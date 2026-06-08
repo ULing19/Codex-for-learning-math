@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>考研数学一学习工作台</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fff4dc'/%3E%3Ctext x='32' y='42' font-size='38' text-anchor='middle' fill='%23b45f06'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <script defer src="./formula-data.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <!-- 移动端侧边栏遮罩 -->
+  <div id="sidebarOverlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <!-- ── 侧边栏 ── -->
+    <aside id="sidebar" class="sidebar" aria-label="导航">
+      <div class="brand">
+        <div class="brand-mark">∑</div>
+        <div>
+          <h1>数学一工作台</h1>
+          <p>公式 · 实验室 · 复习 · 归因</p>
+        </div>
+        <button id="sidebarClose" class="sidebar-close" aria-label="关闭侧边栏">✕</button>
+      </div>
+
+      <!-- 进度仪表盘 -->
+      <div class="dashboard-card">
+        <div id="dashStats" class="dash-stats"></div>
+        <div id="dashProgress" class="dash-progress-bar"><div id="dashFill" class="dash-fill"></div></div>
+        <p id="dashHint" class="dash-hint"></p>
+      </div>
+
+      <!-- 快速入口 -->
+      <div class="quick-nav">
+        <button class="qnav-btn active" data-view="cards" title="公式手册">📚 公式手册</button>
+        <button class="qnav-btn" data-view="labs" title="交互实验室">🔬 实验室</button>
+        <button class="qnav-btn" data-view="review" title="今日复习队列">📅 今日复习</button>
+        <button class="qnav-btn" data-view="errors" title="错题归因">🎯 错题归因</button>
+      </div>
+
+      <!-- 章节目录 -->
+      <nav id="chapterNav" class="chapter-nav" aria-label="章节目录"></nav>
+    </aside>
+
+    <!-- ── 主内容 ── -->
+    <main class="main">
+
+      <!-- 英雄区 -->
+      <section class="hero">
+        <div class="hero-text-block">
+          <p class="eyebrow">考研数学一 · 静态 JS 版</p>
+          <h2>把公式从"背不动"变成"看得懂、搜得到、会使用"。</h2>
+          <p class="hero-sub">覆盖高数、线代、概率统计；重点公式含适用条件、直觉解释、简短证明、例子、易错点与交互演示。</p>
+        </div>
+        <div class="hero-stats-row">
+          <div class="hero-stat"><strong id="cardCount">0</strong><span>公式卡</span></div>
+          <div class="hero-stat"><strong id="mustCount">0</strong><span>必背</span></div>
+          <div class="hero-stat"><strong id="knownCount">0</strong><span>已掌握</span></div>
+          <div class="hero-stat"><strong id="labCount">0</strong><span>交互演示</span></div>
+        </div>
+        <div id="heroRecommend" class="hero-recommend"></div>
+      </section>
+
+      <!-- 工具栏 -->
+      <section class="toolbar" aria-label="搜索和筛选">
+        <label class="search-box">
+          <span>🔍 搜索</span>
+          <input id="searchInput" type="search" placeholder="华里士、等价无穷小、Green、正定、卷积…" />
+        </label>
+        <label>
+          重要程度
+          <select id="importanceFilter">
+            <option value="all">全部</option>
+            <option value="必背">必背</option>
+            <option value="常用">常用</option>
+            <option value="技巧">技巧</option>
+            <option value="了解">了解</option>
+            <option value="拓展">拓展</option>
+          </select>
+        </label>
+        <label>
+          标签
+          <select id="tagFilter"><option value="all">全部</option></select>
+        </label>
+        <label>
+          掌握度
+          <select id="masteryFilter">
+            <option value="all">全部</option>
+            <option value="0">未学</option>
+            <option value="1">认识</option>
+            <option value="2">掌握</option>
+          </select>
+        </label>
+        <div class="toolbar-right">
+          <button id="resetFilters" class="btn-ghost" type="button">重置</button>
+          <button id="onlyInteractiveBtn" class="btn-ghost" type="button" title="只看有交互演示的卡">🔬 只看演示</button>
+          <button id="reviewModeBtn" class="btn-ghost" type="button">📖 复习模式</button>
+          <button id="flashModeBtn" class="btn-ghost" type="button">🃏 闪卡模式</button>
+        </div>
+      </section>
+
+      <!-- 键盘提示 -->
+      <section class="keyboard-hint">
+        <kbd>j</kbd><kbd>k</kbd> 翻卡 &nbsp;
+        <kbd>空格</kbd> 展开/翻转 &nbsp;
+        <kbd>m</kbd> 切换掌握 &nbsp;
+        <kbd>f</kbd> 收藏 &nbsp;
+        <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 设掌握度
+      </section>
+
+      <!-- 结果信息 -->
+      <section id="resultsInfo" class="results-info"></section>
+
+      <!-- 视图容器：公式卡 / 实验室 / 今日复习 / 错题归因 -->
+      <section id="viewCards" class="view-section">
+        <section id="formulaList" class="formula-list"></section>
+      </section>
+
+      <section id="viewLabs" class="view-section hidden">
+        <div class="labs-header">
+          <h2>🔬 交互实验室总览</h2>
+          <p class="labs-sub">每个实验室都有明确的"观察目标"和"考研触发词"。打开公式卡片也可以直接进入对应实验室。</p>
+        </div>
+        <div id="labsGrid" class="labs-grid"></div>
+      </section>
+
+      <section id="viewReview" class="view-section hidden">
+        <div class="review-header">
+          <h2>📅 今日复习队列</h2>
+          <p class="review-sub">系统自动选取：必背未掌握 + 认识状态 + 收藏卡，按学科均衡分配。</p>
+          <div class="review-controls">
+            <button id="reviewStartBtn" class="btn-primary">开始复习</button>
+            <button id="reviewShuffleBtn" class="btn-ghost">🔀 打乱顺序</button>
+          </div>
+        </div>
+        <div id="reviewQueue" class="formula-list"></div>
+      </section>
+
+      <section id="viewErrors" class="view-section hidden">
+        <div class="errors-header">
+          <h2>🎯 错题归因</h2>
+          <p class="errors-sub">选择你常犯的错误类型，系统推荐相关公式卡。</p>
+        </div>
+        <div class="error-tags">
+          <button class="error-tag" data-error="equivalent-misuse">等价替换误用</button>
+          <button class="error-tag" data-error="taylor-order">Taylor 阶数不够</button>
+          <button class="error-tag" data-error="trig-transform">三角变形没想到</button>
+          <button class="error-tag" data-error="integral-method">积分方法选错</button>
+          <button class="error-tag" data-error="linear-algebra">线代秩/特征值混淆</button>
+          <button class="error-tag" data-error="probability-cond">概率条件没看清</button>
+          <button class="error-tag" data-error="series-convergence">级数敛散判断错</button>
+          <button class="error-tag" data-error="multivar-extreme">多元极值漏情况</button>
+        </div>
+        <div id="errorCards" class="formula-list" style="margin-top:16px"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 移动端底部导航 -->
+  <nav class="bottom-nav" aria-label="底部导航">
+    <button class="bnav-btn active" data-view="cards">📚<span>手册</span></button>
+    <button class="bnav-btn" data-view="labs">🔬<span>实验室</span></button>
+    <button class="bnav-btn" data-view="review">📅<span>复习</span></button>
+    <button class="bnav-btn" data-view="errors">🎯<span>归因</span></button>
+    <button id="mobileMenuBtn" class="bnav-btn">☰<span>目录</span></button>
+  </nav>
+</body>
+</html>
