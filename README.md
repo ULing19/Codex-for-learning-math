@@ -1,82 +1,89 @@
-# Codex for Learning Math / 考研数学一交互公式手册
+# Codex for Learning Math
 
-> 一个面向考研数学一复习的静态交互公式手册：494 张公式卡、168 个交互演示、可搜索、可复习、可部署到 GitHub Pages。
->
-> A static interactive formula handbook for China postgraduate entrance exam Math I review: 494 formula cards, 168 interactive demos, searchable, review-friendly, and deployable on GitHub Pages.
+> 考研数学一交互公式手册：把公式、理解、例题、易错点和可视化演示放进一个纯静态学习工作台。<br>
+> Interactive Math I formula handbook for postgraduate entrance exam review, built as a searchable static learning workspace.
 
-[在线访问 / Live Demo](https://uling19.github.io/Codex-for-learning-math/handbook/) · [维护文档 / Maintainer Guide](./handbook/README.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Static Site](https://img.shields.io/badge/site-GitHub%20Pages-2ea44f.svg)](https://uling19.github.io/Codex-for-learning-math/handbook/)
+[![No Build](https://img.shields.io/badge/build-none-success.svg)](#quick-start--快速开始)
+
+[在线访问 / Live Demo](https://uling19.github.io/Codex-for-learning-math/handbook/) ·
+[维护文档 / Maintainer Guide](./handbook/README.md) ·
+[完整版公式手册](./考研数学一-公式手册-完整版.md) ·
+[冷门技巧公式库](./考研数学一-冷门技巧公式库.md)
 
 ![Preview](./handbook/preview.png)
 
----
+## 项目简介
 
-## 中文介绍
+这是一个面向 **考研数学一** 复习的开源交互公式手册，覆盖高等数学、线性代数、概率论与数理统计，以及前置基础和高收益技巧。项目使用 **HTML + CSS + Vanilla JavaScript + MathJax**，不依赖构建工具、不需要后端，适合直接部署到 GitHub Pages。
 
-这是一个用 **HTML + CSS + Vanilla JavaScript + MathJax** 构建的本地/网页公式手册，覆盖考研数学一的核心内容：
+它不是单纯“堆公式”，而是把每个重点公式整理成可学习的卡片：
 
-- 高等数学（同济版上下册范围）
-- 线性代数
-- 概率论与数理统计
-- 前置基础公式
-- 冷门但高收益技巧
-- 考场速查与错题归因
+- 公式 LaTeX 与适用条件
+- 一句话理解与考场用法
+- 简短证明或推导思路
+- 小例子与易错提醒
+- 关联公式跳转
+- SVG / Canvas 风格的交互演示
 
-项目目标不是简单堆公式，而是把公式整理成「能看懂、搜得到、会使用」的学习工作台。重点公式卡通常包含：
+## English Overview
 
-- 公式 LaTeX
-- 一句话理解
-- 适用条件
-- 考场用法
-- 简短证明/来源
-- 小例子
-- 易错点
-- 关联公式
-- 交互演示
+This is an open-source static interactive handbook for China postgraduate entrance exam **Math I** review. It covers calculus, linear algebra, probability and statistics, prerequisite formulas, and high-yield exam tricks.
 
-## 核心功能
+The goal is not only to list formulas, but to make them easier to understand, search, review, and connect. Each important card may include conditions, intuition, quick usage, a mini proof, examples, common mistakes, related formulas, and interactive demos.
 
-- **公式卡片**：494 张结构化公式卡，覆盖高数、线代、概率和冷门技巧。
-- **交互实验室**：168 个可视化演示，帮助理解极限、Taylor、三角、积分、矩阵、概率等概念。
-- **搜索与高亮**：支持标题、章节、标签、解释全文检索。
-- **掌握度系统**：未学 / 认识 / 掌握，保存在浏览器 `localStorage`。
-- **今日推荐**：优先推荐必背、未掌握、有交互的高价值公式。
-- **复习队列**：自动整理必背未掌握、认识状态和收藏卡。
-- **错题归因**：按常见错误类型反查相关公式。
-- **关联跳转**：公式卡之间通过关联 chip 形成知识网络。
-- **键盘快捷键**：支持快速搜索、翻卡、收藏和掌握度标记。
-- **纯静态部署**：无需构建工具、无需后端。
+## Highlights / 功能亮点
 
-## 交互模块
+- **494 张公式卡 / 494 cards**：覆盖高数、线代、概率、前置基础、冷门技巧和考场速查。
+- **168 个交互挂载 / 168 demo entries**：用滑块、SVG、曲线、矩阵变换、概率图像辅助理解。
+- **15 类实验室 / 15 lab types**：等价无穷小、Taylor、三角变形、Riemann 和、Wallis、矩阵特征值、假设检验等。
+- **搜索与高亮 / Search & highlight**：支持标题、章节、标签、解释全文检索。
+- **掌握度追踪 / Mastery tracking**：未学、认识、掌握、本地收藏，保存在浏览器 `localStorage`。
+- **今日推荐 / Daily recommendations**：优先推荐必背、未掌握、有交互的高价值卡片。
+- **错题归因 / Error attribution**：按常见错误类型反查相关公式和知识点。
+- **纯静态部署 / Static deployment**：无数据库、无后端、无构建步骤。
 
-当前支持的 `interactiveType`：
+## Coverage / 内容范围
 
-| 类型 | 用途 |
+| Subject | 中文范围 | English Scope |
+|---|---|---|
+| Prerequisites | 代数恒等式、数列、指数对数、不等式、三角公式 | Algebra, sequences, exponentials, logarithms, inequalities, trigonometry |
+| Calculus I | 极限、连续、导数、中值定理、不定积分、定积分、反常积分、微分方程 | Limits, continuity, derivatives, mean value theorems, integrals, improper integrals, ODEs |
+| Calculus II | 空间解析几何、多元微分、重积分、曲线曲面积分、级数、Fourier | Multivariable calculus, multiple integrals, line/surface integrals, series, Fourier |
+| Linear Algebra | 行列式、矩阵、秩、方程组、向量组、特征值、二次型 | Determinants, matrices, rank, systems, vector spaces, eigenvalues, quadratic forms |
+| Probability | 事件概率、分布、二维变量、数字特征、大数定律、CLT、估计、检验 | Events, distributions, random vectors, moments, LLN, CLT, estimation, hypothesis tests |
+| Tricks | Wallis、Beta/Gamma、Frullani、Euler 代换、Raabe、Dirichlet、Cayley-Hamilton | Wallis, Beta/Gamma, Frullani, Euler substitution, Raabe, Dirichlet, Cayley-Hamilton |
+
+## Interactive Labs / 交互模块
+
+| `interactiveType` | 用途 |
 |---|---|
-| `limit-slider` | 经典极限数值逼近 |
-| `taylor-plot` | Taylor 曲线近似 |
-| `tangent-line` | 导数与切线 |
-| `riemann-sum` | Riemann 和与定积分面积 |
-| `wallis-recursion` | Wallis 公式递推 |
-| `unit-circle` | 单位圆三角函数 |
-| `matrix-transform` | 二维矩阵变换 |
-| `distribution-plot` | 常见概率分布 |
-| `clt-demo` | 中心极限定理 |
-| `equivalent-compare` | 等价无穷小比较 |
-| `taylor-order-lab` | Taylor 展开阶数选择 |
-| `trig-transform-lab` | 三角变形工作台 |
+| `equivalent-compare` | 无穷小等价、同阶和加减陷阱对比 |
+| `taylor-order-lab` | Taylor 阶数选择与组合函数抵消 |
+| `trig-transform-lab` | 积化和差、和差化积、辅助角、倍角降幂 |
 | `integral-method-picker` | 积分方法决策树 |
-| `matrix-eigen-lab` | 特征值、特征向量与正定 |
-| `probability-distribution-lab` | 假设检验拒绝域 |
+| `wallis-recursion` | Wallis 递推链与偶奇公式 |
+| `unit-circle` | 单位圆、象限、特殊角和诱导公式 |
+| `riemann-sum` | 左端点、右端点、中点 Riemann 和 |
+| `matrix-eigen-lab` | 特征值、特征向量、正定判别 |
+| `distribution-plot` | 二项、泊松、正态、指数分布图像 |
+| `clt-demo` | 中心极限定理与标准误压缩 |
+| `probability-distribution-lab` | 假设检验拒绝域、功效、第二类错误 |
+| `limit-slider` | 经典极限数值逼近 |
+| `taylor-plot` | 函数曲线与 Taylor 近似 |
+| `tangent-line` | 割线趋近切线 |
+| `matrix-transform` | 二维矩阵变换可视化 |
 
-## 本地使用
+## Quick Start / 快速开始
 
-最简单方式：直接打开：
+最简单的方式是直接打开：
 
 ```text
 handbook/index.html
 ```
 
-也可以启动本地 HTTP 服务：
+也可以启动本地静态服务：
 
 ```bash
 npx serve handbook
@@ -95,9 +102,9 @@ python -m http.server 8000
 http://localhost:8000
 ```
 
-## 验收命令
+## Development Checks / 验收命令
 
-每次修改后建议运行：
+修改代码或公式数据后，建议运行：
 
 ```bash
 node --check handbook/app.js
@@ -112,98 +119,62 @@ node handbook/smoke-test.js
 
 说明：
 
-- `node --check` 只检查语法。
-- `validate-data.js` 检查公式卡数据完整性。
-- `generate-docs.js` 从结构化数据生成 Markdown 文档。
-- `smoke-test.js` 用 Node fake DOM 检查运行时接线，能发现页面白屏类问题。
+- `node --check` 只检查 JavaScript 语法。
+- `validate-data.js` 检查公式卡字段完整性、ID 唯一性和交互类型合法性。
+- `generate-docs.js` 从结构化数据生成 Markdown 打印版。
+- `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 
-## 文件结构
+## Project Structure / 项目结构
 
 ```text
 .
-├── handbook/
-│   ├── index.html          # 页面入口
-│   ├── styles.css          # 样式
-│   ├── app.js              # 交互逻辑
-│   ├── formula-data.js     # 公式卡数据
-│   ├── validate-data.js    # 数据校验
-│   ├── generate-docs.js    # Markdown 生成
-│   ├── smoke-test.js       # 运行时冒烟测试
-│   ├── README.md           # 维护文档
-│   └── preview.png         # 预览图
-├── 考研数学一-公式手册-完整版.md
-├── 考研数学一-冷门技巧公式库.md
-├── 考研数学一-总索引.md
-└── README.md
+├─ handbook/
+│  ├─ index.html          # 页面入口 / app entry
+│  ├─ styles.css          # 样式 / styles
+│  ├─ app.js              # 交互逻辑 / app logic
+│  ├─ formula-data.js     # 公式卡数据 / formula card data
+│  ├─ validate-data.js    # 数据校验 / data validation
+│  ├─ generate-docs.js    # Markdown 生成 / docs generator
+│  ├─ smoke-test.js       # 冒烟测试 / smoke test
+│  ├─ README.md           # 维护文档 / maintainer guide
+│  └─ preview.png         # GitHub 预览图 / preview image
+├─ 考研数学一-公式手册-完整版.md
+├─ 考研数学一-冷门技巧公式库.md
+├─ 考研数学一-总索引.md
+├─ README.md
+└─ LICENSE
 ```
 
-## 开源协议
+## Contributing / 参与贡献
 
-本项目使用 [MIT License](./LICENSE)。
+欢迎以中英文提交 issue、建议或 PR。适合贡献的方向：
 
-公式、知识点和解释内容用于学习与复习整理。若你基于本项目继续改造，建议保留来源说明与验收脚本，避免公式数据在迭代中失真。
+- 补充公式卡、例题、证明思路或易错点。
+- 改进交互演示，让抽象概念更直观。
+- 修复公式归类、条件限制或符号错误。
+- 优化移动端排版、可访问性和搜索体验。
+- 增加更适合考研复习的章节索引和错题模板。
 
----
+建议流程：
 
-## English Overview
+1. 修改前先运行验收命令，确认基线正常。
+2. 改公式数据时优先修改 `handbook/formula-data.js`。
+3. 不要手动改生成文档；用 `node handbook/generate-docs.js` 重新生成。
+4. 大改 UI 时同步更新 `handbook/smoke-test.js`。
+5. 保持项目纯静态，不引入构建工具，除非先讨论清楚。
 
-This project is a static interactive formula handbook for Math I review. It is built with **HTML + CSS + Vanilla JavaScript + MathJax**, with no build tools and no backend.
+## Roadmap / 后续方向
 
-It focuses on making formulas:
+- 更细的章节学习路径和复习计划。
+- 公式卡难度分级、题型标签和错题归因模板。
+- 更多“证明导图”和“什么时候想到它”的触发提示。
+- 交互实验室的移动端体验和可访问性增强。
+- 公式核验来源说明继续完善。
 
-- easy to search,
-- easy to understand,
-- easy to review,
-- and easy to connect across topics.
+## License / 开源协议
 
-## Features
+本项目使用 [MIT License](./LICENSE) 开源。
 
-- **494 structured formula cards** covering calculus, linear algebra, probability, prerequisites, and high-yield tricks.
-- **168 interactive demos** powered by SVG and plain JavaScript.
-- **Search and highlighting** across titles, chapters, tags, and explanations.
-- **Mastery tracking** via browser `localStorage`.
-- **Today’s recommendations** for high-priority review.
-- **Review queue** based on mastery, importance, and favorites.
-- **Error attribution** for common mistake patterns.
-- **Related formula chips** for quick navigation.
-- **Keyboard shortcuts** for fast study workflows.
-- **Static deployment** via GitHub Pages.
+公式、知识点和解释内容主要用于学习与复习整理。若你基于本项目继续改造，建议保留来源说明、校验脚本和生成流程，避免公式数据在迭代中失真。
 
-## Quick Start
-
-Open:
-
-```text
-handbook/index.html
-```
-
-Or serve locally:
-
-```bash
-npx serve handbook
-```
-
-Then visit the printed local URL.
-
-## Live Demo
-
-[https://uling19.github.io/Codex-for-learning-math/handbook/](https://uling19.github.io/Codex-for-learning-math/handbook/)
-
-## Development Checks
-
-Run before committing changes:
-
-```bash
-node --check handbook/app.js
-node --check handbook/formula-data.js
-node --check handbook/validate-data.js
-node --check handbook/generate-docs.js
-node --check handbook/smoke-test.js
-node handbook/validate-data.js
-node handbook/generate-docs.js
-node handbook/smoke-test.js
-```
-
-## License
-
-MIT License. See [LICENSE](./LICENSE).
+This project is released under the [MIT License](./LICENSE). Formula explanations are organized for educational and review purposes. If you build upon this project, please keep the validation and documentation-generation workflow so the formula data remains reliable.

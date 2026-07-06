@@ -11,6 +11,10 @@
   --purple: #7e22ce;
   --shadow: 0 18px 45px rgba(74,45,15,.10);
   --sidebar-w: 300px;
+  --z-bottom-nav: 800;
+  --z-overlay: 900;
+  --z-sidebar: 1000;
+  --z-toast: 1100;
 }
 
 * { box-sizing: border-box; }
@@ -40,9 +44,11 @@ body {
 
 .sidebar-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.4); z-index: 99;
+  background: rgba(0,0,0,.42); z-index: var(--z-overlay);
+  backdrop-filter: blur(2px);
 }
-.sidebar-overlay.active { display: block; }
+.sidebar-overlay.active,
+.sidebar-overlay.open { display: block; }
 
 .sidebar-close { display: none; }
 
@@ -202,6 +208,7 @@ kbd {
   padding: 18px; border-radius: 20px;
   background: rgba(255,250,242,.92); border: 1px solid var(--line);
   box-shadow: var(--shadow); transition: outline .1s;
+  scroll-margin-top: 16px;
 }
 .formula-card.kb-focus {
   outline: 3px solid var(--accent-2); outline-offset: 2px;
@@ -370,9 +377,10 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 /* ── bottom nav (mobile) ── */
 .bottom-nav {
   display: none; position: fixed; bottom: 0; left: 0; right: 0;
-  height: 58px; background: rgba(255,250,242,.97);
+  min-height: 58px; padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(255,250,242,.97);
   border-top: 1px solid var(--line); backdrop-filter: blur(12px);
-  z-index: 100; justify-content: space-around; align-items: center;
+  z-index: var(--z-bottom-nav); justify-content: space-around; align-items: center;
 }
 .bnav-btn {
   display: flex; flex-direction: column; align-items: center;
@@ -386,7 +394,7 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 @media (max-width: 860px) {
   .app-shell { grid-template-columns: 1fr; }
   .sidebar {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: var(--z-sidebar);
     width: min(var(--sidebar-w), 85vw); transform: translateX(-110%);
     transition: transform .25s ease;
   }
@@ -396,7 +404,7 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
   .hero { grid-template-columns: 1fr; }
   .hero-stats-row { flex-wrap: wrap; }
   .detail-grid { grid-template-columns: 1fr; }
-  .main { padding: 14px; }
+  .main { padding: 14px 14px calc(86px + env(safe-area-inset-bottom)); }
   .toolbar-right { margin-left: 0; width: 100%; }
   .labs-grid { grid-template-columns: 1fr; }
 }
@@ -816,6 +824,21 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 /* secondary grid: 2列 */
 .dg-secondary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
 
+.db-guide {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #f5f3ff, #eff6ff);
+  border-color: #c7d2fe;
+}
+.db-guide h4 { color: #4338ca; }
+.db-guide ol {
+  margin: 8px 0 0 18px;
+  padding: 0;
+  color: #374151;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.db-guide li + li { margin-top: 3px; }
+
 @media (max-width: 640px) {
   .dg-core      { grid-template-columns: 1fr; }
   .dg-secondary { grid-template-columns: 1fr; }
@@ -847,7 +870,7 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 .jump-toast {
   position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%) translateY(12px);
   background: #1e293b; color: white; font-size: 13px; font-weight: 600;
-  padding: 8px 18px; border-radius: 999px; z-index: 200;
+  padding: 8px 18px; border-radius: 999px; z-index: var(--z-toast);
   opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
   white-space: nowrap; max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
 }

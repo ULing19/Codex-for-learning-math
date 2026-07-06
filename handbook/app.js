@@ -15,8 +15,16 @@
     errorType: ""
   };
   const originalIndex = new Map(cards.map((card, i) => [card.id, i]));
+  const cardById = new Map(cards.map((card) => [card.id, card]));
   const subjectIndex = new Map(groups.map((g, i) => [g.subject, i]));
   const chapterIndex = new Map(groups.flatMap((g) => g.chapters.map((ch, i) => [`${g.subject}::${ch}`, i])));
+
+  // 预计算搜索文本：避免每次筛选都对 494 张卡 join 13 个字段 + toLowerCase
+  cards.forEach((card) => {
+    card._searchText = [card.subject, card.chapter, card.section, card.title, card.latex,
+      card.importance, card.tags.join(" "), card.conditions, card.intuition,
+      card.howToUse, card.miniProof, card.example, card.mistakes].join(" ").toLowerCase();
+  });
 
   // ── 运行时关联表（补充 formula-data.js 里稀少的 relatedFormulas）──────────────
   // 格式：id -> [relatedId, ...]  双向会自动展开
@@ -90,6 +98,9 @@
   const setText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
   const setHtml = (id, value) => { const el = $(id); if (el) el.innerHTML = value; };
   const on = (id, event, handler) => { const el = $(id); if (el) el.addEventListener(event, handler); };
+  const cssEscape = (value) => (window.CSS && CSS.escape)
+    ? CSS.escape(value)
+    : String(value).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
   const escapeHtml = (v) => String(v ?? "")
     .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
@@ -375,14 +386,20 @@
   }
 
   function bindControls() {
+    let searchTimer = null;
     on("searchInput", "input", (e) => {
-      state.query = e.target.value.trim().toLowerCase();
-      renderActiveView();
+      const value = e.target.value.trim().toLowerCase();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        state.query = value;
+        renderActiveView();
+      }, 150);
     });
     on("importanceFilter", "change", (e) => { state.importance = e.target.value; renderActiveView(); });
     on("tagFilter", "change", (e) => { state.tag = e.target.value; renderActiveView(); });
     on("masteryFilter", "change", (e) => { state.mastery = e.target.value; renderActiveView(); });
     on("resetFilters", "click", () => {
+      clearTimeout(searchTimer);
       state.query = ""; state.importance = "all"; state.tag = "all"; state.chapter = "all"; state.mastery = "all";
       state.onlyInteractive = false; state.reviewMode = false; state.labType = "all";
       if ($("searchInput")) $("searchInput").value = "";
@@ -499,8 +516,8 @@
       return;
     }
     list.innerHTML = currentItems.map(renderCard).join("");
-    currentItems.forEach(mountInteractive);
-    typesetMath();
+    setupLazyDemos(list);
+    typesetMath(list);
     renderMasteryStats();
   }
 
@@ -802,12 +819,7 @@
         if (card.subject !== subject || card.chapter !== chapter) return false;
       }
       if (state.reviewMode && getMastery(card.id) === 2) return false;
-      if (state.query) {
-        const hay = [card.subject, card.chapter, card.section, card.title, card.latex,
-          card.importance, card.tags.join(" "), card.conditions, card.intuition,
-          card.howToUse, card.miniProof, card.example, card.mistakes].join(" ").toLowerCase();
-        if (!hay.includes(state.query)) return false;
-      }
+      if (state.query && !card._searchText.includes(state.query)) return false;
       return true;
     });
   }
@@ -848,7 +860,7 @@
     // ── 关联卡片 chips ──
     const rels = relMap.get(card.id) || [];
     const relChips = rels.map(rid => {
-      const rc = cards.find(c => c.id === rid);
+      const rc = cardById.get(rid);
       if (!rc) return "";
       return `<button class="rel-chip" data-goto="${escapeHtml(rid)}" title="跳转：${escapeHtml(rc.title)}">${escapeHtml(rc.title)}</button>`;
     }).filter(Boolean).join("");
@@ -864,6 +876,7 @@
       <div class="detail-block db-mis"><h4>⚠ 易错点</h4><p>${escapeHtml(card.mistakes)}</p></div>`;
 
     const secondaryBlocks = `
+      ${renderProofGuide(card)}
       <div class="detail-block db-cond"><h4>适用条件</h4><p>${escapeHtml(card.conditions)}</p></div>
       <div class="detail-block db-proof"><h4>简短证明/来源</h4><p>${escapeHtml(card.miniProof)}</p></div>`;
 
@@ -913,6 +926,60 @@
         </div>
       </article>
     `;
+  }
+
+  function renderProofGuide(card) {
+    const hay = [card.title, card.section, card.chapter, card.tags.join(" "), card.interactiveType].join(" ");
+    let guide;
+    if (/等价无穷小|Taylor|极限|主项/.test(hay)) {
+      guide = {
+        title: "证明导图：先找主项",
+        idea: "极限题的证明核心不是“背替换”，而是比较局部最低非零阶。",
+        steps: ["把目标函数在趋近点展开或化成标准等价式", "保留最低非零阶，检查加减是否发生抵消", "用商的极限验证同阶、等价或高阶小量"]
+      };
+    } else if (/三角|积化和差|和差化积|单位圆|Fourier/.test(hay)) {
+      guide = {
+        title: "证明导图：从和差角出发",
+        idea: "三角恒等式大多是和差角公式的加减组合；图像上表现为相位、振幅和频率的重组。",
+        steps: ["先写出 sin(A±B)、cos(A±B)", "相加或相减消去目标外的项", "应用时同步检查系数 1/2、符号和角度单位"]
+      };
+    } else if (/积分|Wallis|Beta|Gamma|反常|Riemann/.test(hay)) {
+      guide = {
+        title: "证明导图：把难积分变成结构",
+        idea: "积分公式通常来自换元、分部、对称或递推；先判断结构再套方法。",
+        steps: ["识别被积函数的对称性、乘积结构或奇点", "选择换元/分部/区间配对/递推中的一种主线", "最后补上区间、收敛条件和常数因子"]
+      };
+    } else if (/矩阵|特征值|正定|二次型|秩|线性/.test(hay)) {
+      guide = {
+        title: "证明导图：看不变量",
+        idea: "线代公式的证明常围绕秩、行列式、特征值、合同/相似下保持不变的量。",
+        steps: ["先判断变换类型：等价、相似、合同或正交变换", "写出对应不变量：秩、特征值、惯性指数、内积", "用标准形或基变换把问题化到最简单坐标"]
+      };
+    } else if (/概率|分布|期望|方差|Bayes|卷积|检验|CLT/.test(hay)) {
+      guide = {
+        title: "证明导图：先写事件或密度",
+        idea: "概率公式不要先背结论，先把事件、条件或密度区域写清楚。",
+        steps: ["离散题列事件分解，连续题先画积分区域", "条件概率先锁定分母事件，独立性必须明确使用", "数字特征题用定义，再用线性性/独立性化简"]
+      };
+    } else if (/级数|幂级数|Fourier|判别/.test(hay)) {
+      guide = {
+        title: "证明导图：比较尾项速度",
+        idea: "级数敛散的本质是尾项衰减速度；幂级数还要额外检查端点。",
+        steps: ["先判断正项、交错、任意项或函数项级数", "选比较、比值、根值、Dirichlet/Abel 等判别", "求半径后端点必须代回原级数单独检查"]
+      };
+    } else {
+      guide = {
+        title: "证明导图：定义 → 变形 → 条件",
+        idea: "先从定义或标准公式出发，把题目化成可直接验证的形式。",
+        steps: ["写出公式成立所需的定义域、连续性或可导性条件", "用代数恒等变形、极限或导数验证核心等式", "把容易漏掉的边界、方向、常数和符号补回去"]
+      };
+    }
+    return `
+      <div class="detail-block db-guide">
+        <h4>${escapeHtml(guide.title)}</h4>
+        <p>${escapeHtml(guide.idea)}</p>
+        <ol>${guide.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+      </div>`;
   }
 
   // ── mastery button click (event delegation) ───────────────────────────────────
@@ -1015,9 +1082,11 @@
     return (snippets[type] || ["这个模块暂无代码示例。"]).join("\n");
   }
 
-  function typesetMath() {
+  // scope: 可选的 DOM 节点（或节点数组），只排版这些子树，避免每次重排整篇文档
+  function typesetMath(scope) {
     if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise().then(markMathErrors).catch((e) => { console.warn("MathJax 失败：", e); markMathErrors(); });
+      const arg = scope ? (Array.isArray(scope) ? scope : [scope]) : undefined;
+      window.MathJax.typesetPromise(arg).then(markMathErrors).catch((e) => { console.warn("MathJax 失败：", e); markMathErrors(); });
     }
   }
 
@@ -1033,24 +1102,41 @@
     });
   }
 
-  function mountInteractive(card) {
-    document.querySelectorAll(`[data-card="${card.id}"]`).forEach((root) => {
-      const type = root.dataset.demo;
-      if (type === "limit-slider") renderLimitSlider(root);
-      if (type === "taylor-plot") renderTaylorPlot(root);
-      if (type === "tangent-line") renderTangentLine(root);
-      if (type === "riemann-sum") renderRiemannSum(root);
-      if (type === "wallis-recursion") renderWallis(root);
-      if (type === "unit-circle") renderUnitCircle(root);
-      if (type === "matrix-transform") renderMatrixTransform(root);
-      if (type === "distribution-plot") renderDistribution(root);
-      if (type === "clt-demo") renderClt(root);
-      if (type === "equivalent-compare") renderEquivalentCompare(root);
-      if (type === "taylor-order-lab") renderTaylorOrderLab(root);
-      if (type === "trig-transform-lab") renderTrigTransformLab(root);
-      if (type === "integral-method-picker") renderIntegralMethodPicker(root);
-      if (type === "matrix-eigen-lab") renderMatrixEigenLab(root);
-      if (type === "probability-distribution-lab") renderProbabilityDistributionLab(root);
+  // 挂载单个 demo-box（已渲染过则跳过）
+  function mountDemoBox(root) {
+    if (!root || root.dataset.mounted === "true") return;
+    root.dataset.mounted = "true";
+    const type = root.dataset.demo;
+    if (type === "limit-slider") renderLimitSlider(root);
+    if (type === "taylor-plot") renderTaylorPlot(root);
+    if (type === "tangent-line") renderTangentLine(root);
+    if (type === "riemann-sum") renderRiemannSum(root);
+    if (type === "wallis-recursion") renderWallis(root);
+    if (type === "unit-circle") renderUnitCircle(root);
+    if (type === "matrix-transform") renderMatrixTransform(root);
+    if (type === "distribution-plot") renderDistribution(root);
+    if (type === "clt-demo") renderClt(root);
+    if (type === "equivalent-compare") renderEquivalentCompare(root);
+    if (type === "taylor-order-lab") renderTaylorOrderLab(root);
+    if (type === "trig-transform-lab") renderTrigTransformLab(root);
+    if (type === "integral-method-picker") renderIntegralMethodPicker(root);
+    if (type === "matrix-eigen-lab") renderMatrixEigenLab(root);
+    if (type === "probability-distribution-lab") renderProbabilityDistributionLab(root);
+  }
+
+  // 懒挂载：demo 在其所属 <details> 首次展开时才构建（默认折叠则零开销）
+  function setupLazyDemos(listEl) {
+    if (!listEl || !listEl.querySelectorAll) return;
+    listEl.querySelectorAll(".demo-box[data-demo]").forEach((root) => {
+      const details = root.closest && root.closest("details");
+      if (details && !details.open) {
+        details.addEventListener("toggle", () => {
+          if (details.open) listEl.querySelectorAll(`[data-card="${cssEscape(root.dataset.card)}"]`).forEach(mountDemoBox);
+        }, { once: true });
+      } else {
+        // 无 details 包裹或已展开 → 立即挂载
+        mountDemoBox(root);
+      }
     });
   }
 
