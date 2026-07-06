@@ -722,16 +722,12 @@
           <h3>${escapeHtml(title)}</h3>
           <p class="lab-trigger">绑定 ${count} 张卡 · 代表：${escapeHtml(sample?.title || type)}</p>
           <p class="lab-desc">${escapeHtml(desc)}</p>
-          <button class="lab-link-btn" type="button">查看相关公式</button>
+          <button class="lab-link-btn" type="button">打开实验室演示</button>
         </article>`;
     }).join("");
     grid.querySelectorAll(".lab-card").forEach((card) => {
       const open = () => {
-        state.labType = card.dataset.lab || "all";
-        state.onlyInteractive = true;
-        $("onlyInteractiveBtn")?.classList.add("active-mode");
-        switchView("cards");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        openLabDemo(card.dataset.lab || "all");
       };
       card.addEventListener("click", open);
       card.addEventListener("keydown", (event) => {
@@ -740,6 +736,29 @@
           open();
         }
       });
+    });
+  }
+
+  function openLabDemo(type) {
+    state.labType = type || "all";
+    state.onlyInteractive = true;
+    $("onlyInteractiveBtn")?.classList.add("active-mode");
+    switchView("cards");
+    requestAnimationFrame(() => {
+      const selector = `.demo-box[data-demo="${cssEscape(state.labType)}"]`;
+      const demo = document.querySelector(selector);
+      const article = demo?.closest(".formula-card");
+      if (!demo || !article) return;
+
+      const coreDetails = demo.closest("details");
+      if (coreDetails && !coreDetails.open) coreDetails.open = true;
+      article.querySelectorAll(".demo-box[data-demo]").forEach(mountDemoBox);
+      article.classList.add("card-jump-highlight");
+      setTimeout(() => article.classList.remove("card-jump-highlight"), 1400);
+      setText("resultsInfo", `已打开实验室演示：${article.querySelector("h3")?.textContent || state.labType}`);
+      setTimeout(() => {
+        (demo.closest(".interactive") || demo).scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 80);
     });
   }
 
