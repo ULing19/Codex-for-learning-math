@@ -108,10 +108,15 @@ h1,h2,h3,p { margin-top: 0; }
 }
 
 /* ── chapter nav ── */
-.chapter-nav { display: grid; gap: 10px; flex: 1; overflow-y: auto; }
+.chapter-nav {
+  display: flex; flex-direction: column; gap: 10px;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  padding-bottom: 8px; overscroll-behavior: contain;
+}
 .nav-group {
   border: 1px solid var(--line); border-radius: 14px;
   background: #fffdf8; overflow: hidden;
+  flex: 0 0 auto;
 }
 .nav-group h2 {
   margin: 0; padding: 10px 12px; font-size: 13px;
