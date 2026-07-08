@@ -460,6 +460,38 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 .insight-warn    { color: #dc2626; }
 .insight-task    { color: #7c3aed; }
 
+.mini-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0;
+}
+.mini-stat-grid > div {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: #f8fafc;
+}
+.mini-stat-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+.mini-stat-grid strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  margin-top: 2px;
+}
+.tangent-readout p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 720px) { .mini-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .mini-stat-grid { grid-template-columns: 1fr; } }
+
 /* ── equivalent-compare ── */
 .ec-svg { height: 120px; }
 .ec-grid {

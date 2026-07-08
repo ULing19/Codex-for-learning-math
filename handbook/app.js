@@ -1208,31 +1208,126 @@
   }
 
   function renderTaylorPlot(root) {
-    root.innerHTML = `<div class="demo-controls"><label>Taylor 阶数：<input type="range" min="1" max="5" step="2" value="3"></label><span></span></div><svg class="demo-svg" viewBox="0 0 520 260"></svg>`;
-    const input = root.querySelector("input"), label = root.querySelector("span"), svg = root.querySelector("svg");
+    root.innerHTML = `
+      <div class="lab-shell taylor-basic-shell">
+        <div class="lab-header">
+          <span class="lab-title">Taylor 曲线贴合实验室</span>
+          <span class="lab-goal">目标：理解 Taylor 不是“硬背多项式”，而是在展开点附近用同阶导数信息逐步贴近原函数。</span>
+        </div>
+        <div class="demo-controls">
+          <label>Taylor 阶数
+            <input class="tp-order" type="range" min="1" max="5" step="2" value="3">
+          </label>
+          <span class="tp-label"></span>
+        </div>
+        <svg class="demo-svg" viewBox="0 0 520 280"></svg>
+        <div class="tangent-readout tp-readout"></div>
+        <div class="lab-insight">
+          <span class="insight-trigger">考研触发词：局部近似、主项、等价无穷小、0/0 型极限、函数差值抵消。</span>
+          <span class="insight-warn">易错提醒：乘除结构可直接用主项；加减结构必须检查低阶项是否抵消，必要时继续展开。</span>
+          <span class="insight-task">小任务：先选 1 阶，再选 5 阶，对比 x=1 处误差；观察为什么只在 0 附近最可靠。</span>
+        </div>
+      </div>`;
+    const input = root.querySelector(".tp-order");
+    const label = root.querySelector(".tp-label");
+    const svg = root.querySelector("svg");
+    const readout = root.querySelector(".tp-readout");
     const update = () => {
       const order = Number(input.value);
-      label.textContent = `用 sin(x) 的 ${order} 阶近似`;
+      label.textContent = `用 sin(x) 的 ${order} 阶 Maclaurin 近似`;
       const xs = Array.from({length:160},(_,i)=>-Math.PI+(2*Math.PI*i)/159);
-      const map = (x,y) => [260+x*70,130-y*80];
+      const map = (x,y) => [260+x*70,140-y*82];
       const approx = x => order===1?x:order===3?x-x**3/6:x-x**3/6+x**5/120;
-      svg.innerHTML = `<line x1="0" y1="130" x2="520" y2="130" stroke="#ddd"/><line x1="260" y1="0" x2="260" y2="260" stroke="#ddd"/><polyline points="${polyline(xs.map(x=>map(x,Math.sin(x))))}" fill="none" stroke="#2563eb" stroke-width="3"/><polyline points="${polyline(xs.map(x=>map(x,clamp(approx(x),-1.6,1.6))))}" fill="none" stroke="#b45f06" stroke-width="3"/><text x="20" y="30" fill="#2563eb">sin(x)</text><text x="20" y="52" fill="#b45f06">Taylor</text>`;
+      const error = (x) => Math.sin(x) - approx(x);
+      const probeX = 1;
+      const nextTerm = order === 1 ? "\\(-x^3/6\\)" : order === 3 ? "\\(+x^5/120\\)" : "\\(-x^7/5040\\)";
+      svg.innerHTML = `
+        <line x1="0" y1="140" x2="520" y2="140" stroke="#d8dee9"/>
+        <line x1="260" y1="0" x2="260" y2="280" stroke="#d8dee9"/>
+        <polyline points="${polyline(xs.map(x=>map(x,Math.sin(x))))}" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <polyline points="${polyline(xs.map(x=>map(x,clamp(approx(x),-1.65,1.65))))}" fill="none" stroke="#b45f06" stroke-width="3"/>
+        <polyline points="${polyline(xs.map(x=>map(x,clamp(error(x) * 4,-1.65,1.65))))}" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="20" y="30" fill="#2563eb" font-size="12">蓝：sin(x)</text>
+        <text x="20" y="50" fill="#b45f06" font-size="12">橙：Taylor 多项式</text>
+        <text x="20" y="70" fill="#ef4444" font-size="12">红虚线：误差 ×4</text>`;
+      readout.innerHTML = `
+        <div class="mini-stat-grid">
+          <div><span>近似阶数</span><strong>${order} 阶</strong></div>
+          <div><span>x=1 真值</span><strong>${Math.sin(probeX).toFixed(6)}</strong></div>
+          <div><span>x=1 近似</span><strong>${approx(probeX).toFixed(6)}</strong></div>
+          <div><span>x=1 误差</span><strong>${error(probeX).toExponential(2)}</strong></div>
+        </div>
+        <p><strong>理解方式：</strong>展开到 ${order} 阶，等于让多项式在 0 点匹配到这一阶的导数信息；下一项通常从 ${nextTerm} 开始，所以越靠近 0，误差越快变小。做极限时不要盲目展开很多项，先判断题目是否有低阶抵消。</p>`;
     };
     input.addEventListener("input", update); update();
   }
 
   function renderTangentLine(root) {
-    root.innerHTML = `<div class="demo-controls"><label>x₀：<input type="range" min="-2" max="2" step="0.01" value="0.8"></label><span></span></div><svg class="demo-svg" viewBox="0 0 520 260"></svg>`;
-    const input = root.querySelector("input"), label = root.querySelector("span"), svg = root.querySelector("svg");
+    root.innerHTML = `
+      <div class="lab-shell tangent-shell">
+        <div class="lab-header">
+          <span class="lab-title">切线与导数实验室</span>
+          <span class="lab-goal">目标：看清“割线斜率趋近切线斜率”，并把导数翻译成切线方程和局部线性近似。</span>
+        </div>
+        <div class="demo-controls tangent-controls">
+          <label>切点 x₀
+            <input class="tan-x0" type="range" min="-2" max="2" step="0.01" value="0.8">
+          </label>
+          <label>邻近点距离 h
+            <input class="tan-h" type="range" min="0.05" max="1.2" step="0.01" value="0.65">
+          </label>
+        </div>
+        <svg class="demo-svg tangent-svg" viewBox="0 0 520 280"></svg>
+        <div class="tangent-readout"></div>
+        <div class="lab-insight">
+          <span class="insight-trigger">考研触发词：切线、法线、局部近似、函数增量、参数曲线斜率。</span>
+          <span class="insight-warn">易错提醒：竖直切线不能套普通点斜式；参数方程必须先算 dy/dx=(dy/dt)/(dx/dt)。</span>
+          <span class="insight-task">小任务：把 h 拖到最小，观察割线斜率如何靠近 2x₀；再改变 x₀，看切线方向如何同步变化。</span>
+        </div>
+      </div>`;
+    const xInput = root.querySelector(".tan-x0");
+    const hInput = root.querySelector(".tan-h");
+    const readout = root.querySelector(".tangent-readout");
+    const svg = root.querySelector("svg");
     const update = () => {
-      const x0 = Number(input.value), y0 = x0*x0, slope = 2*x0;
-      label.textContent = `f(x)=x²，切点 (${x0.toFixed(2)}, ${y0.toFixed(2)})，斜率 ${slope.toFixed(2)}`;
-      const xs = Array.from({length:120},(_,i)=>-2.2+4.4*i/119);
-      const map = (x,y) => [260+x*90,225-y*45];
-      const [px,py] = map(x0,y0);
-      svg.innerHTML = `<line x1="0" y1="225" x2="520" y2="225" stroke="#ddd"/><line x1="260" y1="0" x2="260" y2="260" stroke="#ddd"/><polyline points="${polyline(xs.map(x=>map(x,x*x)))}" fill="none" stroke="#2563eb" stroke-width="3"/><polyline points="${polyline(xs.map(x=>map(x,y0+slope*(x-x0))))}" fill="none" stroke="#b45f06" stroke-width="3"/><circle cx="${px}" cy="${py}" r="5" fill="#b45f06"/>`;
+      const x0 = Number(xInput.value);
+      const h = Number(hInput.value);
+      const x1 = Math.min(2.2, x0 + h);
+      const y0 = x0 * x0;
+      const y1 = x1 * x1;
+      const tangentSlope = 2 * x0;
+      const secantSlope = (y1 - y0) / (x1 - x0);
+      const slopeError = secantSlope - tangentSlope;
+      const xs = Array.from({length:140},(_,i)=>-2.25+4.5*i/139);
+      const map = (x,y) => [260+x*92,245-y*43];
+      const [px, py] = map(x0, y0);
+      const [qx, qy] = map(x1, y1);
+      const tangent = (x) => y0 + tangentSlope * (x - x0);
+      const secant = (x) => y0 + secantSlope * (x - x0);
+      svg.innerHTML = `
+        <line x1="0" y1="245" x2="520" y2="245" stroke="#d8dee9"/>
+        <line x1="260" y1="0" x2="260" y2="280" stroke="#d8dee9"/>
+        <polyline points="${polyline(xs.map(x => map(x, x*x)))}" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <polyline points="${polyline(xs.map(x => map(x, tangent(x))))}" fill="none" stroke="#b45f06" stroke-width="3"/>
+        <polyline points="${polyline(xs.map(x => map(x, secant(x))))}" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="7 5"/>
+        <line x1="${px}" y1="${py}" x2="${qx}" y2="${qy}" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="4 4"/>
+        <circle cx="${px}" cy="${py}" r="5.5" fill="#b45f06"/>
+        <circle cx="${qx}" cy="${qy}" r="4.5" fill="#ef4444"/>
+        <text x="22" y="28" fill="#2563eb" font-size="12">曲线 f(x)=x²</text>
+        <text x="22" y="48" fill="#b45f06" font-size="12">橙线：切线 y=f(x₀)+f'(x₀)(x-x₀)</text>
+        <text x="22" y="68" fill="#ef4444" font-size="12">红虚线：割线，h 越小越贴近切线</text>`;
+      readout.innerHTML = `
+        <div class="mini-stat-grid">
+          <div><span>切点</span><strong>(${x0.toFixed(2)}, ${y0.toFixed(2)})</strong></div>
+          <div><span>导数斜率 f'(x₀)</span><strong>${tangentSlope.toFixed(3)}</strong></div>
+          <div><span>割线斜率</span><strong>${secantSlope.toFixed(3)}</strong></div>
+          <div><span>斜率误差</span><strong>${slopeError >= 0 ? "+" : ""}${slopeError.toFixed(3)}</strong></div>
+        </div>
+        <p><strong>考场步骤：</strong>先求切点 \\((x_0,f(x_0))\\)，再求斜率 \\(f'(x_0)\\)，最后写 \\(y-f(x_0)=f'(x_0)(x-x_0)\\)。法线斜率通常取 \\(-1/f'(x_0)\\)，但 \\(f'(x_0)=0\\) 或斜率不存在时要单独讨论。</p>`;
     };
-    input.addEventListener("input", update); update();
+    xInput.addEventListener("input", update);
+    hInput.addEventListener("input", update);
+    update();
   }
 
   function renderRiemannSum(root) {
@@ -1559,16 +1654,65 @@
   }
 
   function renderMatrixTransform(root) {
-    root.innerHTML = `<div class="demo-controls">矩阵 A=<input data-m="a" value="1.2"><input data-m="b" value="0.4"><input data-m="c" value="-0.3"><input data-m="d" value="1.0"></div><svg class="demo-svg" viewBox="0 0 520 260"></svg><div class="demo-readout"></div>`;
-    const inputs = root.querySelectorAll("input"), svg = root.querySelector("svg"), out = root.querySelector(".demo-readout");
+    root.innerHTML = `
+      <div class="lab-shell matrix-basic-shell">
+        <div class="lab-header">
+          <span class="lab-title">2D 矩阵变换实验室</span>
+          <span class="lab-goal">目标：把矩阵看成“移动基向量”的几何操作，并用行列式理解面积缩放和方向翻转。</span>
+        </div>
+        <div class="demo-controls matrix-basic-controls">
+          <span>矩阵 \\(A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}\\)</span>
+          <input data-m="a" type="number" step="0.1" value="1.2" aria-label="a">
+          <input data-m="b" type="number" step="0.1" value="0.4" aria-label="b">
+          <input data-m="c" type="number" step="0.1" value="-0.3" aria-label="c">
+          <input data-m="d" type="number" step="0.1" value="1.0" aria-label="d">
+        </div>
+        <svg class="demo-svg" viewBox="0 0 520 290"></svg>
+        <div class="matrix-basic-readout"></div>
+        <div class="lab-insight">
+          <span class="insight-trigger">考研触发词：线性变换、基向量、行列式、面积缩放、可逆、秩。</span>
+          <span class="insight-warn">易错提醒：列向量约定下，矩阵第一列就是 \\(e_1\\) 的像，第二列就是 \\(e_2\\) 的像；不要把行和列读反。</span>
+          <span class="insight-task">小任务：令两列成比例，观察平行四边形塌成线段，此时 det=0，矩阵不可逆。</span>
+        </div>
+      </div>`;
+    const inputs = root.querySelectorAll("input"), svg = root.querySelector("svg"), out = root.querySelector(".matrix-basic-readout");
     const update = () => {
       const v = Object.fromEntries([...inputs].map(i=>[i.dataset.m,Number(i.value)||0]));
-      const map = ([x,y]) => [260+x*70,130-y*70];
+      const det = v.a * v.d - v.b * v.c;
+      const map = ([x,y]) => [260+x*68,155-y*68];
       const t = ([x,y]) => [v.a*x+v.b*y,v.c*x+v.d*y];
+      const unit = [[0,0],[1,0],[1,1],[0,1],[0,0]].map(map);
       const sq = [[0,0],[1,0],[1,1],[0,1],[0,0]].map(t).map(map);
+      const origin = map([0,0]);
       const e1=map(t([1,0])), e2=map(t([0,1]));
-      svg.innerHTML = `<line x1="0" y1="130" x2="520" y2="130" stroke="#ddd"/><line x1="260" y1="0" x2="260" y2="260" stroke="#ddd"/><polyline points="${polyline(sq)}" fill="rgba(180,95,6,0.18)" stroke="#b45f06" stroke-width="3"/><line x1="260" y1="130" x2="${e1[0]}" y2="${e1[1]}" stroke="#2563eb" stroke-width="4"/><line x1="260" y1="130" x2="${e2[0]}" y2="${e2[1]}" stroke="#15803d" stroke-width="4"/>`;
-      out.textContent = `det(A) = ${(v.a*v.d-v.b*v.c).toFixed(3)}，表示单位面积缩放倍率（带方向）。`;
+      const detMeaning = Math.abs(det) < 1e-6 ? "面积塌缩，矩阵不可逆" : det > 0 ? "保持方向，面积放大/缩小" : "方向翻转，面积倍率取绝对值";
+      svg.innerHTML = `
+        <defs>
+          <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/>
+          </marker>
+          <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#15803d"/>
+          </marker>
+        </defs>
+        <line x1="0" y1="${origin[1]}" x2="520" y2="${origin[1]}" stroke="#d8dee9"/>
+        <line x1="${origin[0]}" y1="0" x2="${origin[0]}" y2="290" stroke="#d8dee9"/>
+        <polyline points="${polyline(unit)}" fill="rgba(148,163,184,0.12)" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4"/>
+        <polyline points="${polyline(sq)}" fill="rgba(180,95,6,0.20)" stroke="#b45f06" stroke-width="3"/>
+        <line x1="${origin[0]}" y1="${origin[1]}" x2="${e1[0]}" y2="${e1[1]}" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+        <line x1="${origin[0]}" y1="${origin[1]}" x2="${e2[0]}" y2="${e2[1]}" stroke="#15803d" stroke-width="4" marker-end="url(#arrow-green)"/>
+        <text x="18" y="28" fill="#94a3b8" font-size="12">灰虚线：原单位方格</text>
+        <text x="18" y="48" fill="#b45f06" font-size="12">橙色：变换后的单位方格</text>
+        <text x="18" y="68" fill="#2563eb" font-size="12">蓝：A e₁=第一列</text>
+        <text x="18" y="88" fill="#15803d" font-size="12">绿：A e₂=第二列</text>`;
+      out.innerHTML = `
+        <div class="mini-stat-grid">
+          <div><span>det(A)</span><strong>${det.toFixed(3)}</strong></div>
+          <div><span>面积倍率</span><strong>${Math.abs(det).toFixed(3)}</strong></div>
+          <div><span>Ae₁</span><strong>(${v.a.toFixed(2)}, ${v.c.toFixed(2)})</strong></div>
+          <div><span>Ae₂</span><strong>(${v.b.toFixed(2)}, ${v.d.toFixed(2)})</strong></div>
+        </div>
+        <p><strong>几何解释：</strong>${detMeaning}。列向量线性相关时平行四边形面积为 0，对应 \\(\\det A=0\\)、秩不足、不可逆；这也是线代里“行列式、秩、方程组唯一解”互相连接的核心图像。</p>`;
     };
     inputs.forEach(i=>i.addEventListener("input", update)); update();
   }

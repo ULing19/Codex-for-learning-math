@@ -118,6 +118,47 @@ async function runViewport(browser, baseUrl, viewport) {
   assert.strictEqual(initial.mathErrors, 0, `${viewport.name}: MathJax should not report formula errors`);
   assert.strictEqual(initial.hasStudyLayer, true, `${viewport.name}: study-layer.js should load`);
 
+  const accessibility = await page.evaluate(() => {
+    const visible = (element) => {
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
+    };
+    const seenIds = new Set();
+    const duplicateIds = new Set();
+    document.querySelectorAll("[id]").forEach((element) => {
+      if (seenIds.has(element.id)) duplicateIds.add(element.id);
+      seenIds.add(element.id);
+    });
+    const unnamedButtons = [...document.querySelectorAll("button")]
+      .filter((button) => visible(button))
+      .filter((button) => !(button.getAttribute("aria-label") || button.getAttribute("title") || button.textContent).trim())
+      .map((button) => button.id || button.className || button.outerHTML.slice(0, 80));
+    const search = document.querySelector("#searchInput");
+    const searchName = [search?.getAttribute("aria-label"), search?.getAttribute("placeholder"), search?.closest("label")?.textContent]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+    return {
+      duplicateIds: [...duplicateIds],
+      unnamedButtons,
+      searchHasName: searchName.length > 0,
+      labCardsKeyboardReady: [...document.querySelectorAll("#labsGrid .lab-card")]
+        .every((card) => card.getAttribute("role") === "button" && Number(card.getAttribute("tabindex")) === 0)
+    };
+  });
+  assert.deepStrictEqual(accessibility.duplicateIds, [], `${viewport.name}: DOM should not contain duplicate ids`);
+  assert.deepStrictEqual(accessibility.unnamedButtons, [], `${viewport.name}: visible buttons should have accessible text, title, or aria-label`);
+  assert.strictEqual(accessibility.searchHasName, true, `${viewport.name}: search input should have an accessible name`);
+  assert.strictEqual(accessibility.labCardsKeyboardReady, true, `${viewport.name}: lab cards should be keyboard reachable`);
+
+  await page.keyboard.press("/");
+  const searchFocused = await page.evaluate(() => document.activeElement?.id === "searchInput");
+  assert.strictEqual(searchFocused, true, `${viewport.name}: / should focus search input`);
+  await page.keyboard.press("Escape");
+  const searchBlurred = await page.evaluate(() => document.activeElement?.id !== "searchInput");
+  assert.strictEqual(searchBlurred, true, `${viewport.name}: Esc should blur search input`);
+
   if (viewport.mobile) {
     await page.click("#mobileMenuBtn");
     await page.waitForSelector(".sidebar.open", { timeout: 10000 });
@@ -141,45 +182,90 @@ async function runViewport(browser, baseUrl, viewport) {
     assert.strictEqual(sidebar.lastVisibleAfterScroll, true, `${viewport.name}: last chapter should be visible after scroll`);
     await page.click("#sidebarOverlay");
     await page.waitForFunction(() => !document.querySelector("#sidebar")?.classList.contains("open"));
+
+    const bottomNavHitTarget = await page.evaluate(() => {
+      const button = document.querySelector(".bottom-nav [data-view='labs']");
+      const rect = button.getBoundingClientRect();
+      const target = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      return {
+        visible: getComputedStyle(button).display !== "none",
+        largeEnough: rect.width >= 44 && rect.height >= 44,
+        topHit: target === button || button.contains(target)
+      };
+    });
+    assert.strictEqual(bottomNavHitTarget.visible, true, `${viewport.name}: bottom lab navigation should be visible`);
+    assert.strictEqual(bottomNavHitTarget.largeEnough, true, `${viewport.name}: bottom lab navigation should meet touch target size`);
+    assert.strictEqual(bottomNavHitTarget.topHit, true, `${viewport.name}: bottom lab navigation should be the top hit target`);
   }
 
   await page.click(viewport.labSelector);
   await page.waitForSelector("#viewLabs:not(.hidden)", { timeout: 10000 });
   const labGrid = await page.evaluate(() => ({
     labCards: document.querySelectorAll("#labsGrid .lab-card").length,
-    buttonText: document.querySelector("#labsGrid .lab-card .lab-link-btn")?.textContent.trim()
+    buttonText: document.querySelector("#labsGrid .lab-card .lab-link-btn")?.textContent.trim(),
+    keyboardReady: [...document.querySelectorAll("#labsGrid .lab-card")]
+      .filter((card) => card.getAttribute("role") === "button" && Number(card.getAttribute("tabindex")) === 0).length,
+    labTypes: [...document.querySelectorAll("#labsGrid .lab-card")].map((card) => card.dataset.lab)
   }));
   assert(labGrid.labCards >= 15, `${viewport.name}: lab grid should expose all lab types`);
   assert.strictEqual(labGrid.buttonText, "打开实验室演示", `${viewport.name}: lab CTA should be explicit`);
+  assert.strictEqual(labGrid.keyboardReady, labGrid.labCards, `${viewport.name}: every lab card should support keyboard activation`);
 
-  await page.locator("#labsGrid .lab-card").first().click();
-  await page.waitForTimeout(1000);
-  const labOpen = await page.evaluate(() => ({
-    labsHidden: document.querySelector("#viewLabs")?.classList.contains("hidden"),
-    cardsHidden: document.querySelector("#viewCards")?.classList.contains("hidden"),
-    filteredCards: document.querySelectorAll("#formulaList .formula-card").length,
-    openedDetails: document.querySelector("#formulaList .formula-card details")?.open,
-    mountedDemos: document.querySelectorAll(".demo-box[data-mounted=\"true\"]").length,
-    demoTextLength: document.querySelector(".demo-box")?.textContent.trim().length || 0,
-    studyBlocks: document.querySelectorAll(".db-study").length,
-    resultInfo: document.querySelector("#resultsInfo")?.textContent.trim()
-  }));
+  const labIndices = viewport.mobile
+    ? [...new Set([0, labGrid.labCards - 1])]
+    : Array.from({ length: labGrid.labCards }, (_, index) => index);
+  const openedLabs = [];
+  let labOpen = null;
+  for (const index of labIndices) {
+    if (openedLabs.length) {
+      await page.click(viewport.labSelector);
+      await page.waitForSelector("#viewLabs:not(.hidden)", { timeout: 10000 });
+    }
+    const labCard = page.locator("#labsGrid .lab-card").nth(index);
+    const labType = await labCard.getAttribute("data-lab");
+    if (!labType) throw new Error(`${viewport.name}: lab card ${index} should have a data-lab type`);
+    if (openedLabs.length === 0) {
+      await labCard.focus();
+      await page.keyboard.press("Enter");
+    } else {
+      await labCard.click();
+    }
+    await page.waitForFunction((expectedType) => {
+      const demo = document.querySelector(`.demo-box[data-demo="${expectedType}"][data-mounted="true"]`);
+      return Boolean(demo && demo.closest(".formula-card"));
+    }, labType, { timeout: 10000 });
+    labOpen = await page.evaluate((expectedType) => {
+      const demo = document.querySelector(`.demo-box[data-demo="${expectedType}"][data-mounted="true"]`);
+      return {
+        labType: expectedType,
+        labsHidden: document.querySelector("#viewLabs")?.classList.contains("hidden"),
+        cardsHidden: document.querySelector("#viewCards")?.classList.contains("hidden"),
+        filteredCards: document.querySelectorAll("#formulaList .formula-card").length,
+        openedDetails: demo?.closest("details")?.open,
+        mountedDemos: document.querySelectorAll(".demo-box[data-mounted=\"true\"]").length,
+        demoTextLength: demo?.textContent.trim().length || 0,
+        studyBlocks: document.querySelectorAll(".db-study").length,
+        resultInfo: document.querySelector("#resultsInfo")?.textContent.trim()
+      };
+    }, labType);
 
-  assert.strictEqual(labOpen.labsHidden, true, `${viewport.name}: opening a lab should leave lab grid`);
-  assert.strictEqual(labOpen.cardsHidden, false, `${viewport.name}: opening a lab should show formula cards`);
-  assert(labOpen.filteredCards > 0, `${viewport.name}: lab filter should show related cards`);
-  assert.strictEqual(labOpen.openedDetails, true, `${viewport.name}: lab should auto-open first card details`);
-  assert(labOpen.mountedDemos > 0, `${viewport.name}: lab should mount a demo immediately`);
-  assert(labOpen.demoTextLength > 100, `${viewport.name}: mounted demo should contain teaching content`);
-  assert(labOpen.studyBlocks > 0, `${viewport.name}: study layer should survive lab filtering`);
-  assert(/实验室演示/.test(labOpen.resultInfo), `${viewport.name}: result info should explain lab opening`);
+    assert.strictEqual(labOpen.labsHidden, true, `${viewport.name}: opening ${labType} should leave lab grid`);
+    assert.strictEqual(labOpen.cardsHidden, false, `${viewport.name}: opening ${labType} should show formula cards`);
+    assert(labOpen.filteredCards > 0, `${viewport.name}: ${labType} filter should show related cards`);
+    assert.strictEqual(labOpen.openedDetails, true, `${viewport.name}: ${labType} should auto-open first card details`);
+    assert(labOpen.mountedDemos > 0, `${viewport.name}: ${labType} should mount a demo immediately`);
+    assert(labOpen.demoTextLength > 100, `${viewport.name}: ${labType} demo should contain teaching content`);
+    assert(labOpen.studyBlocks > 0, `${viewport.name}: study layer should survive ${labType} filtering`);
+    assert(/实验室演示/.test(labOpen.resultInfo), `${viewport.name}: result info should explain ${labType} opening`);
+    openedLabs.push(labType);
+  }
 
   if (appErrors.length || failedLocalRequests.length) {
     throw new Error(`${viewport.name}: ${appErrors.concat(failedLocalRequests).join(" | ")}`);
   }
 
   await page.close();
-  return { viewport: viewport.name, initial, labGrid, labOpen };
+  return { viewport: viewport.name, initial, labGrid, labOpen, openedLabs };
 }
 
 (async () => {
@@ -202,7 +288,7 @@ async function runViewport(browser, baseUrl, viewport) {
       mobile: true,
       labSelector: ".bottom-nav [data-view=\"labs\"]"
     }));
-    console.log(`browser-smoke-ok ${results.map((item) => `${item.viewport}:cards=${item.initial.cards},labs=${item.labGrid.labCards},demos=${item.labOpen.mountedDemos}`).join(" ")}`);
+    console.log(`browser-smoke-ok ${results.map((item) => `${item.viewport}:cards=${item.initial.cards},labs=${item.labGrid.labCards},opened=${item.openedLabs.length},demos=${item.labOpen.mountedDemos}`).join(" ")}`);
   } finally {
     await browser.close();
     server.close();

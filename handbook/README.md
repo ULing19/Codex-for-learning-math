@@ -27,9 +27,10 @@
 | `study-layer.js` | 学习深度层：为每张卡生成证明路线、使用场景、例题拆解和检查清单 |
 | `validate-data.js` | 公式数据完整性校验：id 唯一、必填字段、schema 合规 |
 | `generate-docs.js` | 从 `formula-data.js` 生成 Markdown 文档（全量版、冷门版、索引） |
+| `coverage-report.js` | Writes `COVERAGE.md` with chapter, importance, lab, study-layer, and short-field review metrics |
 | `smoke-test.js` | 运行时冒烟测试：用 Node fake DOM 模拟初始化，检查白屏/DOM 接线/渲染是否正常 |
 | `quality-check.js` | 成熟度质量门禁：检查学习深度层、实验室直达、关键交互类型覆盖 |
-| `browser-smoke.js` | 真实浏览器验收：检查桌面/移动端、MathJax、侧栏滚动、实验室直达演示 |
+| `browser-smoke.js` | Real browser acceptance test for desktop/mobile, MathJax, sidebar scrolling, lab demos, keyboard entry points, and basic accessibility |
 
 生成的 Markdown 文档（不要手动编辑，运行 `node handbook/generate-docs.js` 重新生成）：
 
@@ -83,6 +84,7 @@ node --check handbook\validate-data.js
 node --check handbook\generate-docs.js
 node --check handbook\smoke-test.js
 node --check handbook\quality-check.js
+node --check handbook\coverage-report.js
 node --check handbook\browser-smoke.js
 
 # 2. 数据校验（检查公式卡 id 唯一、必填字段、schema 合规）
@@ -97,7 +99,10 @@ node handbook\smoke-test.js
 # 5. 质量门禁（学习深度层/实验室直达/关键模块覆盖）
 node handbook\quality-check.js
 
-# 6. 真实浏览器验收（可选本地运行；CI 会自动运行）
+# 6. Coverage report (generates COVERAGE.md)
+node handbook\coverage-report.js
+
+# 7. 真实浏览器验收（可选本地运行；CI 会自动运行）
 npm install --no-save playwright@1.61.1
 npx playwright install chromium
 npm run verify:browser
@@ -107,8 +112,9 @@ npm run verify:browser
 
 - `node --check` 只做语法检查，不等于功能正常，必须配合 smoke-test
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
+- `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, and short-field review targets into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
-- `browser-smoke.js` 会启动本地静态服务器，用真实 Chromium 验证实验室、移动端侧栏、学习拆解层和 MathJax 渲染错误数
+- `browser-smoke.js` starts a local static server and verifies all desktop lab opening paths, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

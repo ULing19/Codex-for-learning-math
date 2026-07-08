@@ -11,6 +11,7 @@ const html = read("handbook/index.html");
 const app = read("handbook/app.js");
 const generator = read("handbook/generate-docs.js");
 const dataSource = read("handbook/formula-data.js");
+const coverageScript = read("handbook/coverage-report.js");
 
 const mustHaveFiles = [
   "README.md",
@@ -19,6 +20,7 @@ const mustHaveFiles = [
   "CHANGELOG.md",
   "RELEASE_CHECKLIST.md",
   "LICENSE",
+  "COVERAGE.md",
   ".nojekyll",
   ".github/workflows/verify.yml",
   ".github/ISSUE_TEMPLATE/formula-correction.md",
@@ -32,6 +34,7 @@ const rootReadme = readIfExists("README.md");
 const contributing = readIfExists("CONTRIBUTING.md");
 const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
+const coverageReport = readIfExists("COVERAGE.md");
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -51,9 +54,12 @@ for (const file of mustHaveFiles) {
 }
 assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:browser"), "CI must run both base verification and browser smoke verification");
 assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js"), "Root README must document base and browser verification");
+assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
-assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js"), "CHANGELOG must record the maturity verification capability");
+assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js") && changelog.includes("coverage-report.js"), "CHANGELOG must record the maturity verification and coverage-report capabilities");
 assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
+assert(coverageScript.includes("Content Coverage Report") && coverageScript.includes("Interactive Lab Coverage"), "coverage-report.js must produce a project coverage report");
+assert(coverageReport.includes("## Subject Coverage") && coverageReport.includes("## Interactive Lab Coverage") && coverageReport.includes("PASS: coverage gate satisfied"), "COVERAGE.md must be generated and passing");
 assert(!new RegExp("\\?{4,}").test(read("handbook/quality-check.js")), "quality-check.js must not contain mojibake placeholder question marks");
 
 assert(cards.length >= 490, `公式卡数量异常：${cards.length}`);

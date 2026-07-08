@@ -9,6 +9,7 @@
 
 [在线访问 / Live Demo](https://uling19.github.io/Codex-for-learning-math/handbook/) ·
 [维护文档 / Maintainer Guide](./handbook/README.md) ·
+[Coverage Report](./COVERAGE.md) ·
 [完整版公式手册](./考研数学一-公式手册-完整版.md) ·
 [冷门技巧公式库](./考研数学一-冷门技巧公式库.md)
 
@@ -115,9 +116,10 @@ npm run verify
 - `node --check` 只检查 JavaScript 语法。
 - `validate-data.js` 检查公式卡字段完整性、ID 唯一性和交互类型合法性。
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
+- `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, and review-target metrics.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
-- `browser-smoke.js` 用真实 Chromium 检查桌面/移动端、MathJax、侧栏滚动和实验室直达演示；本地运行前执行 `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`。
+- `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, sidebar scrolling, every desktop lab opening path, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`.
 - `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify` 和浏览器冒烟测试。
 
 ## Project Structure / 项目结构
@@ -132,12 +134,14 @@ npm run verify
 │  ├─ study-layer.js      # 证明路线、使用场景、例题拆解生成器 / study layer
 │  ├─ validate-data.js    # 数据校验 / data validation
 │  ├─ generate-docs.js    # Markdown 生成 / docs generator
+│  ├─ coverage-report.js  # coverage report generator
 │  ├─ smoke-test.js       # 冒烟测试 / smoke test
 │  ├─ quality-check.js    # 内容深度与实验室质量门禁 / quality gate
 │  ├─ browser-smoke.js    # 真实浏览器验收 / real browser smoke test
 │  ├─ README.md           # 维护文档 / maintainer guide
 │  └─ preview.png         # GitHub 预览图 / preview image
 ├─ .github/workflows/verify.yml
+├─ COVERAGE.md
 ├─ package.json
 ├─ 考研数学一-公式手册-完整版.md
 ├─ 考研数学一-冷门技巧公式库.md

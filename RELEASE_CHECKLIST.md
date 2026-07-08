@@ -6,6 +6,7 @@ Use this checklist before treating a version as stable.
 
 - [ ] `npm run verify` passes locally.
 - [ ] `npm run verify:browser` passes locally or the GitHub Actions browser job passes.
+- [ ] `COVERAGE.md` is regenerated and reports `PASS: coverage gate satisfied`.
 - [ ] GitHub Actions `Verify handbook` is green on `main`.
 - [ ] GitHub Pages deployment is green.
 - [ ] The live site opens at `https://uling19.github.io/Codex-for-learning-math/handbook/`.
@@ -16,6 +17,7 @@ Use this checklist before treating a version as stable.
 ## Content Review
 
 - [ ] New formula cards include conditions, intuition, usage, proof idea, example, and common mistake.
+- [ ] New or rewritten chapters improve the relevant counts and review targets in `COVERAGE.md`.
 - [ ] Formula cards use supported MathJax syntax.
 - [ ] Cold tricks include conditions and safer fallback methods.
 - [ ] New interactive demos include a clear observation goal and exam trigger.

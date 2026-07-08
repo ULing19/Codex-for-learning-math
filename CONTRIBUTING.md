@@ -27,7 +27,7 @@ npx playwright install chromium
 npm run verify:browser
 ```
 
-`npm run verify` covers syntax, formula data validation, Markdown generation, fake-DOM smoke test, and quality gates. `npm run verify:browser` starts a local static server and checks desktop/mobile behavior, MathJax rendering, sidebar scrolling, and lab demo opening in Chromium.
+`npm run verify` covers syntax, formula data validation, Markdown generation, `COVERAGE.md` generation, fake-DOM smoke test, and quality gates. `npm run verify:browser` starts a local static server and checks desktop/mobile behavior, MathJax rendering, sidebar scrolling, lab demo opening, keyboard entry points, and basic accessibility in Chromium.
 
 ## Content Changes / 内容修改
 
@@ -39,6 +39,7 @@ When adding or editing formula cards:
 4. Use `raw\`...\`` for LaTeX-heavy formulas.
 5. Avoid unsupported MathJax commands. Run browser smoke if the formula is complex.
 6. Regenerate docs with `npm run docs` or `npm run verify`.
+7. Review `COVERAGE.md` if you add many cards or change chapter structure.
 
 ## UI / Lab Changes
 
@@ -48,12 +49,14 @@ When changing UI or labs:
 - Update `handbook/smoke-test.js` when adding/removing required DOM ids.
 - Update `handbook/quality-check.js` when adding new maturity requirements.
 - Update `handbook/browser-smoke.js` when changing lab opening behavior, sidebars, or rendering assumptions.
+- Update `handbook/coverage-report.js` when changing the formula schema, chapter model, or coverage thresholds.
 
 ## Pull Request Checklist / PR 检查清单
 
 - [ ] `npm run verify` passes.
 - [ ] Browser smoke passes locally or in GitHub Actions.
 - [ ] Generated Markdown is updated if formula data changed.
+- [ ] `COVERAGE.md` is regenerated and still reports a passing gate.
 - [ ] UI changes were checked on desktop and mobile.
 - [ ] New formulas include conditions, intuition, usage, proof idea, example, and mistakes.
 - [ ] No `node_modules`, package lock created only for temporary local testing, or other generated test artifacts are committed.

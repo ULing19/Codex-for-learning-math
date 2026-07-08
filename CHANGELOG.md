@@ -4,7 +4,9 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 
 ## Unreleased
 
-- Add future changes here before cutting a release note.
+- Added `coverage-report.js` and generated `COVERAGE.md` so chapter, importance, lab, study-layer, and review-target coverage can be audited from GitHub.
+- Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, and all desktop lab opening paths.
+- Expanded the older `taylor-plot`, `tangent-line`, and `matrix-transform` demos with teaching readouts, SVG explanations, and exam-use guidance.
 
 ## 2026-07-08
 
