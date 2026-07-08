@@ -20,7 +20,7 @@ function git(args) {
 function main() {
   let diff = "";
   try {
-    diff = git(["diff", "--name-only", "--", ...generatedFiles]).trim();
+    diff = git(["-c", "core.quotePath=false", "diff", "--name-only", "--", ...generatedFiles]).trim();
   } catch (error) {
     process.stderr.write(error.stderr || error.message);
     process.exit(1);
