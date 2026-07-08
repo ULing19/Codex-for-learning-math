@@ -24,7 +24,10 @@ const mustHaveFiles = [
   "COVERAGE.md",
   ".nojekyll",
   ".github/workflows/verify.yml",
+  ".github/ISSUE_TEMPLATE/config.yml",
   ".github/ISSUE_TEMPLATE/formula-correction.md",
+  ".github/ISSUE_TEMPLATE/content-gap.md",
+  ".github/ISSUE_TEMPLATE/feature-request.md",
   ".github/ISSUE_TEMPLATE/ui-lab-issue.md",
   ".github/pull_request_template.md"
 ];

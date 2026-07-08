@@ -1,0 +1,12 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live handbook / 在线手册
+    url: https://uling19.github.io/Codex-for-learning-math/handbook/
+    about: Open the deployed interactive formula handbook.
+  - name: Support guide / 支持与反馈说明
+    url: https://github.com/ULing19/Codex-for-learning-math/blob/main/SUPPORT.md
+    about: Check what details to include before reporting a problem.
+  - name: Content governance / 内容治理规范
+    url: https://github.com/ULing19/Codex-for-learning-math/blob/main/CONTENT_GOVERNANCE.md
+    about: Review source tiers, formula verification rules, and trick-label policy.
+

@@ -15,6 +15,13 @@ Please open a GitHub issue when you find:
 - MathJax rendering, mobile layout, sidebar scrolling, search, or mastery tracking behaves incorrectly.
 - A coverage gap exists for 考研数学一, 同济高数, 同济线代, or 高教社概率统计.
 
+Use the closest issue template:
+
+- `Formula correction / 公式修正` for wrong formulas, conditions, examples, proof ideas, tags, or classifications.
+- `Content gap / 内容缺口` for missing chapters, formulas, proof routes, examples, or exam-use explanations.
+- `UI or lab issue / 界面或实验室问题` for layout, search, mobile, MathJax, or interactive lab failures.
+- `Feature request / 功能建议` for new review workflows, lab ideas, or project improvements.
+
 ## Useful Details / 反馈时最好提供
 
 For formula issues:
@@ -58,4 +65,3 @@ npm run verify:browser:live
 - Requests for copyrighted textbook scans or paid course material.
 - Symbolic CAS-level solving for arbitrary input.
 - Account, payment, school registration, or exam policy support unrelated to this handbook.
-
