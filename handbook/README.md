@@ -31,6 +31,7 @@
 | `smoke-test.js` | 运行时冒烟测试：用 Node fake DOM 模拟初始化，检查白屏/DOM 接线/渲染是否正常 |
 | `quality-check.js` | 成熟度质量门禁：检查学习深度层、实验室直达、关键交互类型覆盖 |
 | `browser-smoke.js` | Real browser acceptance test for desktop/mobile, MathJax, sidebar scrolling, lab demos, actual lab control interactions, keyboard entry points, and basic accessibility |
+| `link-check.js` | Local link and metadata gate for Markdown links, HTML assets, required project files, package metadata, and Node version alignment |
 
 生成的 Markdown 文档（不要手动编辑，运行 `node handbook/generate-docs.js` 重新生成）：
 
@@ -94,6 +95,7 @@ node --check handbook\smoke-test.js
 node --check handbook\quality-check.js
 node --check handbook\coverage-report.js
 node --check handbook\browser-smoke.js
+node --check handbook\link-check.js
 
 # 2. 数据校验（检查公式卡 id 唯一、必填字段、schema 合规）
 node handbook\validate-data.js
@@ -110,12 +112,15 @@ node handbook\quality-check.js
 # 6. Coverage report (generates COVERAGE.md)
 node handbook\coverage-report.js
 
-# 7. 真实浏览器验收（可选本地运行；CI 会自动运行）
+# 7. 本地链接与项目元数据检查
+node handbook\link-check.js
+
+# 8. 真实浏览器验收（可选本地运行；CI 会自动运行）
 npm install --no-save playwright@1.61.1
 npx playwright install chromium
 npm run verify:browser
 
-# 8. Online GitHub Pages browser acceptance
+# 9. Online GitHub Pages browser acceptance
 npm run verify:browser:live
 ```
 
@@ -125,6 +130,7 @@ npm run verify:browser:live
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
+- `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, and package metadata drift from entering `main`.
 - `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 

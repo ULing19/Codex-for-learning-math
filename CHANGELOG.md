@@ -6,6 +6,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 
 - Upgraded GitHub Actions to `actions/checkout@v7`, `actions/setup-node@v6`, and Node 24 to remove deprecated Node 20 action-runtime warnings.
 - Added `.nvmrc` and `package.json` `engines.node >=24` so local development and CI use the same supported Node line.
+- Added `link-check.js` and `npm run links` to gate local Markdown links, HTML assets, required project files, package metadata, and Node version alignment.
 - Strengthened browser smoke coverage for desktop sidebar scrolling so the last chapter remains reachable after scrolling.
 - Added `coverage-report.js` and generated `COVERAGE.md` so chapter, importance, lab, study-layer, and review-target coverage can be audited from GitHub.
 - Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, all desktop lab opening paths, and actual lab control interactions.

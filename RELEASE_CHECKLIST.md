@@ -7,6 +7,7 @@ Use this checklist before treating a version as stable.
 - [ ] `npm run verify` passes locally.
 - [ ] `npm run verify:browser` passes locally or the GitHub Actions browser job passes.
 - [ ] `npm run verify:browser:live` passes after GitHub Pages deployment finishes.
+- [ ] `npm run links` passes and reports no stale local links or metadata drift.
 - [ ] `COVERAGE.md` is regenerated and reports `PASS: coverage gate satisfied`.
 - [ ] GitHub Actions `Verify handbook` is green on `main`.
 - [ ] GitHub Pages deployment is green.
