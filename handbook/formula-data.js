@@ -10,6 +10,7 @@ const repairInlineLatex = (value) => {
     .replace(/\u0009ext/g, "\\text")
     .replace(/\u000barphi/g, "\\varphi")
     .replace(/\u000bec/g, "\\vec")
+    .replace(/\u000dho/g, "\\rho")
     .replace(/\u000dight/g, "\\right");
 
   const repairMath = (math) => math.replace(
