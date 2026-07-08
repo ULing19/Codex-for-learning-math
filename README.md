@@ -12,6 +12,9 @@
 [在线访问 / Live Demo](https://uling19.github.io/Codex-for-learning-math/handbook/) ·
 [维护文档 / Maintainer Guide](./handbook/README.md) ·
 [Coverage Report](./COVERAGE.md) ·
+[路线图 / Roadmap](./ROADMAP.md) ·
+[贡献指南 / Contributing](./CONTRIBUTING.md) ·
+[支持反馈 / Support](./SUPPORT.md) ·
 [完整版公式手册](./考研数学一-公式手册-完整版.md) ·
 [冷门技巧公式库](./考研数学一-冷门技巧公式库.md)
 
