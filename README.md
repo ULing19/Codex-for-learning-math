@@ -141,6 +141,7 @@ npm run validate
 npm run docs
 npm run coverage
 npm run health
+npm run doctor
 npm run smoke
 npm run quality
 npm run links
@@ -154,9 +155,18 @@ npm run verify:deploy
 
 Implementation notes:
 
+- `npm run doctor` separates required project problems from optional local tooling gaps.
 - `handbook/browser-smoke.js` runs the real-browser desktop, mobile, lab, keyboard, and live-site checks.
 - `handbook/coverage-report.js` generates `COVERAGE.md` for subject, chapter, lab, and learning-depth coverage.
 - `handbook/project-health.js` generates `PROJECT_HEALTH.md` for release snapshot, verification surface, and governance status.
+
+If `npm run verify:browser` or `npm run verify:browser:live` says Playwright is missing, install it only for the current checkout:
+
+```bash
+npm install --no-save playwright@1.61.1
+```
+
+The application itself still has no runtime package dependency; Playwright is only a local verification tool.
 
 ## Repository Structure
 

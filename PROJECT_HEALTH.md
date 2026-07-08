@@ -63,6 +63,7 @@
 | Area | Command | Coverage |
 | --- | --- | --- |
 | Base verification | `npm run verify` | Syntax, data, generated docs, coverage, smoke, quality, links, hygiene, Pages artifact |
+| Environment doctor | `npm run doctor` | Checks required files, Node version, and optional local tools such as Playwright and GitHub CLI |
 | Browser smoke | `npm run verify:browser` | Real Chromium desktop/mobile/lab interaction checks |
 | Live smoke | `npm run verify:browser:live` | Runs browser smoke against GitHub Pages |
 | Deploy audit | `npm run verify:deploy` | Checks live versioned assets and Pages deployment health |
