@@ -37,7 +37,7 @@ The goal is not only to list formulas, but to make them easier to understand, se
 ## Highlights / 功能亮点
 
 - **494 张公式卡 / 494 cards**：覆盖高数、线代、概率、前置基础、冷门技巧和考场速查。
-- **168 个交互挂载 / 168 demo entries**：用滑块、SVG、曲线、矩阵变换、概率图像辅助理解。
+- **184 个交互挂载 / 184 demo entries**：用滑块、SVG、曲线、矩阵变换、概率图像辅助理解。
 - **15 类实验室 / 15 lab types**：等价无穷小、Taylor、三角变形、Riemann 和、Wallis、矩阵特征值、假设检验等。
 - **内容深度门槛 / Depth gate**：`COVERAGE.md` 记录最短卡片审计目标，当前最低深度分 129，门槛 125。
 - **搜索与高亮 / Search & highlight**：支持标题、章节、标签、解释全文检索。

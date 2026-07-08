@@ -1,6 +1,6 @@
 # 考研数学一交互公式手册
 
-**494 张公式卡 · 250 张必背 · 168 个交互演示 · 静态部署，无需构建**
+**494 张公式卡 · 250 张必背 · 184 个交互演示 · 静态部署，无需构建**
 
 ---
 
@@ -105,7 +105,7 @@ node handbook\validate-data.js
 # 3. 生成文档（从数据重新生成 Markdown，不要手改 Markdown）
 node handbook\generate-docs.js
 
-# 4. 冒烟测试（运行时白屏/DOM 接线检查，必须输出 smoke-ok cards=494 labs=168）
+# 4. 冒烟测试（运行时白屏/DOM 接线检查，必须输出 smoke-ok cards=494 labs=184）
 node handbook\smoke-test.js
 
 # 5. 质量门禁（学习深度层/实验室直达/关键模块覆盖）
@@ -267,9 +267,9 @@ C(
 |---|---|
 | 公式卡总数 | 494 |
 | 必背卡 | 250 |
-| 交互演示卡 | 168 |
+| 交互演示卡 | 184 |
 | 交互模块类型 | 15 种 |
 | 覆盖学科 | 前置基础、高等数学、线性代数、概率论、冷门技巧、附录速查 |
-| smoke-test 基线 | `smoke-ok cards=494 labs=168` |
+| smoke-test 基线 | `smoke-ok cards=494 labs=184` |
 | coverage 深度门槛 | `Minimum card depth score >= 125` |
 | browser-smoke 基线 | `desktop: opened=15, exercised=15` |

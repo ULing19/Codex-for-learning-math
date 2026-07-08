@@ -20,6 +20,16 @@ const allowedInteractiveTypes = new Set([
   "probability-distribution-lab"
 ]);
 
+const labMinimums = new Map([
+  ["equivalent-compare", 3],
+  ["taylor-order-lab", 3],
+  ["trig-transform-lab", 3],
+  ["integral-method-picker", 3],
+  ["matrix-eigen-lab", 3],
+  ["probability-distribution-lab", 3],
+  ["wallis-recursion", 3]
+]);
+
 const requiredKeywords = [
   "华里士",
   "Wallis",
@@ -237,6 +247,13 @@ for (const card of cards) {
     }
   }
   errors.push(...validateLatex(card));
+}
+
+for (const [labType, minimumCount] of labMinimums) {
+  const count = cards.filter((card) => card.interactiveType === labType).length;
+  if (count < minimumCount) {
+    errors.push(`lab-card-count-too-low: ${labType} has ${count}, expected at least ${minimumCount}`);
+  }
 }
 
 for (const group of groups) {
