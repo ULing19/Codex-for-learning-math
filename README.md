@@ -116,7 +116,7 @@ npm run verify
 - `node --check` 只检查 JavaScript 语法。
 - `validate-data.js` 检查公式卡字段完整性、ID 唯一性和交互类型合法性。
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
-- `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, and review-target metrics.
+- `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
 - `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, sidebar scrolling, every desktop lab opening path, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.

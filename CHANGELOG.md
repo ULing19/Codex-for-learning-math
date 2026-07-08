@@ -8,6 +8,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 - Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, and all desktop lab opening paths.
 - Added `npm run verify:browser:live` for running the same browser smoke checks against the GitHub Pages deployment.
 - Expanded the older `taylor-plot`, `tangent-line`, and `matrix-transform` demos with teaching readouts, SVG explanations, and exam-use guidance.
+- Expanded the first 20 shallow review-target formula cards and added a minimum card-depth gate to the coverage report.
 
 ## 2026-07-08
 

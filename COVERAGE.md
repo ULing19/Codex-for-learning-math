@@ -14,6 +14,8 @@
 | Interactive card bindings | 168 |
 | Interactive lab types | 15 |
 | Study layer failures | 0 |
+| Minimum card depth score | 116 |
+| Minimum depth gate | 110 |
 
 ## Subject Coverage
 
@@ -41,20 +43,20 @@
 | Subject | Chapter | Cards | Sections | Must | Common | Trick | Interactive | Short-field cards |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 附录速查 | A. 常用数值附录 | 13 | 12 | 2 | 8 | 0 | 5 | 12 |
-| 概率论 | 第1章 随机事件与概率 | 9 | 6 | 8 | 1 | 0 | 0 | 8 |
-| 概率论 | 第2章 随机变量及其分布 | 10 | 8 | 7 | 3 | 0 | 6 | 10 |
+| 概率论 | 第1章 随机事件与概率 | 9 | 6 | 8 | 1 | 0 | 0 | 7 |
+| 概率论 | 第2章 随机变量及其分布 | 10 | 8 | 7 | 3 | 0 | 6 | 8 |
 | 概率论 | 第3章 多维随机变量 | 9 | 8 | 4 | 4 | 1 | 4 | 6 |
-| 概率论 | 第4章 数字特征 | 9 | 8 | 6 | 2 | 0 | 0 | 8 |
+| 概率论 | 第4章 数字特征 | 9 | 8 | 6 | 2 | 0 | 0 | 7 |
 | 概率论 | 第5章 大数定律与中心极限定理 | 7 | 6 | 4 | 2 | 0 | 4 | 7 |
 | 概率论 | 第6章 数理统计基本概念 | 8 | 6 | 6 | 0 | 0 | 1 | 8 |
-| 概率论 | 第7章 参数估计 | 9 | 7 | 2 | 5 | 0 | 1 | 7 |
-| 概率论 | 第8章 假设检验 | 9 | 9 | 4 | 2 | 0 | 1 | 9 |
+| 概率论 | 第7章 参数估计 | 9 | 7 | 2 | 5 | 0 | 1 | 6 |
+| 概率论 | 第8章 假设检验 | 9 | 9 | 4 | 2 | 0 | 1 | 8 |
 | 高等数学 | 第10章 重积分 | 12 | 11 | 8 | 1 | 2 | 0 | 11 |
 | 高等数学 | 第11章 曲线积分与曲面积分 | 13 | 12 | 8 | 2 | 2 | 0 | 11 |
-| 高等数学 | 第12章 无穷级数 | 18 | 14 | 13 | 3 | 0 | 2 | 16 |
+| 高等数学 | 第12章 无穷级数 | 18 | 14 | 13 | 3 | 0 | 2 | 15 |
 | 高等数学 | 第1章 函数与极限 | 78 | 54 | 40 | 22 | 10 | 48 | 56 |
-| 高等数学 | 第2章 导数与微分 | 22 | 15 | 11 | 7 | 1 | 10 | 21 |
-| 高等数学 | 第3章 微分中值定理与导数应用 | 14 | 12 | 7 | 4 | 1 | 2 | 14 |
+| 高等数学 | 第2章 导数与微分 | 22 | 15 | 11 | 7 | 1 | 10 | 19 |
+| 高等数学 | 第3章 微分中值定理与导数应用 | 14 | 12 | 7 | 4 | 1 | 2 | 13 |
 | 高等数学 | 第4章 不定积分 | 27 | 20 | 13 | 6 | 6 | 3 | 24 |
 | 高等数学 | 第5章 定积分 | 20 | 18 | 7 | 6 | 6 | 6 | 18 |
 | 高等数学 | 第6章 定积分应用 | 10 | 9 | 5 | 3 | 0 | 2 | 9 |
@@ -62,11 +64,11 @@
 | 高等数学 | 第8章 向量代数与空间解析几何 | 8 | 7 | 5 | 3 | 0 | 0 | 6 |
 | 高等数学 | 第9章 多元函数微分法及应用 | 14 | 9 | 11 | 3 | 0 | 1 | 12 |
 | 冷门技巧 | 冷门但高收益技巧库 | 16 | 8 | 0 | 0 | 5 | 1 | 13 |
-| 前置基础 | 0. 前置基础 | 96 | 65 | 43 | 31 | 11 | 60 | 64 |
-| 线性代数 | 第1章 行列式 | 8 | 6 | 5 | 2 | 1 | 0 | 7 |
-| 线性代数 | 第2章 矩阵及其运算 | 9 | 9 | 3 | 3 | 1 | 2 | 9 |
-| 线性代数 | 第3章 初等变换与线性方程组 | 8 | 8 | 5 | 1 | 0 | 0 | 7 |
-| 线性代数 | 第4章 向量组线性相关性 | 9 | 9 | 5 | 2 | 0 | 0 | 8 |
+| 前置基础 | 0. 前置基础 | 96 | 65 | 43 | 31 | 11 | 60 | 63 |
+| 线性代数 | 第1章 行列式 | 8 | 6 | 5 | 2 | 1 | 0 | 5 |
+| 线性代数 | 第2章 矩阵及其运算 | 9 | 9 | 3 | 3 | 1 | 2 | 8 |
+| 线性代数 | 第3章 初等变换与线性方程组 | 8 | 8 | 5 | 1 | 0 | 0 | 6 |
+| 线性代数 | 第4章 向量组线性相关性 | 9 | 9 | 5 | 2 | 0 | 0 | 5 |
 | 线性代数 | 第5章 相似矩阵及二次型 | 13 | 11 | 7 | 3 | 0 | 9 | 12 |
 | 线性代数 | 第6章 线性空间与线性变换【拓展】 | 3 | 3 | 1 | 0 | 0 | 0 | 2 |
 
@@ -108,12 +110,12 @@
 
 | Field | Min | P05 | Median | Average | Cards < 18 chars | Missing |
 | --- | --- | --- | --- | --- | --- | --- |
-| conditions | 6 | 10 | 15 | 16.1 | 364 | 0 |
-| intuition | 11 | 15 | 23 | 24.1 | 64 | 0 |
-| howToUse | 13 | 18 | 29 | 31.9 | 24 | 0 |
-| miniProof | 6 | 13 | 25 | 28.7 | 104 | 0 |
-| example | 10 | 19 | 37 | 39.1 | 18 | 0 |
-| mistakes | 10 | 15 | 25 | 27.1 | 57 | 0 |
+| conditions | 6 | 10 | 16 | 18 | 344 | 0 |
+| intuition | 11 | 15 | 23 | 24.7 | 57 | 0 |
+| howToUse | 15 | 18 | 29 | 32.9 | 18 | 0 |
+| miniProof | 11 | 14 | 26 | 31.1 | 92 | 0 |
+| example | 12 | 21 | 38 | 40.6 | 11 | 0 |
+| mistakes | 10 | 16 | 25 | 29.6 | 45 | 0 |
 
 ## Review Targets
 
@@ -121,26 +123,26 @@ These are the shortest cards by combined study-field length. They are not necess
 
 | Card ID | Subject | Chapter | Title | Depth score | Short fields |
 | --- | --- | --- | --- | --- | --- |
-| linear4-vector-group | 线性代数 | 第4章 向量组线性相关性 | 线性相关、秩、基 | 94 | conditions, howToUse, miniProof, example, mistakes |
-| prob8-testing | 概率论 | 第8章 假设检验 | 常见检验统计量 | 95 | conditions, miniProof, example, mistakes |
-| calc10-center-of-mass | 高等数学 | 第10章 重积分 | 重积分质心与转动惯量 | 95 | conditions, intuition, example, mistakes |
-| calc12-series-tests | 高等数学 | 第12章 无穷级数 | 常数项级数判别法 | 100 | conditions, intuition, miniProof, mistakes |
-| linear1-determinant | 线性代数 | 第1章 行列式 | 行列式性质与展开 | 101 | conditions, howToUse, example, mistakes |
-| prob7-estimation | 概率论 | 第7章 参数估计 | 矩估计、极大似然、置信区间 | 102 | conditions, intuition, example |
-| linear3-systems | 线性代数 | 第3章 初等变换与线性方程组 | 秩与线性方程组解结构 | 104 | conditions, howToUse, miniProof, mistakes |
-| linear2-matrix-rank | 线性代数 | 第2章 矩阵及其运算 | 矩阵运算、逆与秩 | 109 | conditions, howToUse, miniProof, mistakes |
-| pre-common-geometry | 前置基础 | 0. 前置基础 | 平面解析几何常用公式 | 109 | conditions, howToUse, miniProof, mistakes |
-| calc4-basic-integrals | 高等数学 | 第4章 不定积分 | 基本不定积分表 | 110 | conditions, intuition, miniProof |
-| calc2-derivative-table | 高等数学 | 第2章 导数与微分 | 基本导数公式表 | 111 | conditions, intuition, mistakes |
-| calc2-differentiability-continuity | 高等数学 | 第2章 导数与微分 | 可导、可微、连续关系 | 111 | conditions, miniProof |
-| prob2-density-cdf-properties | 概率论 | 第2章 随机变量及其分布 | 分布函数与密度性质 | 112 | conditions, intuition, mistakes |
-| linear1-row-column-operations | 线性代数 | 第1章 行列式 | 行列式行列变换规则 | 113 | conditions, example |
-| prob1-probability | 概率论 | 第1章 随机事件与概率 | 条件概率、全概率、Bayes | 114 | conditions, miniProof, mistakes |
-| linear4-subspace-criteria | 线性代数 | 第4章 向量组线性相关性 | 子空间判别与生成空间 | 114 | conditions, intuition, mistakes |
-| prob4-linear-combination-moments | 概率论 | 第4章 数字特征 | 线性组合的期望、方差、协方差 | 115 | conditions, miniProof |
-| linear4-linear-dependence-tricks | 线性代数 | 第4章 向量组线性相关性 | 向量组线性相关判别技巧 | 115 | conditions, miniProof, example |
-| calc3-monotone-convex | 高等数学 | 第3章 微分中值定理与导数应用 | 单调、凹凸、极值判别 | 116 | conditions, intuition, miniProof |
-| prob2-distributions | 概率论 | 第2章 随机变量及其分布 | 常见分布公式表 | 116 | conditions, intuition, howToUse |
+| linear5-diagonalizable-criteria | 线性代数 | 第5章 相似矩阵及二次型 | 可对角化判别全表 | 116 | conditions, example |
+| linear6-equivalence-similarity-congruence | 线性代数 | 第6章 线性空间与线性变换【拓展】 | 等价、相似、合同对比 | 116 | conditions, example, mistakes |
+| prob4-covariance-properties | 概率论 | 第4章 数字特征 | 协方差性质全表 | 116 | miniProof |
+| prob5-clt | 概率论 | 第5章 大数定律与中心极限定理 | 大数定律与中心极限定理 | 117 | conditions, mistakes |
+| calc2-one-sided-derivative | 高等数学 | 第2章 导数与微分 | 左右导数与尖点判别 | 117 | conditions, howToUse, miniProof |
+| linear3-general-solution-structure | 线性代数 | 第3章 初等变换与线性方程组 | 齐次与非齐次通解结构 | 117 | conditions, miniProof |
+| calc5-even-odd-integral | 高等数学 | 第5章 定积分 | 奇偶函数定积分 | 118 | conditions, howToUse, miniProof |
+| calc8-projection-vector | 高等数学 | 第8章 向量代数与空间解析几何 | 向量投影与方向余弦 | 118 | conditions, howToUse |
+| calc4-trig-basic-integrals-full | 高等数学 | 第4章 不定积分 | 三角函数基础积分全表 | 118 | intuition, miniProof |
+| calc9-multivariable-derivative | 高等数学 | 第9章 多元函数微分法及应用 | 偏导、全微分、梯度 | 119 | conditions, intuition, howToUse, miniProof |
+| calc6-centroid-work | 高等数学 | 第6章 定积分应用 | 质心、功、水压力 | 119 | conditions, miniProof |
+| linear2-trace-eigen | 线性代数 | 第2章 矩阵及其运算 | 迹、行列式与特征值关系 | 120 | conditions, example |
+| prob7-confidence-intervals | 概率论 | 第7章 参数估计 | 常见置信区间公式表 | 120 | conditions |
+| prob1-conditional-independence | 概率论 | 第1章 随机事件与概率 | 条件概率乘法链式公式 | 120 | conditions, miniProof |
+| calc1-equivalent-operations | 高等数学 | 第1章 函数与极限 | 等价无穷小的运算规则 | 121 | conditions, miniProof, mistakes |
+| calc6-pappus | 高等数学 | 第6章 定积分应用 | Pappus 质心定理 | 122 | conditions |
+| linear2-elementary-matrices | 线性代数 | 第2章 矩阵及其运算 | 初等矩阵与初等变换 | 122 | conditions, miniProof, mistakes |
+| calc6-applications | 高等数学 | 第6章 定积分应用 | 面积、体积、弧长公式 | 123 | conditions, intuition, miniProof, mistakes |
+| calc11-stokes-circulation | 高等数学 | 第11章 曲线积分与曲面积分 | Stokes 公式环流模板 | 123 | conditions, example |
+| prob8-rejection-regions | 概率论 | 第8章 假设检验 | 单侧双侧拒绝域速查 | 123 | conditions |
 
 ## Gate Result
 

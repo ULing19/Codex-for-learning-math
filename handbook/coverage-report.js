@@ -85,6 +85,7 @@ function buildReport() {
   const { cards, groups, references } = loadFormulaData();
   const errors = [];
   const fieldNames = ['conditions', 'intuition', 'howToUse', 'miniProof', 'example', 'mistakes'];
+  const minimumDepthScore = 110;
   const importanceOrder = ['必背', '常用', '技巧', '了解', '拓展'];
   const requiredSubjects = ['前置基础', '高等数学', '线性代数', '概率论', '冷门技巧', '附录速查'];
   const expectedChapterMinimums = new Map([
@@ -206,13 +207,19 @@ function buildReport() {
     return [type, count, samples];
   });
 
-  const shortestCards = cards
+  const depthEntries = cards
     .map((card) => ({
       card,
       total: fieldNames.reduce((sum, field) => sum + Math.min(fieldLength(card, field), 120), 0),
       shortFields: fieldNames.filter((field) => fieldLength(card, field) < 18)
     }))
-    .sort((left, right) => left.total - right.total)
+    .sort((left, right) => left.total - right.total);
+  const minDepthScore = depthEntries[0]?.total || 0;
+  if (minDepthScore < minimumDepthScore) {
+    errors.push(`Minimum card depth score should be at least ${minimumDepthScore}, got ${minDepthScore} (${depthEntries[0]?.card.id})`);
+  }
+
+  const shortestCards = depthEntries
     .slice(0, 20)
     .map((entry) => [
       entry.card.id,
@@ -241,7 +248,9 @@ function buildReport() {
         ['Formula groups', groups.length],
         ['Interactive card bindings', interactiveCards.length],
         ['Interactive lab types', interactiveCounts.size],
-        ['Study layer failures', studyFailureCount]
+        ['Study layer failures', studyFailureCount],
+        ['Minimum card depth score', minDepthScore],
+        ['Minimum depth gate', minimumDepthScore]
       ]
     ),
     '',
