@@ -1,5 +1,7 @@
 .claude/
+.codex-temp-clones/
 .playwright-cli/
+.pages-artifact/
 node_modules/
 .DS_Store
 Thumbs.db

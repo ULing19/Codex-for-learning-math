@@ -96,6 +96,7 @@ node --check handbook\quality-check.js
 node --check handbook\coverage-report.js
 node --check handbook\browser-smoke.js
 node --check handbook\link-check.js
+node --check handbook\prepare-pages.js
 
 # 2. 数据校验（检查公式卡 id 唯一、必填字段、schema 合规）
 node handbook\validate-data.js
@@ -115,12 +116,15 @@ node handbook\coverage-report.js
 # 7. 本地链接与项目元数据检查
 node handbook\link-check.js
 
-# 8. 真实浏览器验收（可选本地运行；CI 会自动运行）
+# 8. GitHub Pages 静态产物打包
+node handbook\prepare-pages.js
+
+# 9. 真实浏览器验收（可选本地运行；CI 会自动运行）
 npm install --no-save playwright@1.61.1
 npx playwright install chromium
 npm run verify:browser
 
-# 9. Online GitHub Pages browser acceptance
+# 10. Online GitHub Pages browser acceptance
 npm run verify:browser:live
 ```
 
@@ -131,6 +135,7 @@ npm run verify:browser:live
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
 - `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
+- `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
 - `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, cache-busted `app-version` assets, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 
@@ -233,12 +238,13 @@ C(
 ## 协作规范
 
 1. **改前先跑 baseline**：修改任何文件前，先运行一次 `node handbook\smoke-test.js`，确认基线正常
-2. **每阶段结束必须完整验收**：跑完所有 8 条验收命令，不允许只看语法检查
+2. **每阶段结束必须完整验收**：跑完维护文档列出的全部验收命令，不允许只看语法检查
 3. **不要手改生成的 Markdown**：修改公式内容后运行 `node handbook\generate-docs.js` 重新生成
 4. **大规模重构 UI 时同步更新 smoke-test**：如果新增/删除 HTML 中的 `id`，必须同步更新 `smoke-test.js` 的 `requiredIds`
 5. **不要引入构建工具**：保持 HTML + CSS + Vanilla JS + MathJax，不引入 React/Vite/Webpack 等，除非先给出迁移计划和收益说明
 6. **公式数据 schema 不可随意扩展**：新增字段前需确认 `validate-data.js` 和 `generate-docs.js` 都能处理
 7. **发布必须同步版本号**：改动线上资源时同步更新 `package.json`、`index.html` 的 `app-version` 和本地资源 `?v=`，避免 GitHub Pages 或浏览器缓存旧实验室脚本
+8. **Pages 使用 workflow 部署**：保持 `.github/workflows/pages.yml`、`pages:prepare` 和 GitHub Pages `build_type=workflow` 对齐，避免回退到 legacy branch build
 
 ---
 

@@ -8,10 +8,11 @@ Use this checklist before treating a version as stable.
 - [ ] `npm run verify:browser` passes locally or the GitHub Actions browser job passes.
 - [ ] `npm run verify:browser:live` passes after GitHub Pages deployment finishes.
 - [ ] `npm run links` passes and reports no stale local links or metadata drift.
+- [ ] `npm run pages:prepare` creates `.pages-artifact` with `.nojekyll`, top-level docs, and the `handbook/` static runtime.
 - [ ] Live browser smoke confirms `app-version` and local static asset `?v=` values match `package.json`.
 - [ ] `COVERAGE.md` is regenerated and reports `PASS: coverage gate satisfied`.
 - [ ] GitHub Actions `Verify handbook` is green on `main`.
-- [ ] GitHub Pages deployment is green.
+- [ ] GitHub Actions `Deploy Pages` is green and GitHub Pages is configured for workflow deployment.
 - [ ] The live site opens at `https://uling19.github.io/Codex-for-learning-math/handbook/`.
 - [ ] Lab overview opens a lab directly into a mounted demo on desktop and mobile.
 - [ ] MathJax reports zero `mjx-merror` nodes in browser smoke.

@@ -5,6 +5,7 @@ const assert = require("assert");
 const root = path.resolve(__dirname, "..");
 const handbookRoot = __dirname;
 const errors = [];
+const ignoredDirs = new Set([".git", ".claude", ".pages-artifact", ".playwright-cli", "node_modules"]);
 
 const externalPattern = /^(?:https?:|mailto:|data:|javascript:)/i;
 
@@ -18,7 +19,7 @@ function toPosix(relativePath) {
 
 function listFiles(dir, predicate, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name === ".git" || entry.name === "node_modules") continue;
+    if (ignoredDirs.has(entry.name)) continue;
     const filePath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       listFiles(filePath, predicate, out);
@@ -133,6 +134,7 @@ function checkPackageMetadata() {
     "smoke",
     "quality",
     "links",
+    "pages:prepare",
     "verify",
     "verify:browser",
     "verify:browser:live"
@@ -141,12 +143,15 @@ function checkPackageMetadata() {
     assert(pkg.scripts?.[script], `package.json should define npm script ${script}`);
   }
   assert(pkg.scripts["check:syntax"].includes("handbook/link-check.js"), "check:syntax should include link-check.js");
+  assert(pkg.scripts["check:syntax"].includes("handbook/prepare-pages.js"), "check:syntax should include prepare-pages.js");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
+  assert(pkg.scripts.verify.includes("npm run pages:prepare"), "verify should include npm run pages:prepare");
   return pkg;
 }
 
 function checkRequiredProjectFiles() {
   const requiredFiles = [
+    ".github/workflows/pages.yml",
     ".github/workflows/verify.yml",
     ".nojekyll",
     ".nvmrc",
@@ -162,6 +167,7 @@ function checkRequiredProjectFiles() {
     "handbook/app.js",
     "handbook/styles.css",
     "handbook/formula-data.js",
+    "handbook/prepare-pages.js",
     "handbook/study-layer.js",
     "handbook/preview.png"
   ];
