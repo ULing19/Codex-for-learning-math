@@ -3,6 +3,8 @@
 > 考研数学一交互公式手册：把公式、理解、例题、易错点和可视化演示放进一个纯静态学习工作台。<br>
 > Interactive Math I formula handbook for postgraduate entrance exam review, built as a searchable static learning workspace.
 
+[![Verify handbook](https://github.com/ULing19/Codex-for-learning-math/actions/workflows/verify.yml/badge.svg)](https://github.com/ULing19/Codex-for-learning-math/actions/workflows/verify.yml)
+[![Deploy Pages](https://github.com/ULing19/Codex-for-learning-math/actions/workflows/pages.yml/badge.svg)](https://github.com/ULing19/Codex-for-learning-math/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Static Site](https://img.shields.io/badge/site-GitHub%20Pages-2ea44f.svg)](https://uling19.github.io/Codex-for-learning-math/handbook/)
 [![No Build](https://img.shields.io/badge/build-none-success.svg)](#quick-start--快速开始)
