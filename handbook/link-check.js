@@ -84,6 +84,31 @@ function checkHtmlLinks() {
   return htmlFiles.length;
 }
 
+function checkVersionedHtmlAssets(packageVersion) {
+  const indexPath = path.join(handbookRoot, "index.html");
+  const text = readUtf8(indexPath);
+  const expectedVersion = `v=${packageVersion}`;
+  const versionMeta = text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']\s*\/?>/i);
+  if (!versionMeta) {
+    errors.push("html-version: handbook/index.html is missing meta name=\"app-version\"");
+  } else if (versionMeta[1] !== packageVersion) {
+    errors.push(`html-version: app-version should be ${packageVersion}, got ${versionMeta[1]}`);
+  }
+
+  const versionedTargets = [
+    ...text.matchAll(/<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']([^"']+)["'][^>]*>/gi),
+    ...text.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi),
+    ...text.matchAll(/<meta\b[^>]*\bproperty=["']og:image["'][^>]*\bcontent=["']([^"']+)["'][^>]*>/gi)
+  ].map((match) => match[1])
+    .filter((target) => target.startsWith("./"));
+
+  for (const target of versionedTargets) {
+    if (!target.includes(`?${expectedVersion}`) && !target.includes(`&${expectedVersion}`)) {
+      errors.push(`html-version: ${target} should include ?${expectedVersion}`);
+    }
+  }
+}
+
 function checkPackageMetadata() {
   const pkg = JSON.parse(readUtf8(path.join(root, "package.json")));
   assert.strictEqual(pkg.private, false, "package.json should be publish-safe/open-source marked with private=false");
@@ -117,6 +142,7 @@ function checkPackageMetadata() {
   }
   assert(pkg.scripts["check:syntax"].includes("handbook/link-check.js"), "check:syntax should include link-check.js");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
+  return pkg;
 }
 
 function checkRequiredProjectFiles() {
@@ -148,7 +174,8 @@ function checkRequiredProjectFiles() {
 function main() {
   const markdownFiles = checkMarkdownLinks();
   const htmlFiles = checkHtmlLinks();
-  checkPackageMetadata();
+  const pkg = checkPackageMetadata();
+  checkVersionedHtmlAssets(pkg.version);
   checkRequiredProjectFiles();
   if (errors.length) {
     for (const error of errors) console.error(error);

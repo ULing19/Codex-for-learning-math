@@ -14,7 +14,7 @@
 | Interactive card bindings | 168 |
 | Interactive lab types | 15 |
 | Study layer failures | 0 |
-| Minimum card depth score | 129 |
+| Minimum card depth score | 131 |
 | Minimum depth gate | 125 |
 
 ## Subject Coverage
@@ -47,29 +47,29 @@
 | 概率论 | 第2章 随机变量及其分布 | 10 | 8 | 7 | 3 | 0 | 6 | 8 |
 | 概率论 | 第3章 多维随机变量 | 9 | 8 | 4 | 4 | 1 | 4 | 5 |
 | 概率论 | 第4章 数字特征 | 9 | 8 | 6 | 2 | 0 | 0 | 4 |
-| 概率论 | 第5章 大数定律与中心极限定理 | 7 | 6 | 4 | 2 | 0 | 4 | 6 |
+| 概率论 | 第5章 大数定律与中心极限定理 | 7 | 6 | 4 | 2 | 0 | 4 | 5 |
 | 概率论 | 第6章 数理统计基本概念 | 8 | 6 | 6 | 0 | 0 | 1 | 7 |
 | 概率论 | 第7章 参数估计 | 9 | 7 | 2 | 5 | 0 | 1 | 5 |
-| 概率论 | 第8章 假设检验 | 9 | 9 | 4 | 2 | 0 | 1 | 7 |
+| 概率论 | 第8章 假设检验 | 9 | 9 | 4 | 2 | 0 | 1 | 6 |
 | 高等数学 | 第10章 重积分 | 12 | 11 | 8 | 1 | 2 | 0 | 11 |
 | 高等数学 | 第11章 曲线积分与曲面积分 | 13 | 12 | 8 | 2 | 2 | 0 | 9 |
 | 高等数学 | 第12章 无穷级数 | 18 | 14 | 13 | 3 | 0 | 2 | 14 |
 | 高等数学 | 第1章 函数与极限 | 78 | 54 | 40 | 22 | 10 | 48 | 54 |
-| 高等数学 | 第2章 导数与微分 | 22 | 15 | 11 | 7 | 1 | 10 | 17 |
-| 高等数学 | 第3章 微分中值定理与导数应用 | 14 | 12 | 7 | 4 | 1 | 2 | 13 |
+| 高等数学 | 第2章 导数与微分 | 22 | 15 | 11 | 7 | 1 | 10 | 16 |
+| 高等数学 | 第3章 微分中值定理与导数应用 | 14 | 12 | 7 | 4 | 1 | 2 | 11 |
 | 高等数学 | 第4章 不定积分 | 27 | 20 | 13 | 6 | 6 | 3 | 22 |
 | 高等数学 | 第5章 定积分 | 20 | 18 | 7 | 6 | 6 | 6 | 15 |
 | 高等数学 | 第6章 定积分应用 | 10 | 9 | 5 | 3 | 0 | 2 | 6 |
 | 高等数学 | 第7章 微分方程 | 13 | 11 | 10 | 0 | 1 | 0 | 11 |
 | 高等数学 | 第8章 向量代数与空间解析几何 | 8 | 7 | 5 | 3 | 0 | 0 | 5 |
 | 高等数学 | 第9章 多元函数微分法及应用 | 14 | 9 | 11 | 3 | 0 | 1 | 11 |
-| 冷门技巧 | 冷门但高收益技巧库 | 16 | 8 | 0 | 0 | 5 | 1 | 13 |
+| 冷门技巧 | 冷门但高收益技巧库 | 16 | 8 | 0 | 0 | 5 | 1 | 11 |
 | 前置基础 | 0. 前置基础 | 96 | 65 | 43 | 31 | 11 | 60 | 62 |
 | 线性代数 | 第1章 行列式 | 8 | 6 | 5 | 2 | 1 | 0 | 3 |
-| 线性代数 | 第2章 矩阵及其运算 | 9 | 9 | 3 | 3 | 1 | 2 | 6 |
-| 线性代数 | 第3章 初等变换与线性方程组 | 8 | 8 | 5 | 1 | 0 | 0 | 4 |
-| 线性代数 | 第4章 向量组线性相关性 | 9 | 9 | 5 | 2 | 0 | 0 | 4 |
-| 线性代数 | 第5章 相似矩阵及二次型 | 13 | 11 | 7 | 3 | 0 | 9 | 11 |
+| 线性代数 | 第2章 矩阵及其运算 | 9 | 9 | 3 | 3 | 1 | 2 | 5 |
+| 线性代数 | 第3章 初等变换与线性方程组 | 8 | 8 | 5 | 1 | 0 | 0 | 3 |
+| 线性代数 | 第4章 向量组线性相关性 | 9 | 9 | 5 | 2 | 0 | 0 | 3 |
+| 线性代数 | 第5章 相似矩阵及二次型 | 13 | 11 | 7 | 3 | 0 | 9 | 9 |
 | 线性代数 | 第6章 线性空间与线性变换【拓展】 | 3 | 3 | 1 | 0 | 0 | 0 | 0 |
 
 ## Interactive Lab Coverage
@@ -110,12 +110,12 @@
 
 | Field | Min | P05 | Median | Average | Cards < 18 chars | Missing |
 | --- | --- | --- | --- | --- | --- | --- |
-| conditions | 6 | 10 | 16 | 20.6 | 309 | 0 |
-| intuition | 11 | 16 | 24 | 26.4 | 47 | 0 |
-| howToUse | 15 | 18 | 32 | 35.1 | 13 | 0 |
-| miniProof | 11 | 14 | 28 | 35 | 75 | 0 |
-| example | 13 | 22 | 40 | 44 | 3 | 0 |
-| mistakes | 10 | 16 | 27 | 31.6 | 35 | 0 |
+| conditions | 6 | 10 | 16 | 21.3 | 298 | 0 |
+| intuition | 11 | 16 | 24 | 26.8 | 46 | 0 |
+| howToUse | 15 | 18 | 32 | 36 | 12 | 0 |
+| miniProof | 11 | 14 | 29 | 36.5 | 73 | 0 |
+| example | 15 | 23 | 41 | 45.1 | 2 | 0 |
+| mistakes | 10 | 16 | 27 | 32.4 | 34 | 0 |
 
 ## Review Targets
 
@@ -123,26 +123,26 @@ These are the shortest cards by combined study-field length. They are not necess
 
 | Card ID | Subject | Chapter | Title | Depth score | Short fields |
 | --- | --- | --- | --- | --- | --- |
-| linear5-diagonalization-criteria | 线性代数 | 第5章 相似矩阵及二次型 | 相似对角化判别全表 | 129 | conditions |
-| linear5-quadratic-form-methods | 线性代数 | 第5章 相似矩阵及二次型 | 二次型化标准形三法 | 129 | conditions |
-| linear3-solution-criteria | 线性代数 | 第3章 初等变换与线性方程组 | 齐次/非齐次方程组完整判定 | 131 | conditions |
-| calc3-rolle-root-count | 高等数学 | 第3章 微分中值定理与导数应用 | Rolle 定理与根的个数估计 | 131 | conditions |
-| calc2-elasticity-relative-change | 高等数学 | 第2章 导数与微分 | 相对变化率与弹性 | 131 | conditions, miniProof |
 | calc3-maximum-minimum-closed | 高等数学 | 第3章 微分中值定理与导数应用 | 闭区间最值计算模板 | 131 | conditions |
-| calc3-concavity-inflection | 高等数学 | 第3章 微分中值定理与导数应用 | 凹凸性与拐点判别 | 131 | conditions, intuition, miniProof |
-| cold-total-expectation | 冷门技巧 | 冷门但高收益技巧库 | 全期望与全方差 | 131 | mistakes |
-| linear4-linear-dependence-route-map | 线性代数 | 第4章 向量组线性相关性 | 向量组线性相关判定路线图 | 131 | conditions, example |
-| linear2-rank-inequalities | 线性代数 | 第2章 矩阵及其运算 | 秩的不等式与分块公式 | 132 | conditions |
 | calc8-common-surfaces | 高等数学 | 第8章 向量代数与空间解析几何 | 常见二次曲面标准方程 | 132 | conditions, mistakes |
 | prob4-conditional-expectation | 概率论 | 第4章 数字特征 | 条件期望公式表 | 132 | conditions |
-| prob8-variance-test | 概率论 | 第8章 假设检验 | 正态总体方差检验 | 132 | conditions, howToUse |
-| cold-cayley-hamilton | 冷门技巧 | 冷门但高收益技巧库 | Cayley-Hamilton 定理 | 132 | conditions |
-| prob5-lln-forms | 概率论 | 第5章 大数定律与中心极限定理 | 大数定律常用形式 | 132 | conditions |
 | appendix-common-chi-square-critical-lite | 附录速查 | A. 常用数值附录 | 常用 χ² 分布临界值粗表 | 132 | conditions |
 | calc4-integral-by-parts-table | 高等数学 | 第4章 不定积分 | 分部积分选 u 优先级 | 133 | conditions, miniProof |
 | calc10-triple-integral-types | 高等数学 | 第10章 重积分 | 三重积分区域类型与换序 | 133 | conditions, mistakes |
 | cold-jensen | 冷门技巧 | 冷门但高收益技巧库 | Jensen 不等式 | 133 | conditions |
 | calc1-high-order-log-exp | 高等数学 | 第1章 函数与极限 | 指数对数高阶展开常用差 | 133 | conditions, mistakes |
+| calc2-derivative-trig-complete | 高等数学 | 第2章 导数与微分 | 三角函数导数完整表 | 133 | conditions, miniProof |
+| linear2-invertible-equivalents | 线性代数 | 第2章 矩阵及其运算 | 矩阵可逆等价条件全表 | 133 | conditions |
+| pre-trig-special-angle-master-table | 前置基础 | 0. 前置基础 | 常用特殊角完整表 | 133 | conditions, intuition |
+| pre-trig-quadrant-reference-angle-table | 前置基础 | 0. 前置基础 | 象限符号与参考角表 | 133 | conditions, intuition, miniProof |
+| pre-trig-fourth-sixth-power-averages | 前置基础 | 0. 前置基础 | 四次六次三角幂平均 | 133 | conditions |
+| appendix-common-normal-quantiles | 附录速查 | A. 常用数值附录 | 常用正态分位数 | 133 | conditions, intuition, miniProof |
+| prob2-transform-density | 概率论 | 第2章 随机变量及其分布 | 一维随机变量函数分布 | 134 | conditions, mistakes |
+| pre-trig-cofunction-identities-expanded | 前置基础 | 0. 前置基础 | 余函数与互余角公式 | 134 | conditions |
+| appendix-common-square-cube-values | 附录速查 | A. 常用数值附录 | 常用平方立方与根号近似 | 134 | conditions, miniProof, mistakes |
+| calc6-surface-area | 高等数学 | 第6章 定积分应用 | 旋转曲面面积公式 | 135 | conditions, mistakes |
+| calc12-taylor-series-table | 高等数学 | 第12章 无穷级数 | 常用 Taylor/Maclaurin 展开全表 | 135 | conditions |
+| linear2-sherman-morrison | 线性代数 | 第2章 矩阵及其运算 | 矩阵行列式引理与 Sherman-Morrison | 135 | conditions, intuition |
 
 ## Gate Result
 

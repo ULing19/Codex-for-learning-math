@@ -13,6 +13,8 @@ try {
 }
 
 const root = __dirname;
+const packageJson = require(path.join(root, "..", "package.json"));
+const expectedAppVersion = packageJson.version;
 const mime = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -238,13 +240,25 @@ async function runViewport(browser, baseUrl, viewport) {
     mathErrors: document.querySelectorAll("mjx-merror").length,
     hasStudyLayer: Boolean(window.FORMULA_STUDY_LAYER?.buildStudyLayer),
     mathJaxLoaded: Boolean(window.MathJax?.typesetPromise),
-    bottomNavVisible: getComputedStyle(document.querySelector(".bottom-nav")).display !== "none"
+    bottomNavVisible: getComputedStyle(document.querySelector(".bottom-nav")).display !== "none",
+    appVersion: document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "",
+    scriptSources: [...document.scripts].map((script) => script.src).filter(Boolean),
+    stylesheetHrefs: [...document.querySelectorAll('link[rel="stylesheet"]')].map((link) => link.href),
+    ogImage: document.querySelector('meta[property="og:image"]')?.getAttribute("content") || ""
   }));
 
   assert.strictEqual(initial.cards, 494, `${viewport.name}: should render 494 formula cards`);
   assert.strictEqual(initial.studyBlocks, 494, `${viewport.name}: should render one study layer per card`);
   assert.strictEqual(initial.mathErrors, 0, `${viewport.name}: MathJax should not report formula errors`);
   assert.strictEqual(initial.hasStudyLayer, true, `${viewport.name}: study-layer.js should load`);
+  assert.strictEqual(initial.appVersion, expectedAppVersion, `${viewport.name}: app-version should match package.json`);
+  for (const source of initial.scriptSources.filter((source) => source.startsWith(baseUrl))) {
+    assert(source.includes(`v=${expectedAppVersion}`), `${viewport.name}: local script should be versioned: ${source}`);
+  }
+  for (const href of initial.stylesheetHrefs.filter((href) => href.startsWith(baseUrl))) {
+    assert(href.includes(`v=${expectedAppVersion}`), `${viewport.name}: local stylesheet should be versioned: ${href}`);
+  }
+  assert(initial.ogImage.includes(`v=${expectedAppVersion}`), `${viewport.name}: og:image should be versioned`);
 
   const accessibility = await page.evaluate(() => {
     const visible = (element) => {

@@ -130,8 +130,8 @@ npm run verify:browser:live
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
-- `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, and package metadata drift from entering `main`.
-- `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
+- `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
+- `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, cache-busted `app-version` assets, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---
@@ -238,6 +238,7 @@ C(
 4. **大规模重构 UI 时同步更新 smoke-test**：如果新增/删除 HTML 中的 `id`，必须同步更新 `smoke-test.js` 的 `requiredIds`
 5. **不要引入构建工具**：保持 HTML + CSS + Vanilla JS + MathJax，不引入 React/Vite/Webpack 等，除非先给出迁移计划和收益说明
 6. **公式数据 schema 不可随意扩展**：新增字段前需确认 `validate-data.js` 和 `generate-docs.js` 都能处理
+7. **发布必须同步版本号**：改动线上资源时同步更新 `package.json`、`index.html` 的 `app-version` 和本地资源 `?v=`，避免 GitHub Pages 或浏览器缓存旧实验室脚本
 
 ---
 
