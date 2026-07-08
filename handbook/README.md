@@ -52,6 +52,14 @@ handbook/index.html
 
 ### 本地 HTTP 服务（推荐，避免某些浏览器的 file:// 限制）
 
+推荐运行时：
+
+```text
+Node.js >= 24
+```
+
+仓库包含 `.nvmrc` 和 `package.json` 的 `engines.node`，用于让本地验收与 GitHub Actions 的 Node 24 环境保持一致。
+
 ```bash
 # 方式一（需 Node.js）
 npx serve handbook
@@ -117,7 +125,7 @@ npm run verify:browser:live
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
-- `browser-smoke.js` starts a local static server by default and verifies all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
+- `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

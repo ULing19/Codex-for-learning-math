@@ -287,6 +287,28 @@ async function runViewport(browser, baseUrl, viewport) {
   const searchBlurred = await page.evaluate(() => document.activeElement?.id !== "searchInput");
   assert.strictEqual(searchBlurred, true, `${viewport.name}: Esc should blur search input`);
 
+  if (!viewport.mobile) {
+    const desktopSidebar = await page.evaluate(() => {
+      const sidebar = document.querySelector("#sidebar");
+      const nav = document.querySelector("#chapterNav");
+      const buttons = [...nav.querySelectorAll("button")];
+      const lastButton = buttons.at(-1);
+      nav.scrollTop = nav.scrollHeight;
+      const navRect = nav.getBoundingClientRect();
+      const lastRect = lastButton.getBoundingClientRect();
+      return {
+        sidebarVisible: getComputedStyle(sidebar).display !== "none" && sidebar.getBoundingClientRect().width > 0,
+        buttonCount: buttons.length,
+        scrollableOrFullyVisible: nav.scrollHeight > nav.clientHeight || nav.scrollHeight <= nav.clientHeight + 1,
+        lastVisibleAfterScroll: lastRect.bottom <= navRect.bottom + 1 && lastRect.top >= navRect.top - 1
+      };
+    });
+    assert.strictEqual(desktopSidebar.sidebarVisible, true, `${viewport.name}: desktop sidebar should be visible`);
+    assert(desktopSidebar.buttonCount >= 29, `${viewport.name}: sidebar should expose all chapter buttons`);
+    assert.strictEqual(desktopSidebar.scrollableOrFullyVisible, true, `${viewport.name}: chapter nav should be scrollable or fully visible`);
+    assert.strictEqual(desktopSidebar.lastVisibleAfterScroll, true, `${viewport.name}: last desktop chapter should be visible after scroll`);
+  }
+
   if (viewport.mobile) {
     await page.click("#mobileMenuBtn");
     await page.waitForSelector(".sidebar.open", { timeout: 10000 });

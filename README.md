@@ -79,6 +79,14 @@ The goal is not only to list formulas, but to make them easier to understand, se
 
 ## Quick Start / 快速开始
 
+Recommended runtime:
+
+```text
+Node.js >= 24
+```
+
+The repository includes `.nvmrc` and `package.json` `engines.node` so local checks match GitHub Actions.
+
 最简单的方式是直接打开：
 
 ```text
@@ -120,7 +128,7 @@ npm run verify
 - `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate, currently `125`.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
-- `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, sidebar scrolling, every desktop lab opening path, actual lab control interactions, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.
+- `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, desktop and mobile sidebar scrolling, every desktop lab opening path, actual lab control interactions, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.
 - `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify` 和浏览器冒烟测试。
 
 ## Project Structure / 项目结构
