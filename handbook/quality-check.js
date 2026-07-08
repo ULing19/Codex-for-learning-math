@@ -19,10 +19,12 @@ const mustHaveFiles = [
   "SECURITY.md",
   "CHANGELOG.md",
   "CONTENT_GOVERNANCE.md",
+  "MAINTAINERS.md",
   "RELEASE_CHECKLIST.md",
   "LICENSE",
   "COVERAGE.md",
   ".nojekyll",
+  ".github/CODEOWNERS",
   ".github/workflows/verify.yml",
   ".github/ISSUE_TEMPLATE/config.yml",
   ".github/ISSUE_TEMPLATE/formula-correction.md",
@@ -37,6 +39,7 @@ const workflow = readIfExists(".github/workflows/verify.yml");
 const rootReadme = readIfExists("README.md");
 const contributing = readIfExists("CONTRIBUTING.md");
 const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
+const maintainers = readIfExists("MAINTAINERS.md");
 const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
 const coverageReport = readIfExists("COVERAGE.md");
@@ -62,7 +65,9 @@ assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smo
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
 assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
+assert(contributing.includes(".github/CODEOWNERS") && contributing.includes("MAINTAINERS.md"), "CONTRIBUTING must document review ownership files");
 assert(contentGovernance.includes("Source Tiers") && contentGovernance.includes("Verification Rules") && contentGovernance.includes("High-yield Trick Policy"), "CONTENT_GOVERNANCE must define source tiers, verification rules, and high-yield trick policy");
+assert(maintainers.includes("Review Areas") && maintainers.includes("Merge Expectations") && maintainers.includes("Generated Files"), "MAINTAINERS must document review areas, merge expectations, and generated file rules");
 assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js") && changelog.includes("coverage-report.js"), "CHANGELOG must record the maturity verification and coverage-report capabilities");
 assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
 assert(coverageScript.includes("Content Coverage Report") && coverageScript.includes("Interactive Lab Coverage"), "coverage-report.js must produce a project coverage report");

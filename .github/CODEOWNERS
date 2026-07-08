@@ -1,0 +1,21 @@
+# Repository ownership map.
+# GitHub uses this file to request reviews from the listed owner for matching paths.
+
+* @ULing19
+
+# Static handbook runtime and generated data pipeline.
+/handbook/ @ULing19
+
+# Project governance, issue templates, and workflows.
+/.github/ @ULing19
+/ARCHITECTURE.md @ULing19
+/CONTENT_GOVERNANCE.md @ULing19
+/CONTRIBUTING.md @ULing19
+/RELEASE_CHECKLIST.md @ULing19
+/ROADMAP.md @ULing19
+/SECURITY.md @ULing19
+/SUPPORT.md @ULing19
+
+# Generated or printable learning documents still need review through the data source.
+/*.md @ULing19
+

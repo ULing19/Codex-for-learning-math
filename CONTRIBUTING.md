@@ -63,3 +63,7 @@ When changing UI or labs:
 - [ ] UI changes were checked on desktop and mobile.
 - [ ] New formulas include conditions, intuition, usage, proof idea, example, and mistakes.
 - [ ] No `node_modules`, package lock created only for temporary local testing, or other generated test artifacts are committed.
+
+## Review Ownership / Review 责任
+
+GitHub review requests are routed through `.github/CODEOWNERS`. For practical review expectations, see `MAINTAINERS.md` before changing formula data, interactive labs, validation gates, workflows, or release behavior.
