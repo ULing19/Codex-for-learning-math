@@ -97,6 +97,7 @@ node --check handbook\coverage-report.js
 node --check handbook\browser-smoke.js
 node --check handbook\link-check.js
 node --check handbook\prepare-pages.js
+node --check handbook\deploy-health.js
 
 # 2. 数据校验（检查公式卡 id 唯一、必填字段、schema 合规）
 node handbook\validate-data.js
@@ -126,6 +127,12 @@ npm run verify:browser
 
 # 10. Online GitHub Pages browser acceptance
 npm run verify:browser:live
+
+# 11. Lightweight deployment health audit
+npm run verify:deploy
+
+# Optional: include GitHub Pages and Actions state in the audit
+GITHUB_TOKEN=... npm run verify:deploy
 ```
 
 说明：
@@ -137,6 +144,7 @@ npm run verify:browser:live
 - `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
 - `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
 - `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, cache-busted `app-version` assets, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
+- `deploy-health.js` always checks the live `app-version` and every versioned local asset referenced by the online `index.html`; with `GITHUB_TOKEN` or `GH_TOKEN`, it also checks GitHub Pages `build_type=workflow` and the latest `Verify handbook` / `Deploy Pages` workflow results for `main`.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

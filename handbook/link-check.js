@@ -137,13 +137,15 @@ function checkPackageMetadata() {
     "pages:prepare",
     "verify",
     "verify:browser",
-    "verify:browser:live"
+    "verify:browser:live",
+    "verify:deploy"
   ];
   for (const script of requiredScripts) {
     assert(pkg.scripts?.[script], `package.json should define npm script ${script}`);
   }
   assert(pkg.scripts["check:syntax"].includes("handbook/link-check.js"), "check:syntax should include link-check.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/prepare-pages.js"), "check:syntax should include prepare-pages.js");
+  assert(pkg.scripts["check:syntax"].includes("handbook/deploy-health.js"), "check:syntax should include deploy-health.js");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
   assert(pkg.scripts.verify.includes("npm run pages:prepare"), "verify should include npm run pages:prepare");
   return pkg;
@@ -168,6 +170,7 @@ function checkRequiredProjectFiles() {
     "handbook/styles.css",
     "handbook/formula-data.js",
     "handbook/prepare-pages.js",
+    "handbook/deploy-health.js",
     "handbook/study-layer.js",
     "handbook/preview.png"
   ];
