@@ -7,7 +7,7 @@ authors:
 repository-code: "https://github.com/ULing19/Codex-for-learning-math"
 url: "https://uling19.github.io/Codex-for-learning-math/handbook/"
 license: MIT
-version: "1.0.2"
+version: "1.0.3"
 date-released: "2026-07-09"
 abstract: "A static interactive Math I formula handbook for postgraduate entrance exam review, with searchable formula cards, proof notes, examples, mistakes, mastery tracking, and visual labs."
 keywords:

@@ -321,6 +321,21 @@ async function runViewport(browser, baseUrl, viewport) {
     assert(desktopSidebar.buttonCount >= 29, `${viewport.name}: sidebar should expose all chapter buttons`);
     assert.strictEqual(desktopSidebar.scrollableOrFullyVisible, true, `${viewport.name}: chapter nav should be scrollable or fully visible`);
     assert.strictEqual(desktopSidebar.lastVisibleAfterScroll, true, `${viewport.name}: last desktop chapter should be visible after scroll`);
+
+    await page.evaluate(() => {
+      localStorage.setItem("math1_mastery_v1", JSON.stringify({ "pre-algebra-identities": 2 }));
+      localStorage.setItem("math1_favorites_v1", JSON.stringify(["pre-algebra-identities"]));
+    });
+    page.once("dialog", (dialog) => dialog.accept());
+    await page.click("#clearLocalDataBtn");
+    const localDataReset = await page.evaluate(() => ({
+      mastery: localStorage.getItem("math1_mastery_v1"),
+      favorites: localStorage.getItem("math1_favorites_v1"),
+      notice: document.querySelector("#resultsInfo")?.textContent || ""
+    }));
+    assert.strictEqual(localDataReset.mastery, null, `${viewport.name}: clear local data should remove mastery storage`);
+    assert.strictEqual(localDataReset.favorites, null, `${viewport.name}: clear local data should remove favorites storage`);
+    assert(localDataReset.notice.includes("已清除"), `${viewport.name}: clear local data should show reset notice`);
   }
 
   if (viewport.mobile) {

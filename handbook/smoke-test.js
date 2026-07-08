@@ -23,7 +23,7 @@ const requiredIds = [
   "dashStats", "dashFill", "dashHint",
   "cardCount", "mustCount", "knownCount", "labCount",
   "formulaList", "labsGrid", "reviewQueue", "errorCards",
-  "searchInput", "heroRecommend"
+  "searchInput", "heroRecommend", "clearLocalDataBtn"
 ];
 
 for (const id of requiredIds) {
@@ -111,7 +111,7 @@ const sandbox = {
     MathJax: { typesetPromise: () => Promise.resolve() }
   },
   document: { ...fakeDocument, body: fakeBody, activeElement: { tagName: "BODY" } },
-  localStorage: { getItem: () => null, setItem: () => {} },
+  localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
   requestAnimationFrame: (fn) => fn(),
   console, Math, setTimeout, clearTimeout
 };

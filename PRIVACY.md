@@ -37,6 +37,12 @@ If MathJax fails to load, formulas remain visible as LaTeX text; the handbook sh
 
 To reset mastery and favorites:
 
+1. Open the handbook sidebar.
+2. Click `🧹 清除本地进度`.
+3. Confirm the reset prompt.
+
+If you need to clear manually:
+
 1. Open browser developer tools on the handbook page.
 2. Go to Application/Storage → Local Storage.
 3. Delete `math1_mastery_v1` and `math1_favorites_v1`.
@@ -53,4 +59,3 @@ Do not add analytics, trackers, remote logging, account systems, or telemetry wi
 - Browser smoke or validation checks if behavior changes
 
 The default project direction is privacy-preserving static learning: local state should stay local.
-

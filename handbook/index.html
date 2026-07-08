@@ -9,10 +9,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="考研数学一学习工作台 · 494 张交互公式卡" />
   <meta property="og:description" content="高数、线代、概率统计 494 张公式卡，含适用条件、直觉、证明、易错点与 15 种交互演示。" />
-  <meta property="og:image" content="./preview.png?v=1.0.2" />
-  <meta name="app-version" content="1.0.2" />
+  <meta property="og:image" content="./preview.png?v=1.0.3" />
+  <meta name="app-version" content="1.0.3" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fff4dc'/%3E%3Ctext x='32' y='42' font-size='38' text-anchor='middle' fill='%23b45f06'%3E%E2%88%91%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="./styles.css?v=1.0.2" />
+  <link rel="stylesheet" href="./styles.css?v=1.0.3" />
   <script>
     window.MathJax = {
       tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -20,9 +20,9 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-  <script defer src="./study-layer.js?v=1.0.2"></script>
-  <script defer src="./formula-data.js?v=1.0.2"></script>
-  <script defer src="./app.js?v=1.0.2"></script>
+  <script defer src="./study-layer.js?v=1.0.3"></script>
+  <script defer src="./formula-data.js?v=1.0.3"></script>
+  <script defer src="./app.js?v=1.0.3"></script>
 </head>
 <body>
   <!-- 移动端侧边栏遮罩 -->
@@ -46,6 +46,9 @@
         <div id="dashProgress" class="dash-progress-bar"><div id="dashFill" class="dash-fill"></div></div>
         <p id="dashHint" class="dash-hint"></p>
       </div>
+      <button id="clearLocalDataBtn" class="privacy-reset-btn" type="button" title="清除本地掌握度和收藏数据">
+        🧹 清除本地进度
+      </button>
 
       <!-- 快速入口 -->
       <div class="quick-nav">

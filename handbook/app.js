@@ -89,6 +89,22 @@
   const setMastery = (id, level) => { mastery[id] = level; saveMastery(); };
   const isFavorite = (id) => favorites.has(id);
   const toggleFavorite = (id) => { isFavorite(id) ? favorites.delete(id) : favorites.add(id); saveFavorites(); };
+  function clearLocalLearningData() {
+    const ok = typeof window.confirm === "function"
+      ? window.confirm("确认清除本浏览器中的掌握度和收藏数据？此操作不会影响公式内容。")
+      : true;
+    if (!ok) return;
+    mastery = {};
+    favorites = new Set();
+    try {
+      localStorage.removeItem(MASTERY_KEY);
+      localStorage.removeItem(FAVORITE_KEY);
+    } catch (_) {}
+    focusedIndex = -1;
+    renderMasteryStats();
+    renderActiveView();
+    setText("resultsInfo", "已清除本地掌握度和收藏数据。公式内容和线上站点不受影响。");
+  }
 
   const MASTERY_LABEL = ["未学", "认识", "掌握"];
   const MASTERY_CLASS = ["m-new", "m-familiar", "m-known"];
@@ -437,6 +453,7 @@
     on("mobileMenuBtn", "click", openSidebar);
     on("sidebarClose", "click", closeSidebar);
     on("sidebarOverlay", "click", closeSidebar);
+    on("clearLocalDataBtn", "click", clearLocalLearningData);
     on("reviewStartBtn", "click", () => switchView("review"));
     on("reviewShuffleBtn", "click", () => renderReviewQueue(true));
     document.querySelectorAll(".error-tag").forEach((button) => {

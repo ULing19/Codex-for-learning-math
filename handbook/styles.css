@@ -93,6 +93,16 @@ h1,h2,h3,p { margin-top: 0; }
   transition: width .4s ease;
 }
 .dash-hint { margin: 6px 0 0; font-size: 11px; color: var(--muted); text-align: center; }
+.privacy-reset-btn {
+  width: 100%; margin-top: -2px; padding: 8px 10px;
+  border-radius: 12px; border: 1px dashed #e3b58f;
+  background: #fffaf5; color: #9a3412;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  transition: background .15s, border-color .15s, transform .15s;
+}
+.privacy-reset-btn:hover, .privacy-reset-btn:focus-visible {
+  background: #ffedd5; border-color: #fb923c; transform: translateY(-1px);
+}
 
 /* ── quick nav ── */
 .quick-nav {

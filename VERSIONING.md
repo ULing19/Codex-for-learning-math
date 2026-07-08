@@ -9,13 +9,13 @@ This project is a static GitHub Pages app. A release is not only a commit; it mu
 The public app version is defined in `package.json`:
 
 ```json
-"version": "1.0.2"
+"version": "x.y.z"
 ```
 
 The same version must appear in:
 
 - `handbook/index.html` `<meta name="app-version" ...>`.
-- Local asset query strings in `handbook/index.html`, for example `app.js?v=1.0.2`.
+- Local asset query strings in `handbook/index.html`, for example `app.js?v=x.y.z`.
 - `CITATION.cff` `version`.
 
 `handbook/link-check.js` enforces these values during `npm run verify`.
