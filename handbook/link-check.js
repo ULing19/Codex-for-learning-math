@@ -186,6 +186,7 @@ function checkRequiredProjectFiles() {
     "ROADMAP.md",
     "SECURITY.md",
     "SUPPORT.md",
+    "VERSIONING.md",
     "handbook/README.md",
     "handbook/index.html",
     "handbook/app.js",

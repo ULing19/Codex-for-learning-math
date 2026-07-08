@@ -12,6 +12,7 @@ Use this checklist before treating a version as stable.
 - [ ] `npm run links` passes and reports no stale local links or metadata drift.
 - [ ] `npm run pages:prepare` creates `.pages-artifact` with `.nojekyll`, top-level docs, and the `handbook/` static runtime.
 - [ ] Live browser smoke confirms `app-version` and local static asset `?v=` values match `package.json`.
+- [ ] Runtime/data releases follow `VERSIONING.md`: `package.json`, `handbook/index.html` `app-version`, local `?v=` assets, and `CITATION.cff` version stay aligned.
 - [ ] `COVERAGE.md` is regenerated and reports `PASS: coverage gate satisfied`.
 - [ ] GitHub Actions `Verify handbook` is green on `main`.
 - [ ] GitHub Actions `Deploy Pages` is green and GitHub Pages is configured for workflow deployment.

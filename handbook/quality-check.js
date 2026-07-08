@@ -18,6 +18,7 @@ const mustHaveFiles = [
   "CONTRIBUTING.md",
   "SECURITY.md",
   "CITATION.cff",
+  "VERSIONING.md",
   "CHANGELOG.md",
   "CONTENT_GOVERNANCE.md",
   "MAINTAINERS.md",
@@ -43,6 +44,7 @@ const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
 const maintainers = readIfExists("MAINTAINERS.md");
 const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
+const versioning = readIfExists("VERSIONING.md");
 const coverageReport = readIfExists("COVERAGE.md");
 
 const sandbox = { window: {} };
@@ -65,6 +67,7 @@ assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:
 assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js") && rootReadme.includes("verify:browser:live"), "Root README must document base, local browser, and live browser verification");
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(rootReadme.includes("CITATION.cff"), "Root README must document repository citation metadata");
+assert(rootReadme.includes("VERSIONING.md"), "Root README must document versioning and cache policy");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
 assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
 assert(contributing.includes(".github/CODEOWNERS") && contributing.includes("MAINTAINERS.md"), "CONTRIBUTING must document review ownership files");
@@ -72,6 +75,7 @@ assert(contentGovernance.includes("Source Tiers") && contentGovernance.includes(
 assert(maintainers.includes("Review Areas") && maintainers.includes("Merge Expectations") && maintainers.includes("Generated Files"), "MAINTAINERS must document review areas, merge expectations, and generated file rules");
 assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js") && changelog.includes("coverage-report.js"), "CHANGELOG must record the maturity verification and coverage-report capabilities");
 assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
+assert(releaseChecklist.includes("VERSIONING.md") && versioning.includes("Version Source of Truth") && versioning.includes("When To Bump"), "Release checklist and VERSIONING must document version/cache release policy");
 assert(coverageScript.includes("Content Coverage Report") && coverageScript.includes("Interactive Lab Coverage"), "coverage-report.js must produce a project coverage report");
 assert(coverageReport.includes("## Subject Coverage") && coverageReport.includes("## Interactive Lab Coverage") && coverageReport.includes("PASS: coverage gate satisfied"), "COVERAGE.md must be generated and passing");
 assert(!new RegExp("\\?{4,}").test(read("handbook/quality-check.js")), "quality-check.js must not contain mojibake placeholder question marks");

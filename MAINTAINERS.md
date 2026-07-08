@@ -19,7 +19,7 @@ This file defines practical review ownership for the handbook. It does not creat
 | Interactive labs | `handbook/app.js`, `handbook/styles.css`, `handbook/browser-smoke.js` | Clear controls, mobile usability, visible feedback, MathJax safety, browser smoke coverage |
 | Validation gates | `handbook/*check.js`, `package.json`, workflows | CI coverage, generated-file drift, line endings, required project files, deployment health |
 | Documentation | `README.md`, `ARCHITECTURE.md`, `CONTENT_GOVERNANCE.md`, `CONTRIBUTING.md`, `SUPPORT.md`, `ROADMAP.md` | Accuracy, contributor clarity, no stale commands or links |
-| Release/deploy | `.github/workflows/*.yml`, `RELEASE_CHECKLIST.md`, `handbook/index.html` app version | GitHub Pages health, cache-busted assets, live browser checks, release notes |
+| Release/deploy | `.github/workflows/*.yml`, `RELEASE_CHECKLIST.md`, `VERSIONING.md`, `handbook/index.html` app version | GitHub Pages health, cache-busted assets, live browser checks, release notes |
 
 ## Merge Expectations / 合并前期望
 
@@ -54,4 +54,3 @@ When handing work to another model or contributor, include:
 - Validation commands already run.
 - Whether generated docs were regenerated.
 - Any known risk, skipped check, or unresolved content question.
-
