@@ -182,6 +182,7 @@ function checkRequiredProjectFiles() {
     "COVERAGE.md",
     "LICENSE",
     "MAINTAINERS.md",
+    "PRIVACY.md",
     "README.md",
     "RELEASE_CHECKLIST.md",
     "ROADMAP.md",

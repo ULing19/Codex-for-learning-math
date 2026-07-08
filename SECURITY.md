@@ -2,6 +2,8 @@
 
 This is a static educational website. It has no backend, database, account system, or server-side secret handling.
 
+Privacy and local learning-state behavior are documented in `PRIVACY.md`.
+
 这是一个纯静态学习网站，没有后端、数据库、账号系统或服务端密钥处理。
 
 ## Supported Scope / 支持范围

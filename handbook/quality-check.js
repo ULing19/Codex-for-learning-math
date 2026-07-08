@@ -23,6 +23,7 @@ const mustHaveFiles = [
   "CHANGELOG.md",
   "CONTENT_GOVERNANCE.md",
   "MAINTAINERS.md",
+  "PRIVACY.md",
   "RELEASE_CHECKLIST.md",
   "LICENSE",
   "COVERAGE.md",
@@ -44,6 +45,7 @@ const accessibility = readIfExists("ACCESSIBILITY.md");
 const contributing = readIfExists("CONTRIBUTING.md");
 const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
 const maintainers = readIfExists("MAINTAINERS.md");
+const privacy = readIfExists("PRIVACY.md");
 const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
 const versioning = readIfExists("VERSIONING.md");
@@ -71,12 +73,14 @@ assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-repor
 assert(rootReadme.includes("CITATION.cff"), "Root README must document repository citation metadata");
 assert(rootReadme.includes("VERSIONING.md"), "Root README must document versioning and cache policy");
 assert(rootReadme.includes("ACCESSIBILITY.md"), "Root README must document accessibility guidance");
+assert(rootReadme.includes("PRIVACY.md"), "Root README must document privacy guidance");
 assert(accessibility.includes("Keyboard Support") && accessibility.includes("Browser Smoke Coverage") && accessibility.includes("UI Change Checklist"), "ACCESSIBILITY must document keyboard support, browser smoke coverage, and UI change checklist");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
 assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
 assert(contributing.includes(".github/CODEOWNERS") && contributing.includes("MAINTAINERS.md"), "CONTRIBUTING must document review ownership files");
 assert(contentGovernance.includes("Source Tiers") && contentGovernance.includes("Verification Rules") && contentGovernance.includes("High-yield Trick Policy"), "CONTENT_GOVERNANCE must define source tiers, verification rules, and high-yield trick policy");
 assert(maintainers.includes("Review Areas") && maintainers.includes("Merge Expectations") && maintainers.includes("Generated Files"), "MAINTAINERS must document review areas, merge expectations, and generated file rules");
+assert(privacy.includes("localStorage") && privacy.includes("math1_mastery_v1") && privacy.includes("No analytics"), "PRIVACY must document localStorage keys and no analytics behavior");
 assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js") && changelog.includes("coverage-report.js"), "CHANGELOG must record the maturity verification and coverage-report capabilities");
 assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
 assert(releaseChecklist.includes("VERSIONING.md") && versioning.includes("Version Source of Truth") && versioning.includes("When To Bump"), "Release checklist and VERSIONING must document version/cache release policy");

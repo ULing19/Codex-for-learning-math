@@ -21,6 +21,7 @@
 [贡献指南 / Contributing](./CONTRIBUTING.md) ·
 [支持反馈 / Support](./SUPPORT.md) ·
 [???? / Accessibility](./ACCESSIBILITY.md) ?
+[???? / Privacy](./PRIVACY.md) ?
 [完整版公式手册](./考研数学一-公式手册-完整版.md) ·
 [冷门技巧公式库](./考研数学一-冷门技巧公式库.md)
 
