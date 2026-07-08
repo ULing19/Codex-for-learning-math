@@ -133,6 +133,10 @@ npm run verify:deploy
 
 # Optional: include GitHub Pages and Actions state in the audit
 GITHUB_TOKEN=... npm run verify:deploy
+
+# CI deploy workflow mode: check Pages settings and live assets, but do not require
+# the current Deploy Pages run to already be completed.
+DEPLOY_HEALTH_SKIP_WORKFLOWS=1 GITHUB_TOKEN=... npm run verify:deploy
 ```
 
 说明：
@@ -144,7 +148,7 @@ GITHUB_TOKEN=... npm run verify:deploy
 - `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
 - `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
 - `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, cache-busted `app-version` assets, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
-- `deploy-health.js` always checks the live `app-version` and every versioned local asset referenced by the online `index.html`; with `GITHUB_TOKEN` or `GH_TOKEN`, it also checks GitHub Pages `build_type=workflow` and the latest `Verify handbook` / `Deploy Pages` workflow results for `main`.
+- `deploy-health.js` always checks the live `app-version` and every versioned local asset referenced by the online `index.html`; with `GITHUB_TOKEN` or `GH_TOKEN`, it also checks GitHub Pages `build_type=workflow` and the latest `Verify handbook` / `Deploy Pages` workflow results for `main`. In the Pages workflow, `DEPLOY_HEALTH_SKIP_WORKFLOWS=1` skips only the workflow-result portion so the audit can run before the current workflow marks itself complete.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

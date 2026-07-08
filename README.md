@@ -131,7 +131,7 @@ npm run verify
 - `link-check.js` checks Markdown local links, HTML local assets, required project files, package metadata, Node version alignment, and `index.html` cache-busted asset versions.
 - `prepare-pages.js` builds `.pages-artifact` from public Markdown files, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime for Actions-based Pages deployment.
 - `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, desktop and mobile sidebar scrolling, every desktop lab opening path, actual lab control interactions, mobile lab navigation, keyboard entry points, cache-busted `app-version` assets, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.
-- `deploy-health.js` runs a lightweight post-deploy audit against the live Pages site; set `GITHUB_TOKEN` or `GH_TOKEN` to also verify Pages `build_type=workflow` and latest Actions results.
+- `deploy-health.js` runs a lightweight post-deploy audit against the live Pages site; set `GITHUB_TOKEN` or `GH_TOKEN` to also verify Pages `build_type=workflow` and latest Actions results. The Pages workflow uses `DEPLOY_HEALTH_SKIP_WORKFLOWS=1` because the current deploy run is still closing while the audit step runs.
 - `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify` 和浏览器冒烟测试。
 - `.github/workflows/pages.yml` verifies the handbook, prepares `.pages-artifact`, and deploys GitHub Pages via the Actions Pages workflow with deployment concurrency.
 

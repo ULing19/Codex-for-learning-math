@@ -8,6 +8,7 @@ Use this checklist before treating a version as stable.
 - [ ] `npm run verify:browser` passes locally or the GitHub Actions browser job passes.
 - [ ] `npm run verify:browser:live` passes after GitHub Pages deployment finishes.
 - [ ] `npm run verify:deploy` passes; with `GITHUB_TOKEN` or `GH_TOKEN`, it also confirms workflow Pages and latest green Actions.
+- [ ] The `Deploy Pages` workflow includes the post-deploy `Audit deployed Pages` step.
 - [ ] `npm run links` passes and reports no stale local links or metadata drift.
 - [ ] `npm run pages:prepare` creates `.pages-artifact` with `.nojekyll`, top-level docs, and the `handbook/` static runtime.
 - [ ] Live browser smoke confirms `app-version` and local static asset `?v=` values match `package.json`.

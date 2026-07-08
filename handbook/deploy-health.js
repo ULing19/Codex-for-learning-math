@@ -10,6 +10,7 @@ const expectedRepo = "ULing19/Codex-for-learning-math";
 const baseUrl = (process.env.DEPLOY_HEALTH_BASE_URL || packageJson.homepage).replace(/\/+$/, "");
 const apiBaseUrl = (process.env.GITHUB_API_BASE_URL || "https://api.github.com").replace(/\/+$/, "");
 const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
+const skipWorkflowAudit = /^(1|true|yes)$/i.test(process.env.DEPLOY_HEALTH_SKIP_WORKFLOWS || "");
 
 function requestOnce(url, { json = false, redirects = 0 } = {}) {
   return new Promise((resolve, reject) => {
@@ -135,6 +136,7 @@ async function checkGitHubState() {
   const ref = (await request(`${apiBaseUrl}/repos/${expectedRepo}/git/ref/heads/main`, { json: true })).body;
   const headSha = ref.object.sha;
   assert(/^[0-9a-f]{40}$/.test(headSha), "main ref should expose a commit SHA");
+  if (skipWorkflowAudit) return { headSha, workflowsSkipped: true };
 
   const runsUrl = `${apiBaseUrl}/repos/${expectedRepo}/actions/runs?head_sha=${encodeURIComponent(headSha)}&per_page=20`;
   const runs = (await request(runsUrl, { json: true })).body.workflow_runs || [];
@@ -191,7 +193,7 @@ async function main() {
   const live = await checkLiveSite();
   const githubPart = github.skipped
     ? `github=skipped(${github.reason})`
-    : `sha=${github.headSha.slice(0, 7)}`;
+    : `sha=${github.headSha.slice(0, 7)}${github.workflowsSkipped ? " workflows=skipped" : ""}`;
   console.log(`deploy-health-ok ${githubPart} version=${expectedVersion} assets=${live.assets} indexBytes=${live.indexBytes}`);
 }
 

@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -46,3 +47,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: Audit deployed Pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DEPLOY_HEALTH_SKIP_WORKFLOWS: "1"
+        run: npm run verify:deploy
