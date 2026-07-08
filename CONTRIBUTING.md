@@ -10,6 +10,7 @@ Thanks for improving this handbook. This project accepts Chinese or English issu
 - Formula correctness is more important than volume. Every new formula should include conditions, usage, proof idea, example, and common mistake.
 - Interactive labs should teach one clear idea. A demo is useful only if it makes the formula easier to understand.
 - Generated Markdown must come from `handbook/formula-data.js`; do not manually edit generated handbook documents.
+- Follow `.editorconfig`: UTF-8, LF line endings, final newline, and space indentation. `repo-hygiene.js` enforces this in CI.
 
 ## Local Checks / 本地验收
 

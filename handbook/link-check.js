@@ -170,6 +170,7 @@ function checkRequiredProjectFiles() {
     ".github/ISSUE_TEMPLATE/config.yml",
     ".github/ISSUE_TEMPLATE/content-gap.md",
     ".github/ISSUE_TEMPLATE/feature-request.md",
+    ".editorconfig",
     ".nojekyll",
     ".nvmrc",
     "ACCESSIBILITY.md",

@@ -35,12 +35,14 @@ const mustHaveFiles = [
   ".github/ISSUE_TEMPLATE/content-gap.md",
   ".github/ISSUE_TEMPLATE/feature-request.md",
   ".github/ISSUE_TEMPLATE/ui-lab-issue.md",
-  ".github/pull_request_template.md"
+  ".github/pull_request_template.md",
+  ".editorconfig"
 ];
 const exists = (file) => fs.existsSync(path.join(repoRoot, file));
 const readIfExists = (file) => exists(file) ? read(file) : "";
 const workflow = readIfExists(".github/workflows/verify.yml");
 const rootReadme = readIfExists("README.md");
+const editorconfig = readIfExists(".editorconfig");
 const accessibility = readIfExists("ACCESSIBILITY.md");
 const contributing = readIfExists("CONTRIBUTING.md");
 const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
@@ -68,6 +70,7 @@ for (const file of mustHaveFiles) {
   assert(exists(file), `Missing mature-project governance file: ${file}`);
 }
 assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:browser"), "CI must run both base verification and browser smoke verification");
+assert(editorconfig.includes("charset = utf-8") && editorconfig.includes("end_of_line = lf") && editorconfig.includes("insert_final_newline = true"), ".editorconfig must enforce utf-8, LF, and final newline defaults");
 assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js") && rootReadme.includes("verify:browser:live"), "Root README must document base, local browser, and live browser verification");
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(rootReadme.includes("CITATION.cff"), "Root README must document repository citation metadata");
