@@ -149,6 +149,7 @@ DEPLOY_HEALTH_SKIP_WORKFLOWS=1 GITHUB_TOKEN=... npm run verify:deploy
 - `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
 - `browser-smoke.js` starts a local static server by default and verifies desktop sidebar scrolling, all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, cache-busted `app-version` assets, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - `deploy-health.js` always checks the live `app-version` and every versioned local asset referenced by the online `index.html`; with `GITHUB_TOKEN` or `GH_TOKEN`, it also checks GitHub Pages `build_type=workflow` and the latest `Verify handbook` / `Deploy Pages` workflow results for `main`. In the Pages workflow, `DEPLOY_HEALTH_SKIP_WORKFLOWS=1` skips only the workflow-result portion so the audit can run before the current workflow marks itself complete.
+- The Pages workflow also installs Playwright and runs `browser-smoke.js` against the freshly deployed `/handbook` URL, so online lab opening paths and controls are checked after each deployment.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

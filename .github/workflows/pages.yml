@@ -53,3 +53,14 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DEPLOY_HEALTH_SKIP_WORKFLOWS: "1"
         run: npm run verify:deploy
+
+      - name: Install Playwright runtime
+        run: npm install --no-save playwright@1.61.1
+
+      - name: Install Chromium browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit deployed labs in browser
+        env:
+          BROWSER_SMOKE_BASE_URL: ${{ steps.deployment.outputs.page_url }}handbook
+        run: npm run verify:browser
