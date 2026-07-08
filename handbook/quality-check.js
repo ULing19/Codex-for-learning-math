@@ -12,6 +12,27 @@ const app = read("handbook/app.js");
 const generator = read("handbook/generate-docs.js");
 const dataSource = read("handbook/formula-data.js");
 
+const mustHaveFiles = [
+  "README.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "CHANGELOG.md",
+  "RELEASE_CHECKLIST.md",
+  "LICENSE",
+  ".nojekyll",
+  ".github/workflows/verify.yml",
+  ".github/ISSUE_TEMPLATE/formula-correction.md",
+  ".github/ISSUE_TEMPLATE/ui-lab-issue.md",
+  ".github/pull_request_template.md"
+];
+const exists = (file) => fs.existsSync(path.join(repoRoot, file));
+const readIfExists = (file) => exists(file) ? read(file) : "";
+const workflow = readIfExists(".github/workflows/verify.yml");
+const rootReadme = readIfExists("README.md");
+const contributing = readIfExists("CONTRIBUTING.md");
+const changelog = readIfExists("CHANGELOG.md");
+const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
+
 const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(dataSource, sandbox, { filename: "formula-data.js" });
@@ -24,6 +45,16 @@ const warnings = [];
 const assert = (condition, message) => {
   if (!condition) errors.push(message);
 };
+
+for (const file of mustHaveFiles) {
+  assert(exists(file), `Missing mature-project governance file: ${file}`);
+}
+assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:browser"), "CI must run both base verification and browser smoke verification");
+assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js"), "Root README must document base and browser verification");
+assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
+assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js"), "CHANGELOG must record the maturity verification capability");
+assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
+assert(!new RegExp("\\?{4,}").test(read("handbook/quality-check.js")), "quality-check.js must not contain mojibake placeholder question marks");
 
 assert(cards.length >= 490, `公式卡数量异常：${cards.length}`);
 assert(groups.length >= 6, `学科分组数量异常：${groups.length}`);
