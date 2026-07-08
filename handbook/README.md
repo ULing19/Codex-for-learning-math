@@ -106,6 +106,9 @@ node handbook\coverage-report.js
 npm install --no-save playwright@1.61.1
 npx playwright install chromium
 npm run verify:browser
+
+# 8. Online GitHub Pages browser acceptance
+npm run verify:browser:live
 ```
 
 说明：
@@ -114,7 +117,7 @@ npm run verify:browser
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, and short-field review targets into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
-- `browser-smoke.js` starts a local static server and verifies all desktop lab opening paths, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium.
+- `browser-smoke.js` starts a local static server by default and verifies all desktop lab opening paths, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---

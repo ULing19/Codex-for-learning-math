@@ -25,6 +25,7 @@ For browser-level checks:
 npm install --no-save playwright@1.61.1
 npx playwright install chromium
 npm run verify:browser
+npm run verify:browser:live
 ```
 
 `npm run verify` covers syntax, formula data validation, Markdown generation, `COVERAGE.md` generation, fake-DOM smoke test, and quality gates. `npm run verify:browser` starts a local static server and checks desktop/mobile behavior, MathJax rendering, sidebar scrolling, lab demo opening, keyboard entry points, and basic accessibility in Chromium.

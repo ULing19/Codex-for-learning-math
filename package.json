@@ -12,7 +12,8 @@
     "smoke": "node handbook/smoke-test.js",
     "quality": "node handbook/quality-check.js",
     "verify": "npm run check:syntax && npm run validate && npm run docs && npm run coverage && npm run smoke && npm run quality",
-    "verify:browser": "node handbook/browser-smoke.js"
+    "verify:browser": "node handbook/browser-smoke.js",
+    "verify:browser:live": "node -e \"process.env.BROWSER_SMOKE_BASE_URL='https://uling19.github.io/Codex-for-learning-math/handbook'; require('./handbook/browser-smoke.js')\""
   },
   "keywords": [
     "math",

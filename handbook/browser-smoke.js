@@ -269,9 +269,12 @@ async function runViewport(browser, baseUrl, viewport) {
 }
 
 (async () => {
-  const server = createServer();
-  const port = await listen(server);
-  const baseUrl = `http://127.0.0.1:${port}`;
+  const remoteBaseUrl = process.env.BROWSER_SMOKE_BASE_URL
+    ? process.env.BROWSER_SMOKE_BASE_URL.replace(/\/+$/, "")
+    : "";
+  const server = remoteBaseUrl ? null : createServer();
+  const port = server ? await listen(server) : null;
+  const baseUrl = remoteBaseUrl || `http://127.0.0.1:${port}`;
   const browser = await launchChromium();
   try {
     const results = [];
@@ -291,7 +294,7 @@ async function runViewport(browser, baseUrl, viewport) {
     console.log(`browser-smoke-ok ${results.map((item) => `${item.viewport}:cards=${item.initial.cards},labs=${item.labGrid.labCards},opened=${item.openedLabs.length},demos=${item.labOpen.mountedDemos}`).join(" ")}`);
   } finally {
     await browser.close();
-    server.close();
+    if (server) server.close();
   }
 })().catch((error) => {
   console.error(error);
