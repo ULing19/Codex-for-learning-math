@@ -891,6 +891,7 @@
     //             次要区（conditions + miniProof）默认折叠
     const coreBlocks = `
       <div class="detail-block db-how"><h4>怎么用</h4><p>${escapeHtml(card.howToUse)}</p></div>
+      ${renderStudyLayer(card)}
       <div class="detail-block db-ex"><h4>小例子</h4><p>${escapeHtml(card.example)}</p></div>
       <div class="detail-block db-mis"><h4>⚠ 易错点</h4><p>${escapeHtml(card.mistakes)}</p></div>`;
 
@@ -998,6 +999,40 @@
         <h4>${escapeHtml(guide.title)}</h4>
         <p>${escapeHtml(guide.idea)}</p>
         <ol>${guide.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+      </div>`;
+  }
+
+  function renderStudyLayer(card) {
+    const builder = window.FORMULA_STUDY_LAYER?.buildStudyLayer;
+    if (!builder) return "";
+    const study = builder(card);
+    return `
+      <div class="detail-block db-study">
+        <div class="study-head">
+          <h4>学习拆解：证明、场景与例题</h4>
+          <span>${escapeHtml(study.kind)}</span>
+        </div>
+        <div class="study-grid">
+          <section>
+            <h5>${escapeHtml(study.proofTitle)}</h5>
+            <p>${escapeHtml(study.proofCore)}</p>
+            <ol>${study.proofSteps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+          </section>
+          <section>
+            <h5>${escapeHtml(study.usageTitle)}</h5>
+            <ul>${study.triggers.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            <p class="study-flow">${study.examSteps.map(step => `<span>${escapeHtml(step)}</span>`).join("")}</p>
+          </section>
+          <section>
+            <h5>${escapeHtml(study.exampleTitle)}</h5>
+            <p>${escapeHtml(study.exampleProblem)}</p>
+            <ol>${study.exampleSolution.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+          </section>
+          <section>
+            <h5>${escapeHtml(study.checklistTitle)}</h5>
+            <ul>${study.checklist.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+          </section>
+        </div>
       </div>`;
   }
 

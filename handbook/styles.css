@@ -829,10 +829,52 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px; margin-top: 10px;
 }
-.db-how  { grid-column: 1 / -1; }          /* 怎么用：全宽 */
+.db-how,
+.db-study { grid-column: 1 / -1; }         /* 怎么用/学习拆解：全宽 */
 .db-demo { grid-column: 1 / -1; }          /* 演示：全宽 */
 .db-mis  { background: #fef9f0; border-color: #fde68a; } /* 易错点：暖色提示 */
 .db-mis h4 { color: #92400e; }
+
+.db-study {
+  background: linear-gradient(135deg, #fff7ed, #f8fafc);
+  border-color: #fed7aa;
+}
+.study-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.study-head h4 { margin: 0; color: #9a3412; }
+.study-head span {
+  flex-shrink: 0; padding: 2px 8px; border-radius: 999px;
+  background: #ffedd5; color: #9a3412; font-size: 10px; font-weight: 800;
+}
+.study-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+}
+.study-grid section {
+  padding: 9px 10px; border-radius: 12px;
+  background: rgba(255,255,255,.72); border: 1px solid #fde68a;
+}
+.study-grid h5 {
+  margin: 0 0 5px; font-size: 12px; color: #7c2d12;
+}
+.study-grid p,
+.study-grid li {
+  font-size: 12px; line-height: 1.7; color: #4b3b2b;
+}
+.study-grid p { margin: 0 0 6px; }
+.study-grid ol,
+.study-grid ul {
+  margin: 0 0 0 18px; padding: 0;
+}
+.study-flow {
+  display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px !important;
+}
+.study-flow span {
+  display: inline-flex; align-items: center; padding: 2px 7px;
+  border-radius: 999px; background: #fff7ed; border: 1px solid #fed7aa;
+  color: #9a3412; font-size: 11px; font-weight: 700;
+}
 
 /* secondary grid: 2列 */
 .dg-secondary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
@@ -854,6 +896,7 @@ pre { overflow: auto; padding: 10px; border-radius: 10px; background: #1f2937; c
 
 @media (max-width: 640px) {
   .dg-core      { grid-template-columns: 1fr; }
+  .study-grid   { grid-template-columns: 1fr; }
   .dg-secondary { grid-template-columns: 1fr; }
 }
 

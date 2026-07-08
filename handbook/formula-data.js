@@ -427,7 +427,7 @@ B=P^{-1}AP,\quad A=P\Lambda P^{-1}
 f=x^TAx,\quad A\text{正定}\iff x^TAx>0\ (x\ne0)
 \\
 A\text{正定}\iff \lambda_i>0\iff \text{顺序主子式全}>0
-`, "必背", ["特征值", "对角化", "二次型", "正定"], "相似对角化、二次型化简、正定判别。", "特征向量是被矩阵拉伸但不改变方向的向量。", "先求特征值，再求特征向量；正定优先用主子式或特征值。", "对角化就是换一组由特征向量构成的坐标轴。", "\\(\\begin{pmatrix}2&0\\\\0&3\\end{pmatrix}\\) 正定，因为特征值 2,3 都正。", "代数重数不等于几何重数时可能不能对角化。", "matrix-eigen-lab"),
+`, "必背", ["特征值", "对角化", "二次型", "正定"], "相似对角化、二次型化简、正定判别。", "特征向量是被矩阵拉伸但不改变方向的向量。", "先求特征值，再求特征向量；正定优先用主子式或特征值。", "对角化就是换一组由特征向量构成的坐标轴。", "\\(\\left(\\begin{array}{cc}2&0\\\\0&3\\end{array}\\right)\\) 正定，因为特征值 2,3 都正。", "代数重数不等于几何重数时可能不能对角化。", "matrix-eigen-lab"),
 
   C("linear6-transform", "线性代数", "第6章 线性空间与线性变换【拓展】", "线性空间", "基、坐标、线性变换", raw`
 \alpha=x_1e_1+\cdots+x_ne_n
@@ -702,7 +702,7 @@ r(AB)\le \min\{r(A),r(B)\}
 \\
 r(A)+r(B)-n\le r(AB)\quad(A_{m\times n},B_{n\times s})
 \\
-r\begin{pmatrix}A&0\\0&B\end{pmatrix}=r(A)+r(B)
+r\left(\begin{array}{cc}A&0\\0&B\end{array}\right)=r(A)+r(B)
 `, "常用", ["矩阵", "秩", "不等式"], "秩证明、线性方程组解空间维数。", "秩是线性信息量，乘法不会凭空增加信息。", "证明秩关系时想列空间包含、初等变换或 Sylvester 不等式。", "由线性映射像空间维数和核空间关系可解释。", "若 A 可逆，则 \\(r(AB)=r(B)\\)。", "矩阵尺寸要匹配；不要把所有不等式都当等式。"),
 
   C("linear3-solution-criteria", "线性代数", "第3章 初等变换与线性方程组", "解的判定", "齐次/非齐次方程组完整判定", raw`
@@ -1014,9 +1014,9 @@ F(x,y,z)=0,\quad F_z\ne0
 \frac{\partial z}{\partial y}=-\frac{F_y}{F_z}
 \\
 F(x,y,u,v)=0,\ G(x,y,u,v)=0:
-\quad \begin{pmatrix}u_x\\v_x\end{pmatrix}
-=-\begin{pmatrix}F_u&F_v\\G_u&G_v\end{pmatrix}^{-1}
-\begin{pmatrix}F_x\\G_x\end{pmatrix}
+\quad \left(\begin{array}{c}u_x\\v_x\end{array}\right)
+=-\left(\begin{array}{cc}F_u&F_v\\G_u&G_v\end{array}\right)^{-1}
+\left(\begin{array}{c}F_x\\G_x\end{array}\right)
 `, "常用", ["多元微分", "隐函数", "偏导"], "隐函数偏导、方程组确定函数。", "隐函数求导就是对约束方程两边求偏导，然后解未知偏导。", "看到 \\(F(x,y,z)=0\\) 且要 \\(z_x,z_y\\)，直接套 \\(-F_x/F_z\\)。", "由 \\(F_x+F_z z_x=0\\) 得到。", "若 \\(x^2+y^2+z^2=1\\)，则 \\(z_x=-x/z\\)。", "分母偏导不能为 0；方程组情形要检查 Jacobi 行列式非零。"),
 
   C("calc9-tangent-plane", "高等数学", "第9章 多元函数微分法及应用", "切平面", "曲面切平面与法线", raw`
@@ -1118,12 +1118,12 @@ x_1^{n-1}&x_2^{n-1}&\cdots&x_n^{n-1}
 `, "必背", ["行列式", "代数余子式", "Laplace"], "行列式证明、伴随矩阵推导。", "按一行展开时，同一行元素和对应余子式配对才给原行列式。", "遇到代数余子式求和，先判断元素与余子式是否同一行/列。", "把某一行替换成另一行后行列式有两行相同，故为 0。", "\\(\\sum_j a_{2j}A_{1j}=0\\)，因为相当于把第 1 行换成第 2 行展开。", "余子式下标和展开方向最容易错。"),
 
   C("linear2-block-inverse", "线性代数", "第2章 矩阵及其运算", "分块矩阵", "分块逆矩阵与 Schur 补", raw`
-\begin{pmatrix}A&B\\0&D\end{pmatrix}^{-1}
-=\begin{pmatrix}A^{-1}&-A^{-1}BD^{-1}\\0&D^{-1}\end{pmatrix}
+\left(\begin{array}{cc}A&B\\0&D\end{array}\right)^{-1}
+=\left(\begin{array}{cc}A^{-1}&-A^{-1}BD^{-1}\\0&D^{-1}\end{array}\right)
 \\
-\begin{pmatrix}A&B\\C&D\end{pmatrix}^{-1}
+\left(\begin{array}{cc}A&B\\C&D\end{array}\right)^{-1}
 \text{可由 }S=D-CA^{-1}B\text{ 分块消元得到}
-`, "了解", ["分块矩阵", "逆矩阵", "Schur补"], "分块矩阵求逆、理论题。", "分块求逆就是把普通高斯消元升级成按块消元。", "块上三角且对角块可逆时，可直接套第一式。", "令乘积等于单位块矩阵，逐块解出未知块。", "\\(\\begin{pmatrix}A&B\\\\0&D\\end{pmatrix}\\) 可逆当且仅当 A、D 都可逆。", "矩阵块不能交换，公式顺序不能随手调。"),
+`, "了解", ["分块矩阵", "逆矩阵", "Schur补"], "分块矩阵求逆、理论题。", "分块求逆就是把普通高斯消元升级成按块消元。", "块上三角且对角块可逆时，可直接套第一式。", "令乘积等于单位块矩阵，逐块解出未知块。", "\\(\\left(\\begin{array}{cc}A&B\\\\0&D\\end{array}\\right)\\) 可逆当且仅当 A、D 都可逆。", "矩阵块不能交换，公式顺序不能随手调。"),
 
   C("linear2-trace-eigen", "线性代数", "第2章 矩阵及其运算", "迹与特征值", "迹、行列式与特征值关系", raw`
 \operatorname{tr}(A)=\sum_i a_{ii},\quad
@@ -2890,7 +2890,7 @@ x^2+y^2=r^2,\quad d\sigma=r\,dr\,d\theta
 \text{球坐标: }x=\rho\sin\varphi\cos\theta,\ y=\rho\sin\varphi\sin\theta,\ z=\rho\cos\varphi
 \\
 dV=\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta
-`, "必背", ["三重积分", "柱坐标", "球坐标", "Jacobi"], "球体、圆柱、圆锥区域的三重积分。", "柱坐标适合绕轴对称，球坐标适合球面对称。", "看到 \\(x^2+y^2\\) 用柱坐标；看到 \\(x^2+y^2+z^2\\) 用球坐标。", "由坐标变换 Jacobi 行列式得到体积微元。", "半径为 \\(a\\) 的球体体积为 \\(\int_0^{2\pi}\int_0^\pi\int_0^a\rho^2\sin\varphi d\rho d\varphi d\theta=4\pi a^3/3\\)。", "球坐标中 \\(\varphi\\) 通常是与正 \\(z\\) 轴夹角，不是平面极角。"),
+`, "必背", ["三重积分", "柱坐标", "球坐标", "Jacobi"], "球体、圆柱、圆锥区域的三重积分。", "柱坐标适合绕轴对称，球坐标适合球面对称。", "看到 \\(x^2+y^2\\) 用柱坐标；看到 \\(x^2+y^2+z^2\\) 用球坐标。", "由坐标变换 Jacobi 行列式得到体积微元。", "半径为 \\(a\\) 的球体体积为 \\(\int_{0}^{2\pi}\int_{0}^{\pi}\int_{0}^{a}\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta=4\pi a^3/3\\)。", "球坐标中 \\(\varphi\\) 通常是与正 \\(z\\) 轴夹角，不是平面极角。"),
 
   C("calc10-gaussian-double-integral", "高等数学", "第10章 重积分", "特殊积分", "二维 Gaussian 积分", raw`
 \int_{-\infty}^{\infty}e^{-x^2}dx=\sqrt{\pi}
@@ -2977,7 +2977,7 @@ T(\alpha_j)=\sum_{i=1}^{n}a_{ij}\alpha_i
 [T(x)]_{\mathcal B}=A[x]_{\mathcal B}
 \\
 A_{\mathcal C}=P^{-1}A_{\mathcal B}P
-`, "了解", ["线性变换", "矩阵表示", "基变换", "相似"], "理解相似矩阵、不同基下同一线性变换。", "矩阵是线性变换在某组基下的坐标记录。", "换基问题先写过渡矩阵，再用 \\(P^{-1}AP\\)。", "同一向量换坐标、同一变换换表示都会产生相似关系。", "旋转变换在标准正交基下矩阵为 \\(\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}\\)。", "相似不是随便左右乘；左右两边必须是互逆的换基矩阵。"),
+`, "了解", ["线性变换", "矩阵表示", "基变换", "相似"], "理解相似矩阵、不同基下同一线性变换。", "矩阵是线性变换在某组基下的坐标记录。", "换基问题先写过渡矩阵，再用 \\(P^{-1}AP\\)。", "同一向量换坐标、同一变换换表示都会产生相似关系。", "旋转变换在标准正交基下矩阵为 \\(\\left(\\begin{array}{cc}\\cos\\theta&-\\sin\\theta\\\\\\sin\\theta&\\cos\\theta\\end{array}\\right)\\)。", "相似不是随便左右乘；左右两边必须是互逆的换基矩阵。"),
 
   C("prob1-inclusion-exclusion-expanded", "概率论", "第1章 随机事件与概率", "事件运算", "容斥公式扩展", raw`
 P(A\cup B)=P(A)+P(B)-P(AB)

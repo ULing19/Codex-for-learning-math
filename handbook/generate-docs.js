@@ -1,5 +1,6 @@
 const fs = require("fs");
 const vm = require("vm");
+const studyLayer = require("./study-layer.js");
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -12,6 +13,25 @@ const date = "2026-06-07";
 
 const mdFormula = (latex) => `$$\n\\begin{gathered}\n${latex.trim()}\n\\end{gathered}\n$$`;
 const line = (label, text) => `- **${label}**：${text}`;
+const list = (items) => items.map((item) => `  - ${item}`).join("\n");
+
+const studyBlock = (card) => {
+  const study = studyLayer.buildStudyLayer(card);
+  return [
+    `- **学习拆解类型**：${study.kind}`,
+    `- **${study.proofTitle}**：${study.proofCore}`,
+    `- **证明路线**：`,
+    list(study.proofSteps),
+    `- **${study.usageTitle}**：`,
+    list(study.triggers),
+    `- **考场步骤**：${study.examSteps.join(" → ")}`,
+    `- **${study.exampleTitle}**：${study.exampleProblem}`,
+    `- **例题步骤**：`,
+    list(study.exampleSolution),
+    `- **${study.checklistTitle}**：`,
+    list(study.checklist)
+  ].join("\n");
+};
 
 const cardBlock = (card, index) => [
   `#### ${index}. ${card.title}`,
@@ -24,6 +44,7 @@ const cardBlock = (card, index) => [
   line("什么时候想到它", card.howToUse),
   line("为什么成立", card.miniProof),
   line("一个小例子", card.example),
+  studyBlock(card),
   line("别乱用提醒", card.mistakes),
   card.interactiveType !== "none"
     ? line("交互模块", `打开 handbook/index.html 搜索「${card.title}」，展开卡片查看 ${card.interactiveType} 演示。`)
@@ -154,6 +175,7 @@ for (const card of coldCards) {
   cold += `${line("适用条件", card.conditions)}\n`;
   cold += `${line("简短证明/来源", card.miniProof)}\n`;
   cold += `${line("一个小例子", card.example)}\n`;
+  cold += `${studyBlock(card)}\n`;
   cold += `${line("别乱用提醒", card.mistakes)}\n\n`;
 }
 

@@ -5,6 +5,7 @@ const vm = require("vm");
 const root = __dirname;
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const studyLayer = fs.readFileSync(path.join(root, "study-layer.js"), "utf8");
 const data = fs.readFileSync(path.join(root, "formula-data.js"), "utf8");
 
 const htmlIds = new Set([...html.matchAll(/id="([^"]+)"/g)].map(match => match[1]));
@@ -118,6 +119,7 @@ sandbox.window.window = sandbox.window;
 sandbox.window.document = sandbox.document;
 
 vm.createContext(sandbox);
+vm.runInContext(studyLayer, sandbox, { filename: "study-layer.js" });
 vm.runInContext(data, sandbox, { filename: "formula-data.js" });
 vm.runInContext(app, sandbox, { filename: "app.js" });
 
@@ -132,6 +134,9 @@ if (!Number.isFinite(labCount) || labCount <= 0)
 
 if (!elements.get("formulaList").innerHTML.includes("formula-card"))
   throw new Error("formulaList did not render formula cards");
+
+if (!elements.get("formulaList").innerHTML.includes("db-study"))
+  throw new Error("formula cards did not render the study layer");
 
 if (!elements.get("heroRecommend").innerHTML)
   throw new Error("heroRecommend was not populated during init");

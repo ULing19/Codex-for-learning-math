@@ -1,0 +1,101 @@
+const fs = require("fs");
+const path = require("path");
+const vm = require("vm");
+const studyLayer = require("./study-layer.js");
+
+const root = __dirname;
+const repoRoot = path.resolve(root, "..");
+const read = (file) => fs.readFileSync(path.join(repoRoot, file), "utf8");
+
+const html = read("handbook/index.html");
+const app = read("handbook/app.js");
+const generator = read("handbook/generate-docs.js");
+const dataSource = read("handbook/formula-data.js");
+
+const sandbox = { window: {} };
+vm.createContext(sandbox);
+vm.runInContext(dataSource, sandbox, { filename: "formula-data.js" });
+
+const cards = sandbox.window.FORMULA_CARDS || [];
+const groups = sandbox.window.FORMULA_GROUPS || [];
+const errors = [];
+const warnings = [];
+
+const assert = (condition, message) => {
+  if (!condition) errors.push(message);
+};
+
+assert(cards.length >= 490, `公式卡数量异常：${cards.length}`);
+assert(groups.length >= 6, `学科分组数量异常：${groups.length}`);
+assert(html.includes("./study-layer.js") && html.indexOf("./study-layer.js") < html.indexOf("./app.js"), "index.html 必须在 app.js 前加载 study-layer.js");
+assert(app.includes("function openLabDemo"), "app.js 缺少 openLabDemo，实验室总览不能直达演示");
+assert(app.includes("打开实验室演示"), "实验室卡片按钮文案必须明确为打开演示");
+assert(app.includes("renderStudyLayer(card)"), "公式卡核心区必须渲染学习拆解层");
+assert(generator.includes("studyBlock(card)"), "Markdown 生成脚本必须输出学习拆解层");
+
+const interactiveCards = cards.filter((card) => card.interactiveType && card.interactiveType !== "none");
+const interactiveTypes = new Map();
+for (const card of interactiveCards) {
+  interactiveTypes.set(card.interactiveType, (interactiveTypes.get(card.interactiveType) || 0) + 1);
+}
+
+const requiredLabTypes = [
+  "equivalent-compare",
+  "taylor-order-lab",
+  "trig-transform-lab",
+  "integral-method-picker",
+  "matrix-eigen-lab",
+  "probability-distribution-lab",
+  "wallis-recursion",
+  "unit-circle",
+  "distribution-plot",
+  "clt-demo",
+  "riemann-sum"
+];
+
+for (const type of requiredLabTypes) {
+  assert(interactiveTypes.has(type), `缺少高价值实验室挂载：${type}`);
+}
+
+let studyFailures = 0;
+const kindCount = new Map();
+for (const card of cards) {
+  const study = studyLayer.buildStudyLayer(card);
+  kindCount.set(study.kind, (kindCount.get(study.kind) || 0) + 1);
+  const checks = [
+    [study.proofTitle && study.proofTitle.length >= 8, "proofTitle"],
+    [study.proofCore && study.proofCore.length >= 60, "proofCore"],
+    [Array.isArray(study.proofSteps) && study.proofSteps.length >= 4, "proofSteps"],
+    [Array.isArray(study.triggers) && study.triggers.length >= 2, "triggers"],
+    [Array.isArray(study.examSteps) && study.examSteps.length >= 5, "examSteps"],
+    [study.exampleProblem && study.exampleProblem.length >= 35, "exampleProblem"],
+    [Array.isArray(study.exampleSolution) && study.exampleSolution.length >= 3, "exampleSolution"],
+    [Array.isArray(study.checklist) && study.checklist.length >= 3, "checklist"]
+  ];
+  const bad = checks.filter(([ok]) => !ok).map(([, name]) => name);
+  if (bad.length) {
+    studyFailures += 1;
+    if (studyFailures <= 12) errors.push(`学习拆解不完整：${card.id} -> ${bad.join(", ")}`);
+  }
+}
+if (studyFailures > 12) errors.push(`还有 ${studyFailures - 12} 张卡学习拆解不完整`);
+
+const fieldStats = ["conditions", "intuition", "howToUse", "miniProof", "example", "mistakes"].map((field) => {
+  const lens = cards.map((card) => String(card[field] || "").trim().length).sort((a, b) => a - b);
+  const median = lens[Math.floor(lens.length / 2)];
+  const avg = lens.reduce((sum, item) => sum + item, 0) / lens.length;
+  return { field, min: lens[0], median, avg: Number(avg.toFixed(1)) };
+});
+
+for (const stat of fieldStats) {
+  if (stat.median < 12) warnings.push(`字段中位数偏短：${stat.field} median=${stat.median}`);
+}
+
+if (errors.length) {
+  console.error(errors.join("\n"));
+  process.exit(1);
+}
+
+if (warnings.length) console.warn(warnings.join("\n"));
+
+console.log(`quality-ok cards=${cards.length} interactive=${interactiveCards.length} labTypes=${interactiveTypes.size} studyKinds=${[...kindCount.entries()].map(([k, v]) => `${k}:${v}`).join(",")}`);

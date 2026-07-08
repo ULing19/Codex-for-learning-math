@@ -228,6 +228,9 @@ for (const card of cards) {
     if (!card[field] || String(card[field]).trim().length < 6) {
       errors.push(`字段过短：${card.id}.${field}`);
     }
+    if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(String(card[field]))) {
+      errors.push(`字段含控制字符，疑似 LaTeX 反斜杠未双写：${card.id}.${field}`);
+    }
     if (String(card[field]).includes("??")) {
       errors.push(`字段疑似编码损坏：${card.id}.${field}`);
     }
