@@ -15,6 +15,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 - Expanded sparse high-value lab bindings from 168 to 184 cards and added validation minimums so core labs keep at least three entry cards.
 - Bumped the static asset version to `1.0.2` so GitHub Pages serves the refreshed formula data instead of cached lab bindings.
 - Added live Chromium lab smoke testing to the Pages deployment workflow so the deployed site must open and exercise lab demos before the deploy is considered healthy.
+- Added `generated-check.js` and `npm run generated:check` so regenerated Markdown and `COVERAGE.md` must be committed after data changes.
 - Strengthened browser smoke coverage for desktop sidebar scrolling so the last chapter remains reachable after scrolling.
 - Added `coverage-report.js` and generated `COVERAGE.md` so chapter, importance, lab, study-layer, and review-target coverage can be audited from GitHub.
 - Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, all desktop lab opening paths, and actual lab control interactions.

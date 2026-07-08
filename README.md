@@ -126,6 +126,7 @@ npm run verify
 - `validate-data.js` 检查公式卡字段完整性、ID 唯一性、标题唯一性和交互类型合法性。
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
 - `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate, currently `125`.
+- `generated-check.js` fails CI if `generate-docs.js` or `coverage-report.js` rewrites generated Markdown that was not committed.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
 - `link-check.js` checks Markdown local links, HTML local assets, required project files, package metadata, Node version alignment, and `index.html` cache-busted asset versions.

@@ -131,6 +131,7 @@ function checkPackageMetadata() {
     "validate",
     "docs",
     "coverage",
+    "generated:check",
     "smoke",
     "quality",
     "links",
@@ -146,6 +147,8 @@ function checkPackageMetadata() {
   assert(pkg.scripts["check:syntax"].includes("handbook/link-check.js"), "check:syntax should include link-check.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/prepare-pages.js"), "check:syntax should include prepare-pages.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/deploy-health.js"), "check:syntax should include deploy-health.js");
+  assert(pkg.scripts["check:syntax"].includes("handbook/generated-check.js"), "check:syntax should include generated-check.js");
+  assert(pkg.scripts.verify.includes("npm run generated:check"), "verify should include npm run generated:check");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
   assert(pkg.scripts.verify.includes("npm run pages:prepare"), "verify should include npm run pages:prepare");
   return pkg;
@@ -169,6 +172,7 @@ function checkRequiredProjectFiles() {
     "handbook/app.js",
     "handbook/styles.css",
     "handbook/formula-data.js",
+    "handbook/generated-check.js",
     "handbook/prepare-pages.js",
     "handbook/deploy-health.js",
     "handbook/study-layer.js",

@@ -28,6 +28,7 @@
 | `validate-data.js` | 公式数据完整性校验：id 唯一、标题唯一、必填字段、schema 合规 |
 | `generate-docs.js` | 从 `formula-data.js` 生成 Markdown 文档（全量版、冷门版、索引） |
 | `coverage-report.js` | Writes `COVERAGE.md` with chapter, importance, lab, study-layer, short-field review metrics, and a minimum card-depth gate, currently `125` |
+| `generated-check.js` | Generated-output gate: fails if regenerated Markdown docs or `COVERAGE.md` differ from committed files |
 | `smoke-test.js` | 运行时冒烟测试：用 Node fake DOM 模拟初始化，检查白屏/DOM 接线/渲染是否正常 |
 | `quality-check.js` | 成熟度质量门禁：检查学习深度层、实验室直达、关键交互类型覆盖 |
 | `browser-smoke.js` | Real browser acceptance test for desktop/mobile, MathJax, sidebar scrolling, lab demos, actual lab control interactions, keyboard entry points, and basic accessibility |
@@ -144,6 +145,7 @@ DEPLOY_HEALTH_SKIP_WORKFLOWS=1 GITHUB_TOKEN=... npm run verify:deploy
 - `node --check` 只做语法检查，不等于功能正常，必须配合 smoke-test
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
+- `generated-check.js` runs after docs and coverage generation to ensure generated Markdown output is committed instead of silently drifting in CI.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
 - `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
 - `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
