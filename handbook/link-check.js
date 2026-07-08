@@ -163,6 +163,7 @@ function checkRequiredProjectFiles() {
     ".github/dependabot.yml",
     ".nojekyll",
     ".nvmrc",
+    "ARCHITECTURE.md",
     "CHANGELOG.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",

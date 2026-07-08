@@ -11,6 +11,7 @@
 
 [在线访问 / Live Demo](https://uling19.github.io/Codex-for-learning-math/handbook/) ·
 [维护文档 / Maintainer Guide](./handbook/README.md) ·
+[架构说明 / Architecture](./ARCHITECTURE.md) ·
 [Coverage Report](./COVERAGE.md) ·
 [路线图 / Roadmap](./ROADMAP.md) ·
 [贡献指南 / Contributing](./CONTRIBUTING.md) ·
