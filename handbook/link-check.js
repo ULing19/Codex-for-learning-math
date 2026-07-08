@@ -132,6 +132,7 @@ function checkPackageMetadata() {
     "docs",
     "coverage",
     "generated:check",
+    "health",
     "smoke",
     "quality",
     "links",
@@ -148,8 +149,10 @@ function checkPackageMetadata() {
   assert(pkg.scripts["check:syntax"].includes("handbook/prepare-pages.js"), "check:syntax should include prepare-pages.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/deploy-health.js"), "check:syntax should include deploy-health.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/generated-check.js"), "check:syntax should include generated-check.js");
+  assert(pkg.scripts["check:syntax"].includes("handbook/project-health.js"), "check:syntax should include project-health.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/repo-hygiene.js"), "check:syntax should include repo-hygiene.js");
   assert(pkg.scripts.verify.includes("npm run generated:check"), "verify should include npm run generated:check");
+  assert(pkg.scripts.verify.includes("npm run health"), "verify should include npm run health");
   assert(pkg.scripts.verify.includes("npm run repo:hygiene"), "verify should include npm run repo:hygiene");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
   assert(pkg.scripts.verify.includes("npm run pages:prepare"), "verify should include npm run pages:prepare");
@@ -181,6 +184,7 @@ function checkRequiredProjectFiles() {
     "CONTENT_GOVERNANCE.md",
     "CONTRIBUTING.md",
     "COVERAGE.md",
+    "PROJECT_HEALTH.md",
     "LICENSE",
     "MAINTAINERS.md",
     "PRIVACY.md",
@@ -196,6 +200,7 @@ function checkRequiredProjectFiles() {
     "handbook/styles.css",
     "handbook/formula-data.js",
     "handbook/generated-check.js",
+    "handbook/project-health.js",
     "handbook/repo-hygiene.js",
     "handbook/prepare-pages.js",
     "handbook/deploy-health.js",

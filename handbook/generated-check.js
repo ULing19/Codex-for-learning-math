@@ -4,6 +4,7 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const generatedFiles = [
   "COVERAGE.md",
+  "PROJECT_HEALTH.md",
   "\u8003\u7814\u6570\u5b66\u4e00-\u516c\u5f0f\u624b\u518c-\u5b8c\u6574\u7248.md",
   "\u8003\u7814\u6570\u5b66\u4e00-\u51b7\u95e8\u6280\u5de7\u516c\u5f0f\u5e93.md",
   "\u8003\u7814\u6570\u5b66\u4e00-\u603b\u7d22\u5f15.md"
@@ -44,7 +45,7 @@ function main() {
   if (diff) {
     console.error("generated-diff: generated files are out of date after docs/coverage generation");
     console.error(diff);
-    console.error("Run npm run docs && npm run coverage, then commit the regenerated files.");
+    console.error("Run npm run docs && npm run coverage && npm run health, then commit the regenerated files.");
     process.exit(1);
   }
 

@@ -16,15 +16,16 @@
     "node": ">=24"
   },
   "scripts": {
-    "check:syntax": "node --check handbook/app.js && node --check handbook/formula-data.js && node --check handbook/study-layer.js && node --check handbook/validate-data.js && node --check handbook/generate-docs.js && node --check handbook/smoke-test.js && node --check handbook/quality-check.js && node --check handbook/coverage-report.js && node --check handbook/browser-smoke.js && node --check handbook/link-check.js && node --check handbook/prepare-pages.js && node --check handbook/deploy-health.js && node --check handbook/generated-check.js && node --check handbook/repo-hygiene.js",
+    "check:syntax": "node --check handbook/app.js && node --check handbook/formula-data.js && node --check handbook/study-layer.js && node --check handbook/validate-data.js && node --check handbook/generate-docs.js && node --check handbook/smoke-test.js && node --check handbook/quality-check.js && node --check handbook/coverage-report.js && node --check handbook/project-health.js && node --check handbook/browser-smoke.js && node --check handbook/link-check.js && node --check handbook/prepare-pages.js && node --check handbook/deploy-health.js && node --check handbook/generated-check.js && node --check handbook/repo-hygiene.js",
     "validate": "node handbook/validate-data.js",
     "docs": "node handbook/generate-docs.js",
     "coverage": "node handbook/coverage-report.js",
+    "health": "node handbook/project-health.js",
     "smoke": "node handbook/smoke-test.js",
     "quality": "node handbook/quality-check.js",
     "links": "node handbook/link-check.js",
     "pages:prepare": "node handbook/prepare-pages.js",
-    "verify": "npm run check:syntax && npm run validate && npm run docs && npm run coverage && npm run generated:check && npm run smoke && npm run quality && npm run links && npm run repo:hygiene && npm run pages:prepare",
+    "verify": "npm run check:syntax && npm run validate && npm run docs && npm run coverage && npm run health && npm run generated:check && npm run smoke && npm run quality && npm run links && npm run repo:hygiene && npm run pages:prepare",
     "verify:browser": "node handbook/browser-smoke.js",
     "verify:browser:live": "node -e \"process.env.BROWSER_SMOKE_BASE_URL='https://uling19.github.io/Codex-for-learning-math/handbook'; require('./handbook/browser-smoke.js')\"",
     "verify:deploy": "node handbook/deploy-health.js",

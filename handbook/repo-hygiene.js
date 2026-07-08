@@ -43,6 +43,14 @@ function main() {
         errors.push(`control-character: ${file} contains byte 0x${data[badIndex].toString(16).padStart(2, "0")} at byte ${badIndex}`);
       }
     }
+    const text = data.toString("utf8");
+    if (text.includes("\uFFFD")) {
+      errors.push(`text-integrity: ${file} contains Unicode replacement character U+FFFD`);
+    }
+    const placeholderMatch = text.match(/\?{4,}/);
+    if (placeholderMatch) {
+      errors.push(`text-integrity: ${file} contains repeated question-mark placeholder "${placeholderMatch[0]}"`);
+    }
   }
 
   if (errors.length) {

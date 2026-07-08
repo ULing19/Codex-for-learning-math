@@ -4,6 +4,8 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 
 ## Unreleased
 
+- Replaced the corrupted root `README.md` with a clean bilingual project overview and maintenance guide.
+- Added `project-health.js`, generated `PROJECT_HEALTH.md`, and wired the health report into `npm run verify` and generated-output drift checks.
 - Added `CONTENT_GOVERNANCE.md` and gated it in project quality checks so formula additions follow source-tier, condition, and trick-label rules.
 - Added content-gap and feature-request issue templates plus issue chooser links for live site, support, and content governance.
 - Added `.github/CODEOWNERS` and `MAINTAINERS.md` to document review ownership, merge expectations, and generated-file responsibilities.

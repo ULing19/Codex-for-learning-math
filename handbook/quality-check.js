@@ -27,6 +27,7 @@ const mustHaveFiles = [
   "RELEASE_CHECKLIST.md",
   "LICENSE",
   "COVERAGE.md",
+  "PROJECT_HEALTH.md",
   ".nojekyll",
   ".github/CODEOWNERS",
   ".github/workflows/verify.yml",
@@ -52,6 +53,7 @@ const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
 const versioning = readIfExists("VERSIONING.md");
 const coverageReport = readIfExists("COVERAGE.md");
+const projectHealth = readIfExists("PROJECT_HEALTH.md");
 
 const sandbox = { window: {} };
 vm.createContext(sandbox);
@@ -89,6 +91,7 @@ assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("M
 assert(releaseChecklist.includes("VERSIONING.md") && versioning.includes("Version Source of Truth") && versioning.includes("When To Bump"), "Release checklist and VERSIONING must document version/cache release policy");
 assert(coverageScript.includes("Content Coverage Report") && coverageScript.includes("Interactive Lab Coverage"), "coverage-report.js must produce a project coverage report");
 assert(coverageReport.includes("## Subject Coverage") && coverageReport.includes("## Interactive Lab Coverage") && coverageReport.includes("PASS: coverage gate satisfied"), "COVERAGE.md must be generated and passing");
+assert(projectHealth.includes("## Release Snapshot") && projectHealth.includes("## Verification Surface") && projectHealth.includes("PASS: project maturity health gate satisfied"), "PROJECT_HEALTH.md must be generated and passing");
 assert(!new RegExp("\\?{4,}").test(read("handbook/quality-check.js")), "quality-check.js must not contain mojibake placeholder question marks");
 
 assert(cards.length >= 490, `公式卡数量异常：${cards.length}`);
