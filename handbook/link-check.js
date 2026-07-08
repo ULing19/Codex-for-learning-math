@@ -166,6 +166,7 @@ function checkRequiredProjectFiles() {
     "ARCHITECTURE.md",
     "CHANGELOG.md",
     "CODE_OF_CONDUCT.md",
+    "CONTENT_GOVERNANCE.md",
     "CONTRIBUTING.md",
     "COVERAGE.md",
     "LICENSE",

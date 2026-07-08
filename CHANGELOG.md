@@ -4,6 +4,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 
 ## Unreleased
 
+- Added `CONTENT_GOVERNANCE.md` and gated it in project quality checks so formula additions follow source-tier, condition, and trick-label rules.
 - Upgraded GitHub Actions to `actions/checkout@v7`, `actions/setup-node@v6`, and Node 24 to remove deprecated Node 20 action-runtime warnings.
 - Added `.nvmrc` and `package.json` `engines.node >=24` so local development and CI use the same supported Node line.
 - Added `link-check.js` and `npm run links` to gate local Markdown links, HTML assets, required project files, package metadata, and Node version alignment.

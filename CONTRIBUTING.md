@@ -38,9 +38,10 @@ When adding or editing formula cards:
 2. Keep `id` unique and stable.
 3. Fill every field: `conditions`, `intuition`, `howToUse`, `miniProof`, `example`, `mistakes`.
 4. Use `raw\`...\`` for LaTeX-heavy formulas.
-5. Avoid unsupported MathJax commands. Run browser smoke if the formula is complex.
-6. Regenerate docs with `npm run docs` or `npm run verify`.
-7. Review `COVERAGE.md` if you add many cards or change chapter structure.
+5. Follow `CONTENT_GOVERNANCE.md` for source tiers, condition checks, trick labels, and correction policy.
+6. Avoid unsupported MathJax commands. Run browser smoke if the formula is complex.
+7. Regenerate docs with `npm run docs` or `npm run verify`.
+8. Review `COVERAGE.md` if you add many cards or change chapter structure.
 
 ## UI / Lab Changes
 
@@ -58,6 +59,7 @@ When changing UI or labs:
 - [ ] Browser smoke passes locally or in GitHub Actions.
 - [ ] Generated Markdown is updated if formula data changed.
 - [ ] `COVERAGE.md` is regenerated and still reports a passing gate.
+- [ ] Content changes follow `CONTENT_GOVERNANCE.md` source and condition rules.
 - [ ] UI changes were checked on desktop and mobile.
 - [ ] New formulas include conditions, intuition, usage, proof idea, example, and mistakes.
 - [ ] No `node_modules`, package lock created only for temporary local testing, or other generated test artifacts are committed.

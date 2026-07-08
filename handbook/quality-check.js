@@ -18,6 +18,7 @@ const mustHaveFiles = [
   "CONTRIBUTING.md",
   "SECURITY.md",
   "CHANGELOG.md",
+  "CONTENT_GOVERNANCE.md",
   "RELEASE_CHECKLIST.md",
   "LICENSE",
   "COVERAGE.md",
@@ -32,6 +33,7 @@ const readIfExists = (file) => exists(file) ? read(file) : "";
 const workflow = readIfExists(".github/workflows/verify.yml");
 const rootReadme = readIfExists("README.md");
 const contributing = readIfExists("CONTRIBUTING.md");
+const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
 const changelog = readIfExists("CHANGELOG.md");
 const releaseChecklist = readIfExists("RELEASE_CHECKLIST.md");
 const coverageReport = readIfExists("COVERAGE.md");
@@ -56,6 +58,8 @@ assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:
 assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js") && rootReadme.includes("verify:browser:live"), "Root README must document base, local browser, and live browser verification");
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
+assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
+assert(contentGovernance.includes("Source Tiers") && contentGovernance.includes("Verification Rules") && contentGovernance.includes("High-yield Trick Policy"), "CONTENT_GOVERNANCE must define source tiers, verification rules, and high-yield trick policy");
 assert(changelog.includes("2026-07-08") && changelog.includes("browser-smoke.js") && changelog.includes("coverage-report.js"), "CHANGELOG must record the maturity verification and coverage-report capabilities");
 assert(releaseChecklist.includes("GitHub Pages") && releaseChecklist.includes("MathJax"), "Release checklist must cover GitHub Pages and MathJax checks");
 assert(coverageScript.includes("Content Coverage Report") && coverageScript.includes("Interactive Lab Coverage"), "coverage-report.js must produce a project coverage report");
