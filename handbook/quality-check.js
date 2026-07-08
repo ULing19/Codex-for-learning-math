@@ -17,6 +17,7 @@ const mustHaveFiles = [
   "README.md",
   "CONTRIBUTING.md",
   "SECURITY.md",
+  "CITATION.cff",
   "CHANGELOG.md",
   "CONTENT_GOVERNANCE.md",
   "MAINTAINERS.md",
@@ -63,6 +64,7 @@ for (const file of mustHaveFiles) {
 assert(workflow.includes("npm run verify") && workflow.includes("npm run verify:browser"), "CI must run both base verification and browser smoke verification");
 assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smoke.js") && rootReadme.includes("verify:browser:live"), "Root README must document base, local browser, and live browser verification");
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
+assert(rootReadme.includes("CITATION.cff"), "Root README must document repository citation metadata");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
 assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
 assert(contributing.includes(".github/CODEOWNERS") && contributing.includes("MAINTAINERS.md"), "CONTRIBUTING must document review ownership files");

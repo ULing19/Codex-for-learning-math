@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this handbook, please cite the repository and live site. / 如果你使用本手册，请引用仓库与在线版本。"
+title: "Codex for Learning Math: 考研数学一交互公式手册"
+type: software
+authors:
+  - name: "ULing19"
+repository-code: "https://github.com/ULing19/Codex-for-learning-math"
+url: "https://uling19.github.io/Codex-for-learning-math/handbook/"
+license: MIT
+version: "1.0.2"
+date-released: "2026-07-09"
+abstract: "A static interactive Math I formula handbook for postgraduate entrance exam review, with searchable formula cards, proof notes, examples, mistakes, mastery tracking, and visual labs."
+keywords:
+  - kaoyan
+  - mathematics
+  - calculus
+  - linear algebra
+  - probability
+  - MathJax
+  - GitHub Pages
+

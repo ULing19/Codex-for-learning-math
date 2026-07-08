@@ -14,6 +14,7 @@
 [架构说明 / Architecture](./ARCHITECTURE.md) ·
 [内容治理 / Content Governance](./CONTENT_GOVERNANCE.md) ·
 [维护者说明 / Maintainers](./MAINTAINERS.md) ·
+[Citation](./CITATION.cff) ?
 [Coverage Report](./COVERAGE.md) ·
 [路线图 / Roadmap](./ROADMAP.md) ·
 [贡献指南 / Contributing](./CONTRIBUTING.md) ·
@@ -209,4 +210,6 @@ npm run verify
 
 公式、知识点和解释内容主要用于学习与复习整理。若你基于本项目继续改造，建议保留来源说明、校验脚本和生成流程，避免公式数据在迭代中失真。
 
+
+If you cite or redistribute this handbook, please use the repository citation metadata in [CITATION.cff](./CITATION.cff) and link to the live handbook.
 This project is released under the [MIT License](./LICENSE). Formula explanations are organized for educational and review purposes. If you build upon this project, please keep the validation and documentation-generation workflow so the formula data remains reliable.

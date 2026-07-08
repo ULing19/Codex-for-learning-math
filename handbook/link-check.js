@@ -153,6 +153,11 @@ function checkPackageMetadata() {
   assert(pkg.scripts.verify.includes("npm run repo:hygiene"), "verify should include npm run repo:hygiene");
   assert(pkg.scripts.verify.includes("npm run links"), "verify should include npm run links");
   assert(pkg.scripts.verify.includes("npm run pages:prepare"), "verify should include npm run pages:prepare");
+
+  const citation = readUtf8(path.join(root, "CITATION.cff"));
+  for (const field of ["cff-version: 1.2.0", "title:", "authors:", "repository-code:", "url:", "license: MIT", `version: "${pkg.version}"`]) {
+    assert(citation.includes(field), `CITATION.cff should include ${field}`);
+  }
   return pkg;
 }
 
@@ -169,6 +174,7 @@ function checkRequiredProjectFiles() {
     ".nvmrc",
     "ARCHITECTURE.md",
     "CHANGELOG.md",
+    "CITATION.cff",
     "CODE_OF_CONDUCT.md",
     "CONTENT_GOVERNANCE.md",
     "CONTRIBUTING.md",
