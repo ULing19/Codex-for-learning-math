@@ -101,6 +101,17 @@ ddot displaystyle dot neq textbf
 
 const latexEnvironments = new Set(["array", "cases", "gathered", "matrix", "pmatrix", "bmatrix", "vmatrix"]);
 
+function findControlCharacter(value) {
+  const text = String(value ?? "");
+  for (let index = 0; index < text.length; index += 1) {
+    const code = text.charCodeAt(index);
+    if (code < 32 && code !== 9 && code !== 10) {
+      return { index, code };
+    }
+  }
+  return null;
+}
+
 function validateLatex(card) {
   const latexErrors = [];
   const latex = String(card.latex ?? "");

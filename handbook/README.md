@@ -146,6 +146,7 @@ DEPLOY_HEALTH_SKIP_WORKFLOWS=1 GITHUB_TOKEN=... npm run verify:deploy
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
 - `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `generated-check.js` runs after docs and coverage generation to ensure generated Markdown output is committed instead of silently drifting in CI.
+- `generated-check.js` also scans generated Markdown for raw control characters, which catches cases like `\rho` becoming a carriage return in normal JS strings.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
 - `link-check.js` prevents stale local Markdown links, missing HTML assets, missing required project files, package metadata drift, and stale `index.html` asset versions from entering `main`.
 - `prepare-pages.js` creates `.pages-artifact` from public top-level docs, `.nojekyll`, `LICENSE`, and the static `handbook/` runtime so GitHub Pages deploys a clean site instead of the whole working tree.
