@@ -39,6 +39,7 @@ The goal is not only to list formulas, but to make them easier to understand, se
 - **494 张公式卡 / 494 cards**：覆盖高数、线代、概率、前置基础、冷门技巧和考场速查。
 - **168 个交互挂载 / 168 demo entries**：用滑块、SVG、曲线、矩阵变换、概率图像辅助理解。
 - **15 类实验室 / 15 lab types**：等价无穷小、Taylor、三角变形、Riemann 和、Wallis、矩阵特征值、假设检验等。
+- **内容深度门槛 / Depth gate**：`COVERAGE.md` 记录最短卡片审计目标，当前最低深度分 129，门槛 125。
 - **搜索与高亮 / Search & highlight**：支持标题、章节、标签、解释全文检索。
 - **掌握度追踪 / Mastery tracking**：未学、认识、掌握、本地收藏，保存在浏览器 `localStorage`。
 - **今日推荐 / Daily recommendations**：优先推荐必背、未掌握、有交互的高价值卡片。
@@ -116,10 +117,10 @@ npm run verify
 - `node --check` 只检查 JavaScript 语法。
 - `validate-data.js` 检查公式卡字段完整性、ID 唯一性和交互类型合法性。
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
-- `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate.
+- `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate, currently `125`.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
-- `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, sidebar scrolling, every desktop lab opening path, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.
+- `browser-smoke.js` checks desktop/mobile Chromium behavior, MathJax, sidebar scrolling, every desktop lab opening path, actual lab control interactions, mobile lab navigation, keyboard entry points, and basic accessibility; locally run `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`, or check GitHub Pages with `npm run verify:browser:live`.
 - `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify` 和浏览器冒烟测试。
 
 ## Project Structure / 项目结构

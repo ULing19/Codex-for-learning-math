@@ -27,10 +27,10 @@
 | `study-layer.js` | 学习深度层：为每张卡生成证明路线、使用场景、例题拆解和检查清单 |
 | `validate-data.js` | 公式数据完整性校验：id 唯一、必填字段、schema 合规 |
 | `generate-docs.js` | 从 `formula-data.js` 生成 Markdown 文档（全量版、冷门版、索引） |
-| `coverage-report.js` | Writes `COVERAGE.md` with chapter, importance, lab, study-layer, short-field review metrics, and a minimum card-depth gate |
+| `coverage-report.js` | Writes `COVERAGE.md` with chapter, importance, lab, study-layer, short-field review metrics, and a minimum card-depth gate, currently `125` |
 | `smoke-test.js` | 运行时冒烟测试：用 Node fake DOM 模拟初始化，检查白屏/DOM 接线/渲染是否正常 |
 | `quality-check.js` | 成熟度质量门禁：检查学习深度层、实验室直达、关键交互类型覆盖 |
-| `browser-smoke.js` | Real browser acceptance test for desktop/mobile, MathJax, sidebar scrolling, lab demos, keyboard entry points, and basic accessibility |
+| `browser-smoke.js` | Real browser acceptance test for desktop/mobile, MathJax, sidebar scrolling, lab demos, actual lab control interactions, keyboard entry points, and basic accessibility |
 
 生成的 Markdown 文档（不要手动编辑，运行 `node handbook/generate-docs.js` 重新生成）：
 
@@ -115,9 +115,9 @@ npm run verify:browser:live
 
 - `node --check` 只做语法检查，不等于功能正常，必须配合 smoke-test
 - `smoke-test.js` 用 Node 的 `vm` 模块模拟浏览器初始化，检查关键 DOM 接线、cardCount/labCount 填充、formulaList 渲染、heroRecommend 渲染
-- `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and minimum card-depth score into an auditable report.
+- `coverage-report.js` outputs `COVERAGE.md`, turning chapter coverage, lab coverage, study-layer coverage, short-field review targets, and the `125` minimum card-depth gate into an auditable report.
 - `quality-check.js` 检查每张卡是否能生成证明路线、使用场景、例题拆解和检查清单，并验证实验室总览能直达演示
-- `browser-smoke.js` starts a local static server by default and verifies all desktop lab opening paths, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
+- `browser-smoke.js` starts a local static server by default and verifies all desktop lab opening paths, actual lab control interactions, mobile sidebar behavior, bottom navigation hit targets, study blocks, and MathJax error counts in Chromium. Set `BROWSER_SMOKE_BASE_URL` or run `npm run verify:browser:live` to run the same checks against GitHub Pages.
 - 不允许只说"语法检查通过"就认为没问题
 
 ---
@@ -237,3 +237,5 @@ C(
 | 交互模块类型 | 15 种 |
 | 覆盖学科 | 前置基础、高等数学、线性代数、概率论、冷门技巧、附录速查 |
 | smoke-test 基线 | `smoke-ok cards=494 labs=168` |
+| coverage 深度门槛 | `Minimum card depth score >= 125` |
+| browser-smoke 基线 | `desktop: opened=15, exercised=15` |

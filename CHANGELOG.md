@@ -5,10 +5,12 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 ## Unreleased
 
 - Added `coverage-report.js` and generated `COVERAGE.md` so chapter, importance, lab, study-layer, and review-target coverage can be audited from GitHub.
-- Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, and all desktop lab opening paths.
+- Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, all desktop lab opening paths, and actual lab control interactions.
 - Added `npm run verify:browser:live` for running the same browser smoke checks against the GitHub Pages deployment.
 - Expanded the older `taylor-plot`, `tangent-line`, and `matrix-transform` demos with teaching readouts, SVG explanations, and exam-use guidance.
-- Expanded the first 20 shallow review-target formula cards and added a minimum card-depth gate to the coverage report.
+- Expanded 40 shallow review-target formula cards with richer conditions, proof routes, usage steps, worked examples, and mistake notes.
+- Raised the minimum card-depth gate in `coverage-report.js` to 125 after the content-depth pass raised the current minimum score to 129.
+- Fixed a MathJax `pmatrix` rendering regression by switching the affected inline example to the project-standard `array` matrix form.
 
 ## 2026-07-08
 

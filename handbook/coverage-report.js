@@ -85,7 +85,7 @@ function buildReport() {
   const { cards, groups, references } = loadFormulaData();
   const errors = [];
   const fieldNames = ['conditions', 'intuition', 'howToUse', 'miniProof', 'example', 'mistakes'];
-  const minimumDepthScore = 110;
+  const minimumDepthScore = 125;
   const importanceOrder = ['必背', '常用', '技巧', '了解', '拓展'];
   const requiredSubjects = ['前置基础', '高等数学', '线性代数', '概率论', '冷门技巧', '附录速查'];
   const expectedChapterMinimums = new Map([

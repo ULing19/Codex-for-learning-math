@@ -81,6 +81,134 @@ function listen(server) {
   });
 }
 
+async function exerciseMountedDemo(page, labType, viewportName) {
+  const before = await page.evaluate((expectedType) => {
+    const demo = document.querySelector(`.demo-box[data-demo="${expectedType}"][data-mounted="true"]`);
+    if (!demo) return null;
+    const rect = demo.getBoundingClientRect();
+    return {
+      textLength: demo.textContent.trim().length,
+      htmlLength: demo.innerHTML.length,
+      visible: rect.width > 0 && rect.height > 0,
+      rangeCount: demo.querySelectorAll("input[type='range']").length,
+      numberCount: demo.querySelectorAll("input[type='number']").length,
+      selectCount: demo.querySelectorAll("select").length,
+      checkboxCount: demo.querySelectorAll("input[type='checkbox']").length,
+      buttonCount: [...demo.querySelectorAll("button")].filter((button) => !button.disabled).length,
+      svgCount: demo.querySelectorAll("svg").length,
+      canvasCount: demo.querySelectorAll("canvas").length,
+      text: demo.textContent
+    };
+  }, labType);
+
+  assert(before, `${viewportName}: ${labType} should have a mounted demo before exercise`);
+  assert.strictEqual(before.visible, true, `${viewportName}: ${labType} demo should be visible before exercise`);
+
+  const actions = await page.evaluate((expectedType) => {
+    const demo = document.querySelector(`.demo-box[data-demo="${expectedType}"][data-mounted="true"]`);
+    const visible = (element) => {
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
+    };
+    const fire = (element) => {
+      element.dispatchEvent(new Event("input", { bubbles: true }));
+      element.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    const summary = {
+      ranges: 0,
+      numbers: 0,
+      selects: 0,
+      checkboxes: 0,
+      buttons: 0,
+      changedValues: 0
+    };
+
+    [...demo.querySelectorAll("input[type='range']")].forEach((input, index) => {
+      const min = Number(input.min || 0);
+      const max = Number(input.max || 100);
+      const current = Number(input.value || 0);
+      const span = Number.isFinite(max - min) && max > min ? max - min : 1;
+      const target = index % 2 === 0 ? min + span * 0.82 : min + span * 0.27;
+      const next = Math.max(min, Math.min(max, target));
+      if (Math.abs(current - next) > Number(input.step || 0.001) / 2) {
+        input.value = String(next);
+        summary.changedValues += 1;
+      }
+      fire(input);
+      summary.ranges += 1;
+    });
+
+    [...demo.querySelectorAll("input[type='number']")].forEach((input, index) => {
+      const current = Number(input.value || 0);
+      const step = Number(input.step || 1) || 1;
+      const next = current + step * (index % 2 === 0 ? 1 : -1);
+      input.value = String(next);
+      fire(input);
+      summary.numbers += 1;
+      summary.changedValues += 1;
+    });
+
+    [...demo.querySelectorAll("select")].forEach((select) => {
+      if (select.options.length > 1) {
+        select.selectedIndex = (select.selectedIndex + 1) % select.options.length;
+        summary.changedValues += 1;
+      }
+      fire(select);
+      summary.selects += 1;
+    });
+
+    [...demo.querySelectorAll("input[type='checkbox']")].forEach((checkbox) => {
+      checkbox.checked = !checkbox.checked;
+      fire(checkbox);
+      summary.checkboxes += 1;
+      summary.changedValues += 1;
+    });
+
+    [...demo.querySelectorAll("button")]
+      .filter((button) => !button.disabled && visible(button) && !button.classList.contains("imp-clear"))
+      .slice(0, 6)
+      .forEach((button) => {
+        button.click();
+        summary.buttons += 1;
+      });
+
+    return summary;
+  }, labType);
+
+  await page.waitForTimeout(120);
+
+  const after = await page.evaluate((expectedType) => {
+    const demo = document.querySelector(`.demo-box[data-demo="${expectedType}"][data-mounted="true"]`);
+    const rect = demo?.getBoundingClientRect();
+    const text = demo?.textContent || "";
+    return {
+      stillMounted: Boolean(demo),
+      stillOpen: Boolean(demo?.closest("details")?.open),
+      visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+      textLength: text.trim().length,
+      htmlLength: demo?.innerHTML.length || 0,
+      hasVisual: Boolean(demo?.querySelector("svg, canvas")),
+      hasControl: Boolean(demo?.querySelector("input, select, button")),
+      hasBadNumericText: /\b(?:NaN|Infinity|undefined)\b/.test(text),
+      htmlChanged: Boolean(demo && demo.innerHTML.length !== 0)
+    };
+  }, labType);
+
+  const controlCount = actions.ranges + actions.numbers + actions.selects + actions.checkboxes + actions.buttons;
+  assert(controlCount > 0, `${viewportName}: ${labType} demo should expose at least one interactive control`);
+  assert(actions.changedValues > 0 || actions.buttons > 0, `${viewportName}: ${labType} exercise should change a control or press a button`);
+  assert.strictEqual(after.stillMounted, true, `${viewportName}: ${labType} demo should remain mounted after exercise`);
+  assert.strictEqual(after.stillOpen, true, `${viewportName}: ${labType} details should remain open after exercise`);
+  assert.strictEqual(after.visible, true, `${viewportName}: ${labType} demo should remain visible after exercise`);
+  assert.strictEqual(after.hasControl, true, `${viewportName}: ${labType} demo should retain controls after exercise`);
+  assert(after.hasVisual || after.textLength > 100, `${viewportName}: ${labType} demo should retain a visual or teaching text`);
+  assert(after.textLength > 100, `${viewportName}: ${labType} demo should retain teaching content after exercise`);
+  assert.strictEqual(after.hasBadNumericText, false, `${viewportName}: ${labType} demo should not render NaN/Infinity/undefined after exercise`);
+
+  return { before, actions, after };
+}
+
 async function runViewport(browser, baseUrl, viewport) {
   const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height } });
   const appErrors = [];
@@ -215,6 +343,7 @@ async function runViewport(browser, baseUrl, viewport) {
     ? [...new Set([0, labGrid.labCards - 1])]
     : Array.from({ length: labGrid.labCards }, (_, index) => index);
   const openedLabs = [];
+  const exercisedLabs = [];
   let labOpen = null;
   for (const index of labIndices) {
     if (openedLabs.length) {
@@ -257,6 +386,7 @@ async function runViewport(browser, baseUrl, viewport) {
     assert(labOpen.demoTextLength > 100, `${viewport.name}: ${labType} demo should contain teaching content`);
     assert(labOpen.studyBlocks > 0, `${viewport.name}: study layer should survive ${labType} filtering`);
     assert(/实验室演示/.test(labOpen.resultInfo), `${viewport.name}: result info should explain ${labType} opening`);
+    exercisedLabs.push(await exerciseMountedDemo(page, labType, viewport.name));
     openedLabs.push(labType);
   }
 
@@ -265,7 +395,7 @@ async function runViewport(browser, baseUrl, viewport) {
   }
 
   await page.close();
-  return { viewport: viewport.name, initial, labGrid, labOpen, openedLabs };
+  return { viewport: viewport.name, initial, labGrid, labOpen, openedLabs, exercisedLabs };
 }
 
 (async () => {
@@ -291,7 +421,7 @@ async function runViewport(browser, baseUrl, viewport) {
       mobile: true,
       labSelector: ".bottom-nav [data-view=\"labs\"]"
     }));
-    console.log(`browser-smoke-ok ${results.map((item) => `${item.viewport}:cards=${item.initial.cards},labs=${item.labGrid.labCards},opened=${item.openedLabs.length},demos=${item.labOpen.mountedDemos}`).join(" ")}`);
+    console.log(`browser-smoke-ok ${results.map((item) => `${item.viewport}:cards=${item.initial.cards},labs=${item.labGrid.labCards},opened=${item.openedLabs.length},exercised=${item.exercisedLabs.length},demos=${item.labOpen.mountedDemos}`).join(" ")}`);
   } finally {
     await browser.close();
     if (server) server.close();
