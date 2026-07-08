@@ -117,7 +117,8 @@ npm run verify
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
 - `quality-check.js` 检查学习拆解层、实验室直达、关键交互类型和成熟度门禁。
-- `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify`。
+- `browser-smoke.js` 用真实 Chromium 检查桌面/移动端、MathJax、侧栏滚动和实验室直达演示；本地运行前执行 `npm install --no-save playwright@1.61.1 && npx playwright install chromium && npm run verify:browser`。
+- `.github/workflows/verify.yml` 会在 push / PR 时自动运行 `npm run verify` 和浏览器冒烟测试。
 
 ## Project Structure / 项目结构
 
@@ -133,6 +134,7 @@ npm run verify
 │  ├─ generate-docs.js    # Markdown 生成 / docs generator
 │  ├─ smoke-test.js       # 冒烟测试 / smoke test
 │  ├─ quality-check.js    # 内容深度与实验室质量门禁 / quality gate
+│  ├─ browser-smoke.js    # 真实浏览器验收 / real browser smoke test
 │  ├─ README.md           # 维护文档 / maintainer guide
 │  └─ preview.png         # GitHub 预览图 / preview image
 ├─ .github/workflows/verify.yml
