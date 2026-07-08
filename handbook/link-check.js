@@ -172,6 +172,7 @@ function checkRequiredProjectFiles() {
     ".github/ISSUE_TEMPLATE/feature-request.md",
     ".nojekyll",
     ".nvmrc",
+    "ACCESSIBILITY.md",
     "ARCHITECTURE.md",
     "CHANGELOG.md",
     "CITATION.cff",

@@ -9,6 +9,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 - Added `.github/CODEOWNERS` and `MAINTAINERS.md` to document review ownership, merge expectations, and generated-file responsibilities.
 - Added `CITATION.cff` and citation metadata checks so reuse of the handbook has a stable repository citation.
 - Added `VERSIONING.md` to document static asset cache busting, version bump rules, release steps, and deployment evidence.
+- Added `ACCESSIBILITY.md` to document keyboard support, browser smoke accessibility coverage, UI change checklist, and known limitations.
 - Upgraded GitHub Actions to `actions/checkout@v7`, `actions/setup-node@v6`, and Node 24 to remove deprecated Node 20 action-runtime warnings.
 - Added `.nvmrc` and `package.json` `engines.node >=24` so local development and CI use the same supported Node line.
 - Added `link-check.js` and `npm run links` to gate local Markdown links, HTML assets, required project files, package metadata, and Node version alignment.

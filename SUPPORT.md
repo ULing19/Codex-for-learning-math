@@ -22,6 +22,8 @@ Use the closest issue template:
 - `UI or lab issue / 界面或实验室问题` for layout, search, mobile, MathJax, or interactive lab failures.
 - `Feature request / 功能建议` for new review workflows, lab ideas, or project improvements.
 
+Accessibility and keyboard issues should usually use the UI/lab template. See `ACCESSIBILITY.md` for current accessibility commitments and checks.
+
 ## Useful Details / 反馈时最好提供
 
 For formula issues:

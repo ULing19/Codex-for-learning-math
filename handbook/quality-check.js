@@ -15,6 +15,7 @@ const coverageScript = read("handbook/coverage-report.js");
 
 const mustHaveFiles = [
   "README.md",
+  "ACCESSIBILITY.md",
   "CONTRIBUTING.md",
   "SECURITY.md",
   "CITATION.cff",
@@ -39,6 +40,7 @@ const exists = (file) => fs.existsSync(path.join(repoRoot, file));
 const readIfExists = (file) => exists(file) ? read(file) : "";
 const workflow = readIfExists(".github/workflows/verify.yml");
 const rootReadme = readIfExists("README.md");
+const accessibility = readIfExists("ACCESSIBILITY.md");
 const contributing = readIfExists("CONTRIBUTING.md");
 const contentGovernance = readIfExists("CONTENT_GOVERNANCE.md");
 const maintainers = readIfExists("MAINTAINERS.md");
@@ -68,6 +70,8 @@ assert(rootReadme.includes("npm run verify") && rootReadme.includes("browser-smo
 assert(rootReadme.includes("COVERAGE.md") && rootReadme.includes("coverage-report.js"), "Root README must document the coverage report workflow");
 assert(rootReadme.includes("CITATION.cff"), "Root README must document repository citation metadata");
 assert(rootReadme.includes("VERSIONING.md"), "Root README must document versioning and cache policy");
+assert(rootReadme.includes("ACCESSIBILITY.md"), "Root README must document accessibility guidance");
+assert(accessibility.includes("Keyboard Support") && accessibility.includes("Browser Smoke Coverage") && accessibility.includes("UI Change Checklist"), "ACCESSIBILITY must document keyboard support, browser smoke coverage, and UI change checklist");
 assert(contributing.includes("Pull Request Checklist") && contributing.includes("npm run verify"), "CONTRIBUTING must include a PR checklist and verification command");
 assert(contributing.includes("CONTENT_GOVERNANCE.md"), "CONTRIBUTING must point content contributors to CONTENT_GOVERNANCE.md");
 assert(contributing.includes(".github/CODEOWNERS") && contributing.includes("MAINTAINERS.md"), "CONTRIBUTING must document review ownership files");
