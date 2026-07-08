@@ -23,6 +23,7 @@ Use this checklist before treating a version as stable.
 ## Content Review
 
 - [ ] New formula cards include conditions, intuition, usage, proof idea, example, and common mistake.
+- [ ] New or renamed formula cards have unique titles so search results and related links are unambiguous.
 - [ ] New or rewritten chapters improve the relevant counts and review targets in `COVERAGE.md`.
 - [ ] Formula cards use supported MathJax syntax.
 - [ ] Cold tricks include conditions and safer fallback methods.

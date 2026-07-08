@@ -11,6 +11,7 @@ All notable changes are tracked here. This project follows a pragmatic changelog
 - Added a workflow-based GitHub Pages deployment with a prepared static artifact to replace fragile legacy branch builds.
 - Added `deploy-health.js` and `npm run verify:deploy` to audit Pages settings, latest workflow results, and live versioned assets after deployment.
 - Wired `verify:deploy` into the Pages workflow as a post-deploy audit step.
+- Promoted duplicate formula titles from warnings to validation failures and disambiguated one-dimensional transform cards.
 - Strengthened browser smoke coverage for desktop sidebar scrolling so the last chapter remains reachable after scrolling.
 - Added `coverage-report.js` and generated `COVERAGE.md` so chapter, importance, lab, study-layer, and review-target coverage can be audited from GitHub.
 - Strengthened `browser-smoke.js` to check keyboard entry points, duplicate IDs, visible button names, mobile hit targets, all desktop lab opening paths, and actual lab control interactions.

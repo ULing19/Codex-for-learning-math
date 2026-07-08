@@ -206,6 +206,7 @@ const cards = sandbox.window.FORMULA_CARDS || [];
 const groups = sandbox.window.FORMULA_GROUPS || [];
 const errors = [];
 const warnings = [];
+const allowWarnings = /^(1|true|yes)$/i.test(process.env.VALIDATE_ALLOW_WARNINGS || "");
 
 errors.push(...fatalEscapes);
 
@@ -283,7 +284,8 @@ for (const group of groups) {
 }
 
 if (warnings.length) {
-  console.warn(warnings.join("\n"));
+  if (allowWarnings) console.warn(warnings.join("\n"));
+  else errors.push(...warnings);
 }
 
 if (errors.length) {

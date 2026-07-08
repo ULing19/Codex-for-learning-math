@@ -25,7 +25,7 @@
 | `app.js` | 核心交互逻辑：筛选、搜索、掌握度、收藏、15 个交互演示、今日推荐、关联跳转 |
 | `formula-data.js` | 494 张公式卡结构化数据，使用 `C(...)` 工厂函数定义，所有内容源头 |
 | `study-layer.js` | 学习深度层：为每张卡生成证明路线、使用场景、例题拆解和检查清单 |
-| `validate-data.js` | 公式数据完整性校验：id 唯一、必填字段、schema 合规 |
+| `validate-data.js` | 公式数据完整性校验：id 唯一、标题唯一、必填字段、schema 合规 |
 | `generate-docs.js` | 从 `formula-data.js` 生成 Markdown 文档（全量版、冷门版、索引） |
 | `coverage-report.js` | Writes `COVERAGE.md` with chapter, importance, lab, study-layer, short-field review metrics, and a minimum card-depth gate, currently `125` |
 | `smoke-test.js` | 运行时冒烟测试：用 Node fake DOM 模拟初始化，检查白屏/DOM 接线/渲染是否正常 |
@@ -99,7 +99,7 @@ node --check handbook\link-check.js
 node --check handbook\prepare-pages.js
 node --check handbook\deploy-health.js
 
-# 2. 数据校验（检查公式卡 id 唯一、必填字段、schema 合规）
+# 2. 数据校验（检查公式卡 id 唯一、标题唯一、必填字段、schema 合规）
 node handbook\validate-data.js
 
 # 3. 生成文档（从数据重新生成 Markdown，不要手改 Markdown）
@@ -201,6 +201,7 @@ C(
    - `tags` 用中文关键词数组，便于中文搜索
    - 重点卡（必背/常用）必须认真填写 `intuition`、`howToUse`、`example`、`mistakes`
    - `interactiveType` 填 `"none"` 或下方列表中的一个有效值
+   - `title` 必须能唯一定位一张卡；相似主题用括号区分方法，例如“分布函数法/密度变换法”
 4. 新增后必须运行完整验收命令，`validate-data.js` 会检查 schema 合规性
 
 ---

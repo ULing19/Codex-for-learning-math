@@ -79,7 +79,7 @@
 | unit-circle | 63 | 三角函数核心公式 / 倍角、半角、降幂与辅助角 / Fourier 奇偶展开与常用系数 |
 | limit-slider | 26 | 两个重要极限与指数型极限 / 夹逼准则与常用上下界 / 洛必达、等价无穷小与 Taylor 的选型 |
 | taylor-plot | 19 | Taylor 公式 / 常用 Taylor/Maclaurin 展开全表 / 分式与根式的常用展开 |
-| distribution-plot | 15 | 常见分布公式表 / 联合、边缘、条件、卷积 / 一维随机变量函数分布 |
+| distribution-plot | 15 | 常见分布公式表 / 联合、边缘、条件、卷积 / 一维随机变量函数分布（密度变换法） |
 | tangent-line | 13 | 基本导数公式表 / 复合、隐函数、参数方程求导 / 微分、线性近似与误差 |
 | matrix-transform | 11 | 矩阵运算、逆与秩 / Hessian 二阶判别法 / 合同标准形、惯性定理与正定判别全表 |
 | riemann-sum | 8 | 定积分基础性质与变上限 / 面积、体积、弧长公式 / 积分中值定理与平均值 |
@@ -137,7 +137,7 @@ These are the shortest cards by combined study-field length. They are not necess
 | pre-trig-quadrant-reference-angle-table | 前置基础 | 0. 前置基础 | 象限符号与参考角表 | 133 | conditions, intuition, miniProof |
 | pre-trig-fourth-sixth-power-averages | 前置基础 | 0. 前置基础 | 四次六次三角幂平均 | 133 | conditions |
 | appendix-common-normal-quantiles | 附录速查 | A. 常用数值附录 | 常用正态分位数 | 133 | conditions, intuition, miniProof |
-| prob2-transform-density | 概率论 | 第2章 随机变量及其分布 | 一维随机变量函数分布 | 134 | conditions, mistakes |
+| prob2-transform-density | 概率论 | 第2章 随机变量及其分布 | 一维随机变量函数分布（密度变换法） | 134 | conditions, mistakes |
 | pre-trig-cofunction-identities-expanded | 前置基础 | 0. 前置基础 | 余函数与互余角公式 | 134 | conditions |
 | appendix-common-square-cube-values | 附录速查 | A. 常用数值附录 | 常用平方立方与根号近似 | 134 | conditions, miniProof, mistakes |
 | calc6-surface-area | 高等数学 | 第6章 定积分应用 | 旋转曲面面积公式 | 135 | conditions, mistakes |

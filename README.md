@@ -123,7 +123,7 @@ npm run verify
 说明：
 
 - `node --check` 只检查 JavaScript 语法。
-- `validate-data.js` 检查公式卡字段完整性、ID 唯一性和交互类型合法性。
+- `validate-data.js` 检查公式卡字段完整性、ID 唯一性、标题唯一性和交互类型合法性。
 - `generate-docs.js` 从结构化数据生成 Markdown 打印版。
 - `coverage-report.js` writes `COVERAGE.md` with subject, chapter, importance, lab, study-layer, review-target metrics, and a minimum card-depth gate, currently `125`.
 - `smoke-test.js` 使用 Node fake DOM 检查页面关键结构和运行时接线。
