@@ -7,7 +7,8 @@ const handbookRoot = __dirname;
 const errors = [];
 const ignoredDirs = new Set([".git", ".claude", ".pages-artifact", ".playwright-cli", "node_modules"]);
 
-const externalPattern = /^(?:https?:|mailto:|data:|javascript:)/i;
+const externalPattern = /^(?:https?:|mailto:|data:)/i;
+const unsafeSchemePattern = /^(?:javascript:|vbscript:|file:)/i;
 
 function readUtf8(filePath) {
   return fs.readFileSync(filePath, "utf8");
@@ -46,6 +47,10 @@ function stripDecorations(target) {
 
 function checkLocalTarget(sourceFile, rawTarget, label) {
   const cleaned = stripDecorations(rawTarget);
+  if (unsafeSchemePattern.test(cleaned)) {
+    errors.push(`${label}: ${toPosix(path.relative(root, sourceFile))} uses unsafe URL scheme ${rawTarget}`);
+    return;
+  }
   if (!cleaned || cleaned.startsWith("#") || externalPattern.test(cleaned)) return;
   if (/^[a-z]:/i.test(cleaned) || cleaned.startsWith("\\\\")) {
     errors.push(`${label}: ${toPosix(path.relative(root, sourceFile))} uses absolute local path ${rawTarget}`);
