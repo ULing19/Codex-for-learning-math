@@ -127,6 +127,7 @@ function checkPackageMetadata() {
   assert.strictEqual(nvmrc, "24", ".nvmrc should stay aligned to package engines and CI");
 
   const requiredScripts = [
+    "test",
     "check:syntax",
     "validate",
     "docs",
@@ -146,6 +147,7 @@ function checkPackageMetadata() {
   for (const script of requiredScripts) {
     assert(pkg.scripts?.[script], `package.json should define npm script ${script}`);
   }
+  assert.strictEqual(pkg.scripts.test, "npm run verify", "npm test should remain the standard alias for the complete verification suite");
   assert(pkg.scripts["check:syntax"].includes("handbook/link-check.js"), "check:syntax should include link-check.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/prepare-pages.js"), "check:syntax should include prepare-pages.js");
   assert(pkg.scripts["check:syntax"].includes("handbook/deploy-health.js"), "check:syntax should include deploy-health.js");
